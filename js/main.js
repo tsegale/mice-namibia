@@ -37,7 +37,76 @@ document.addEventListener("DOMContentLoaded", function () {
       contactConfirmation.hidden = false;
     });
   }
+
+  initEventsArchive();
 });
+
+// TODO: populate with real 2027 events (and content/images) once the client confirms them
+var EVENTS = [];
+
+function renderEvents(searchTerm) {
+  var list = document.querySelector("[data-events-list]");
+  if (!list) return;
+
+  var term = (searchTerm || "").trim().toLowerCase();
+  var matches = EVENTS.filter(function (event) {
+    return event.title.toLowerCase().indexOf(term) !== -1;
+  });
+
+  list.innerHTML = "";
+
+  if (matches.length === 0) {
+    var empty = document.createElement("p");
+    empty.className = "events-empty";
+    empty.textContent = "No events currently scheduled. Check back soon.";
+    list.appendChild(empty);
+    return;
+  }
+
+  matches.forEach(function (event) {
+    var item = document.createElement("div");
+    item.className = "event-item";
+    item.innerHTML =
+      '<span class="event-item-date">' + event.date + "</span>" +
+      '<span class="event-item-title">' + event.title + "</span>";
+    list.appendChild(item);
+  });
+}
+
+function initEventsArchive() {
+  var searchInput = document.querySelector("[data-event-search]");
+  var findBtn = document.querySelector("[data-event-search-btn]");
+  if (!searchInput) return;
+
+  renderEvents("");
+
+  searchInput.addEventListener("input", function () {
+    renderEvents(searchInput.value);
+  });
+
+  if (findBtn) {
+    findBtn.addEventListener("click", function () {
+      renderEvents(searchInput.value);
+    });
+  }
+
+  // TODO: implement Month/Day calendar views once real event data arrives
+  var viewButtons = document.querySelectorAll(".events-view-btn");
+  viewButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      viewButtons.forEach(function (b) {
+        b.classList.remove("active");
+      });
+      btn.classList.add("active");
+
+      document.querySelectorAll(".events-panel").forEach(function (panel) {
+        panel.hidden = true;
+      });
+      var target = document.getElementById("events-view-" + btn.dataset.view);
+      if (target) target.hidden = false;
+    });
+  });
+}
 
 function initGallery(gallery) {
   var slides = gallery.querySelectorAll(".gallery-slide");
