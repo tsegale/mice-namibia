@@ -15,10 +15,19 @@ confirms a real name, and keep it easy to find/replace across the codebase.
   change. Read the relevant spec before building or editing a page.
 - `content/blogs/` — 10 finished blog articles (.docx) ready to drop into the
   Blog section once it's built.
-- Venue photography (Movenpick, The Westin Cape Town, WICC, Windhoek Country
-  Club Resort & Casino) and the Confevo theme reference files live in the
-  original `MICE SEGMENT` folder on the Desktop, not copied in here yet —
-  pull them in when the Venues page is built.
+- `assets/images/venues/` — real, web-optimized photography (resized to a
+  1920px max width, compressed) for all 4 venues from the brief:
+  `movenpick/`, `the-westin-cape-town/`, `wicc/`, and
+  `windhoek-country-club-resort-casino/`, each with 5-7 shots (exterior,
+  conference space, dining, and a couple of signature spaces). This is a
+  curated subset, not the full photo libraries, which run into the
+  thousands of images per venue and live only in the original
+  `MICE SEGMENT/Photos` folder on the Desktop, most as unoptimized 10-30MB
+  camera originals. Go back to that folder only if a specific page needs a
+  shot not already pulled in here.
+- The Confevo theme reference files themselves live in the original
+  `MICE SEGMENT` folder on the Desktop (not copied in here - it's a
+  ThemeForest reference, not something to ship).
 
 ## Known content gaps (flagged in the brief, not yet delivered by the client)
 
@@ -27,12 +36,30 @@ confirms a real name, and keep it easy to find/replace across the codebase.
 - Partner/brand logos for the "Trusted by" strip — same, pending Drive link.
 - FAQ question/answer content — client said it will arrive as a Word doc.
 - Real upcoming-conference listings for the homepage schedule section.
-- Page 5 of the Home Page spec ("About the Virtual Innovation Summit")
-  tells you to replace the section with "Zusammen Travels" branding — that's
-  a different Spybitech client (a travel agency) and doesn't belong on this
-  site. Treat that instruction as a copy-paste leftover from another brief:
-  write fresh MICE-relevant copy for that section instead, and flag it back
-  to the client rather than shipping "Zusammen Travels" text here.
+- CORRECTION (superseded an earlier note in this file that called this a
+  mistake - it isn't): page 5 of the Home Page spec tells you to replace
+  the "About" section with "Zusammen Travels" branding, and
+  content/specs/06-venues-spec.pdf confirms why: this site is explicitly
+  "Zusammen Tours and Travel Agency's MICE segment" - i.e. a MICE-focused
+  sub-site/service line of Jammy's existing Zusammen Travels client
+  (zusammentravels.com), not an unrelated company. So the About section
+  SHOULD reference Zusammen Travels, using the client's exact text:
+  Main: "Zusammen Travels: Connecting the World Through a Global Digital
+  Experience"
+  Description: "Zusammen Travels brings the world closer through a global
+  digital experience that inspires exploration, connection, and discovery.
+  Through innovation and meaningful travel experiences, we connect people
+  with destinations, cultures, and opportunities worldwide, creating a
+  connected space where stories, experiences, and global possibilities
+  come together."
+  Stat: the brief's exact text here ("25+ Online & Accessible Worldwide to
+  40+") is garbled - most likely it means change the reference theme's
+  "25+" stat to "40+" while keeping a similar label. Confirm the intended
+  number/label with the client before finalizing; don't invent specifics.
+  This also means the working name "MICE Namibia" may not be the final
+  brand - it could end up presented as a Zusammen Travels MICE service
+  rather than a standalone brand. Flag this to Jammy/the client rather
+  than assuming.
 
 Use clearly marked placeholders (e.g. an HTML comment `<!-- TODO: real
 speaker bios pending client Drive link -->`) for anything blocked on missing
@@ -67,7 +94,7 @@ venues.html          (from "6. Venues" spec — build later)
 contact.html         (from "7. Contact Us" spec — build later)
 css/style.css
 js/main.js
-assets/images/
+assets/images/venues/<venue-slug>/   Curated, optimized venue photography
 content/specs/        Page-by-page design briefs (reference only, not shipped)
 content/blogs/         Finished blog articles (reference only, not shipped)
 ```

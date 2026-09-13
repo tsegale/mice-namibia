@@ -10,8 +10,10 @@ No confirmed brand name yet — see `CLAUDE.md`.
 
 ## Status
 
-Scaffold only. Homepage is next, built via Claude Code from
-`content/specs/01-home-page-spec.pdf`.
+Homepage (`index.html`) and the Venues section (`venues.html` plus four
+venue detail pages) are built, using the curated real venue photography in
+`assets/images/venues/`. Remaining pages (About, Events, Services, Blog,
+Contact Us) are still to be built from their specs in `content/specs/`.
 
 ## Sitemap (from the client brief)
 
@@ -24,10 +26,11 @@ Scaffold only. Homepage is next, built via Claude Code from
    Booking, Transportation Services, Post-Event Evaluation
 5. Blogs — 10 articles ready in `content/blogs/`
 6. Venues — Movenpick, The Westin Cape Town, WICC, Windhoek Country Club
-   Resort & Casino (photos still in the original `MICE SEGMENT` folder on
-   the Desktop, not yet copied here)
+   Resort & Casino (curated photos in `assets/images/venues/`; the full
+   photo libraries remain in the original `MICE SEGMENT` folder)
 7. Contact Us
 
-See `CLAUDE.md` for design rules, known content gaps, and the one spec
-inconsistency worth flagging back to the client (the homepage section that
-references "Zusammen Travels").
+See `CLAUDE.md` for design rules and known content gaps, including the note
+that this site is Zusammen Travels' MICE segment rather than a standalone
+brand — the working name "MICE Namibia" is a placeholder pending
+confirmation from the client.
