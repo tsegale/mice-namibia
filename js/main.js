@@ -24,6 +24,19 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   document.querySelectorAll("[data-gallery]").forEach(initGallery);
+
+  // TODO: wire this form to a backend/email service (Zusammen Travels may
+  // already have a Node.js/Nodemailer setup on their main site worth reusing)
+  var contactForm = document.querySelector("[data-contact-form]");
+  var contactConfirmation = document.querySelector("[data-form-confirmation]");
+  if (contactForm && contactConfirmation) {
+    contactForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      contactForm.reset();
+      contactForm.hidden = true;
+      contactConfirmation.hidden = false;
+    });
+  }
 });
 
 function initGallery(gallery) {

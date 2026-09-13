@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Venues - MICE Namibia</title>
-  <meta name="description" content="Explore conference centres, hotels and resorts across Namibia and South Africa suited to meetings, incentives, conferences and exhibitions.">
+  <title>Contact Us - MICE Namibia</title>
+  <meta name="description" content="Get in touch with MICE Namibia to plan your next meeting, incentive trip, conference or exhibition.">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -19,8 +19,8 @@
         <li><a href="events.html">Events</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="blog.html">Blog</a></li>
-        <li><a href="venues.html" class="active">Venues</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="venues.html">Venues</a></li>
+        <li><a href="contact.html" class="active">Contact Us</a></li>
       </ul>
 
       <div class="nav-actions">
@@ -34,78 +34,99 @@
 
   <main>
 
-    <section class="page-header" style="background-image: url('assets/images/venues/wicc/event-4.jpg');">
+    <section class="page-header" style="background-image: url('assets/images/venues/wicc/event-5.jpg');">
       <div class="container">
-        <h1>Venues</h1>
-        <p class="page-slogan">Discover Spaces That Bring Events to Life</p>
-        <p>Every successful event starts with the right venue. As part of Zusammen Tours and Travel Agency's MICE segment, we offer a carefully selected collection of conference centres, meeting rooms, exhibition venues, hotels and distinctive event spaces to suit a wide range of business events and occasions. Whether you're organising a corporate meeting, incentive trip, conference, exhibition or gala dinner, our venue listings make it easy to find the ideal setting. Discover spaces that inspire collaboration, create lasting impressions and provide the perfect backdrop for successful events across Namibia.</p>
+        <h1>Let's Plan Your Next Event.</h1>
       </div>
     </section>
 
-    <!-- TODO: add category/country filters once more venues are added -->
     <section class="section">
+      <div class="container contact-grid">
+
+        <div class="contact-col">
+          <h2>What we do, we deliver with perfection.</h2>
+          <p>Driven by passion, precision, and expertise, we manage every detail with excellence to ensure your event is flawlessly executed from concept to completion.</p>
+
+          <div class="contact-map">
+            <iframe
+              src="https://www.google.com/maps?q=Windhoek,Namibia&output=embed"
+              title="Map showing Windhoek, Namibia"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+        <div class="contact-col">
+          <h2>Get In Touch</h2>
+          <p class="contact-subheading">Make Today Count</p>
+          <p>Don't wait for the right moment. Reach out, reconnect, and take action today, because tomorrow is never guaranteed.</p>
+
+          <form class="contact-form" data-contact-form>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="first-name">First Name*</label>
+                <input type="text" id="first-name" name="first-name" required>
+              </div>
+              <div class="form-field">
+                <label for="last-name">Last Name*</label>
+                <input type="text" id="last-name" name="last-name" required>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="email">Email*</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-field">
+              <label for="phone">Phone*</label>
+              <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5"></textarea>
+            </div>
+
+            <!-- TODO: wire this form to a backend/email service (Zusammen Travels may
+                 already have a Node.js/Nodemailer setup on their main site worth reusing) -->
+            <button type="submit" class="btn btn-primary btn-large">Submit</button>
+          </form>
+          <p class="form-confirmation" data-form-confirmation hidden>Thanks, we'll be in touch.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section section-alt">
       <div class="container">
-        <div class="venues-grid">
+        <div class="info-cards">
 
-          <article class="venue-card">
-            <div class="venue-card-media">
-              <img src="assets/images/venues/movenpick/exterior-facade.jpg" alt="Exterior of Movenpick">
+          <div class="info-card">
+            <div class="info-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             </div>
-            <div class="venue-card-body">
-              <span class="venue-card-type">Hotel</span>
-              <h3>Movenpick</h3>
-              <div class="venue-card-country">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
-                <span>Namibia</span>
-              </div>
-              <a href="venue-movenpick.html" class="btn btn-outline">View Details</a>
-            </div>
-          </article>
+            <h3>Phone Number</h3>
+            <a href="tel:+264812455852">+264 81 245 5852</a>
+          </div>
 
-          <article class="venue-card">
-            <div class="venue-card-media">
-              <img src="assets/images/venues/wicc/event-3.jpg" alt="Event space at WICC">
+          <div class="info-card">
+            <div class="info-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg>
             </div>
-            <div class="venue-card-body">
-              <span class="venue-card-type">Convention Centre</span>
-              <h3>WICC</h3>
-              <div class="venue-card-country">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
-                <span>Namibia</span>
-              </div>
-              <a href="venue-wicc.html" class="btn btn-outline">View Details</a>
-            </div>
-          </article>
+            <h3>Email Address</h3>
+            <a href="mailto:corporate.events@zusammentravels.com">corporate.events@zusammentravels.com</a>
+          </div>
 
-          <article class="venue-card">
-            <div class="venue-card-media">
-              <img src="assets/images/venues/windhoek-country-club-resort-casino/exterior.jpg" alt="Exterior of Windhoek Country Club Resort & Casino">
+          <div class="info-card">
+            <div class="info-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
             </div>
-            <div class="venue-card-body">
-              <span class="venue-card-type">Resort</span>
-              <h3>Windhoek Country Club Resort &amp; Casino</h3>
-              <div class="venue-card-country">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
-                <span>Namibia</span>
-              </div>
-              <a href="venue-windhoek-country-club.html" class="btn btn-outline">View Details</a>
-            </div>
-          </article>
-
-          <article class="venue-card">
-            <div class="venue-card-media">
-              <img src="assets/images/venues/the-westin-cape-town/exterior.jpg" alt="Exterior of The Westin Cape Town">
-            </div>
-            <div class="venue-card-body">
-              <span class="venue-card-type">Hotel</span>
-              <h3>The Westin Cape Town</h3>
-              <div class="venue-card-country">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
-                <span>South Africa</span>
-              </div>
-              <a href="venue-westin-cape-town.html" class="btn btn-outline">View Details</a>
-            </div>
-          </article>
+            <h3>Main Address</h3>
+            <p>Windhoek, Namibia</p>
+            <span class="info-card-caption">We work remotely and provide support online. Our team is ready to assist you virtually.</span>
+          </div>
 
         </div>
       </div>
