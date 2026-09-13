@@ -224,48 +224,59 @@ h1, h2, h3, h4 {
 /* Hero */
 
 .hero {
-  background: var(--color-bg-alt);
+  position: relative;
+  background-size: cover;
+  background-position: center;
   padding: var(--space-6) 0;
   border-bottom: 1px solid var(--color-border);
+  color: #ffffff;
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: var(--space-5);
-  align-items: center;
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 33, 61, 0.6);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .hero h1 {
-  font-size: 2.5rem;
+  font-size: 2.75rem;
   letter-spacing: -0.01em;
+  color: #ffffff;
 }
 
 .hero p {
-  margin-top: var(--space-3);
-  font-size: 1.1rem;
-  color: var(--color-body);
-  max-width: 520px;
+  margin: var(--space-3) auto 0;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 560px;
 }
 
 .hero-actions {
   margin-top: var(--space-4);
   display: flex;
   gap: var(--space-2);
+  justify-content: center;
   flex-wrap: wrap;
 }
 
-.hero-media {
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--color-border);
+.hero .btn-outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
 }
 
-.hero-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.hero .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #ffffff;
+  color: #ffffff;
 }
 
 /* Intro / destinations */
@@ -665,27 +676,43 @@ h1, h2, h3, h4 {
 /* Page header (secondary pages) */
 
 .page-header {
-  background: var(--color-bg-alt);
+  position: relative;
+  background-size: cover;
+  background-position: center;
   border-bottom: 1px solid var(--color-border);
-  padding: var(--space-5) 0;
+  padding: var(--space-6) 0;
   text-align: center;
+  color: #ffffff;
+}
+
+.page-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 33, 61, 0.6);
+}
+
+.page-header .container {
+  position: relative;
+  z-index: 1;
 }
 
 .page-header h1 {
   font-size: 2.25rem;
+  color: #ffffff;
 }
 
 .page-header .page-slogan {
   margin-top: var(--space-1);
   font-size: 1.05rem;
   font-weight: 600;
-  color: var(--color-primary);
+  color: #cfdcff;
 }
 
 .page-header p {
   max-width: 760px;
   margin: var(--space-3) auto 0;
-  color: var(--color-body);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* Venues listing */
@@ -873,13 +900,8 @@ h1, h2, h3, h4 {
   }
 
   .about,
-  .hero-grid,
   .venue-detail {
     grid-template-columns: 1fr;
-  }
-
-  .hero-media {
-    order: -1;
   }
 
   .footer-columns {
