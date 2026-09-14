@@ -1450,11 +1450,134 @@ h1, h2, h3, h4 {
   font-weight: 600;
 }
 
+/* Pricing */
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  align-items: stretch;
+}
+
+.pricing-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing-card--featured {
+  border-color: var(--color-primary);
+  background: var(--color-primary-tint);
+  box-shadow: 0 8px 24px rgba(29, 78, 216, 0.12);
+}
+
+.pricing-card-name {
+  font-size: 1.1rem;
+  margin-bottom: var(--space-1);
+}
+
+.pricing-card-price {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.pricing-card-price span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+.pricing-card-desc {
+  margin: var(--space-2) 0 var(--space-3);
+  color: var(--color-body);
+  font-size: 0.9rem;
+}
+
+.pricing-card-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-3);
+  flex: 1;
+}
+
+.pricing-card-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--color-body);
+}
+
+.pricing-card-features svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--color-primary);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* Sponsors map */
+
+.sponsors-map {
+  padding: var(--space-3);
+}
+
+.sponsors-map svg {
+  width: 100%;
+  height: 100%;
+}
+
+.sponsors-map .continent {
+  fill: var(--color-border);
+}
+
+.sponsors-map .continent--africa {
+  fill: var(--color-primary);
+}
+
+.sponsors-map .marker-ring {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 2;
+  opacity: 0.5;
+}
+
+.sponsors-map .marker-dot {
+  fill: #ffffff;
+  stroke: var(--color-primary);
+  stroke-width: 2;
+}
+
+/* Gallery */
+
+.gallery-masonry {
+  column-count: 3;
+  column-gap: var(--space-3);
+}
+
+.gallery-masonry figure {
+  margin: 0 0 var(--space-3);
+  break-inside: avoid;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.gallery-masonry img {
+  width: 100%;
+  display: block;
+}
+
 /* Responsive */
 
 @media (max-width: 900px) {
   .services-grid,
-  .conference-grid {
+  .conference-grid,
+  .pricing-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -1471,6 +1594,10 @@ h1, h2, h3, h4 {
 
   .footer-columns {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery-masonry {
+    column-count: 2;
   }
 }
 
@@ -1509,7 +1636,8 @@ h1, h2, h3, h4 {
   .services-grid,
   .conference-grid,
   .venues-grid,
-  .form-row {
+  .form-row,
+  .pricing-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1519,6 +1647,10 @@ h1, h2, h3, h4 {
 
   .events-toolbar {
     align-items: stretch;
+  }
+
+  .gallery-masonry {
+    column-count: 1;
   }
 
   .newsletter {
