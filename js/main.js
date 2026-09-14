@@ -39,7 +39,48 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   initEventsArchive();
+  initBlogFilters();
 });
+
+function initBlogFilters() {
+  var cards = document.querySelectorAll("[data-blog-list] .blog-card");
+  var searchInput = document.querySelector("[data-blog-search]");
+  var categoryButtons = document.querySelectorAll("[data-blog-categories] .category-filter");
+  var emptyState = document.querySelector("[data-blog-empty]");
+  if (!cards.length) return;
+
+  var activeCategory = "all";
+
+  function applyFilters() {
+    var term = (searchInput ? searchInput.value : "").trim().toLowerCase();
+    var visibleCount = 0;
+
+    cards.forEach(function (card) {
+      var matchesCategory = activeCategory === "all" || card.dataset.category === activeCategory;
+      var matchesSearch = term === "" || card.dataset.search.indexOf(term) !== -1;
+      var visible = matchesCategory && matchesSearch;
+      card.hidden = !visible;
+      if (visible) visibleCount++;
+    });
+
+    if (emptyState) emptyState.hidden = visibleCount !== 0;
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("input", applyFilters);
+  }
+
+  categoryButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      categoryButtons.forEach(function (b) {
+        b.classList.remove("active");
+      });
+      btn.classList.add("active");
+      activeCategory = btn.dataset.category;
+      applyFilters();
+    });
+  });
+}
 
 // TODO: populate with real 2027 events (and content/images) once the client confirms them
 var EVENTS = [];
