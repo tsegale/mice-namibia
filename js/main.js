@@ -7,8 +7,13 @@ document.addEventListener("DOMContentLoaded", function () {
   if (navToggle && header) {
     navToggle.addEventListener("click", function () {
       header.classList.toggle("nav-open");
+      if (!header.classList.contains("nav-open")) {
+        closeNavDropdowns();
+      }
     });
   }
+
+  initNavDropdowns();
 
   // TODO: wire the newsletter forms to a real email service once one is chosen.
   var newsletterForms = document.querySelectorAll("[data-newsletter-form]");
@@ -41,6 +46,50 @@ document.addEventListener("DOMContentLoaded", function () {
   initEventsArchive();
   initBlogFilters();
 });
+
+var navDropdownItems = [];
+
+function closeNavDropdowns() {
+  navDropdownItems.forEach(function (item) {
+    item.classList.remove("open");
+    var toggle = item.querySelector(".nav-dropdown-toggle");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  });
+}
+
+function initNavDropdowns() {
+  navDropdownItems = Array.prototype.slice.call(document.querySelectorAll(".nav-item--dropdown"));
+
+  navDropdownItems.forEach(function (item) {
+    var toggle = item.querySelector(".nav-dropdown-toggle");
+    if (!toggle) return;
+
+    toggle.addEventListener("click", function () {
+      var isOpen = item.classList.contains("open");
+      closeNavDropdowns();
+      if (!isOpen) {
+        item.classList.add("open");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+    });
+
+    item.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" || event.key === "Esc") {
+        closeNavDropdowns();
+        toggle.focus();
+      }
+    });
+  });
+
+  document.addEventListener("click", function (event) {
+    var clickedInsideDropdown = navDropdownItems.some(function (item) {
+      return item.contains(event.target);
+    });
+    if (!clickedInsideDropdown) {
+      closeNavDropdowns();
+    }
+  });
+}
 
 function initBlogFilters() {
   var cards = document.querySelectorAll("[data-blog-list] .blog-card");
