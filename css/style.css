@@ -179,6 +179,27 @@ h1, h2, h3, h4 {
   color: var(--color-primary);
 }
 
+.nav-brand {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.nav-brand-mark {
+  display: block;
+}
+
+.nav-brand-tagline {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  max-width: 150px;
+  line-height: 1.3;
+}
+
 .nav-links {
   display: flex;
   align-items: center;
@@ -913,6 +934,8 @@ h1, h2, h3, h4 {
 
 .footer-logo {
   display: block;
+  width: 44px;
+  height: auto;
   border-radius: 8px;
   background: #ffffff;
   padding: 4px;
