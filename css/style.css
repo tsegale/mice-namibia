@@ -358,6 +358,27 @@ h1, h2, h3, h4 {
   margin-top: var(--space-5);
 }
 
+.service-card--photo {
+  padding: 0;
+  overflow: hidden;
+}
+
+.service-card-media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.service-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.service-card-body {
+  padding: var(--space-4);
+}
+
 /* About */
 
 .about {
@@ -691,13 +712,63 @@ h1, h2, h3, h4 {
 
 .trusted-logos {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: var(--space-5);
+  gap: var(--space-4) var(--space-5);
   min-height: 48px;
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
   padding: var(--space-3) 0;
+}
+
+.trusted-logos img {
+  max-height: 42px;
+  max-width: 130px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.65;
+  transition: filter 0.15s ease, opacity 0.15s ease;
+}
+
+.trusted-logos img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+.trusted-cta {
+  margin-top: var(--space-3);
+}
+
+.sponsor-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.sponsor-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 110px;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sponsor-tile:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 18px rgba(20, 33, 61, 0.06);
+}
+
+.sponsor-tile img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 /* Footer */
@@ -1409,6 +1480,23 @@ h1, h2, h3, h4 {
 .blog-card {
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
+  padding: 0;
+  overflow: hidden;
+}
+
+.blog-card-media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.blog-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.blog-card-body {
   padding: var(--space-3);
 }
 
@@ -1859,6 +1947,10 @@ h1, h2, h3, h4 {
   .gallery-masonry {
     column-count: 2;
   }
+
+  .sponsor-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 720px) {
@@ -1916,6 +2008,10 @@ h1, h2, h3, h4 {
 
   .gallery-masonry {
     column-count: 1;
+  }
+
+  .sponsor-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .newsletter {
