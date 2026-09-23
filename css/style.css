@@ -851,8 +851,12 @@ h1, h2, h3, h4 {
   animation: trusted-scroll 45s linear infinite;
 }
 
-.trusted-logos:hover .trusted-track {
-  animation-play-state: paused;
+/* Pause on hover for mouse users only; on touch screens :hover sticks after
+   a tap and would freeze the strip. */
+@media (hover: hover) {
+  .trusted-logos:hover .trusted-track {
+    animation-play-state: paused;
+  }
 }
 
 .trusted-track img {
