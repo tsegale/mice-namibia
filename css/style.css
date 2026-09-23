@@ -830,31 +830,83 @@ h1, h2, h3, h4 {
   margin-bottom: var(--space-4);
 }
 
+/* Infinite marquee. The track holds the logo set twice (second copy is
+   aria-hidden), so translating by -50% lands exactly on the start of the
+   duplicate and the loop is seamless. Spacing uses margin-right on every
+   logo rather than flex gap so both halves are identical in width. */
 .trusted-logos {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: var(--space-4) var(--space-5);
-  min-height: 48px;
+  --trusted-logo-height: 80px;
+  --trusted-logo-max-width: 220px;
+  --trusted-logo-spacing: var(--space-5);
+  overflow: hidden;
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
-  padding: var(--space-3) 0;
+  padding: var(--space-4) 0;
 }
 
-.trusted-logos img {
-  max-height: 42px;
-  max-width: 130px;
+.trusted-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: trusted-scroll 45s linear infinite;
+}
+
+.trusted-logos:hover .trusted-track {
+  animation-play-state: paused;
+}
+
+.trusted-track img {
+  flex: none;
+  height: var(--trusted-logo-height);
+  max-width: var(--trusted-logo-max-width);
   width: auto;
+  margin-right: var(--trusted-logo-spacing);
   object-fit: contain;
-  filter: grayscale(100%);
-  opacity: 0.65;
-  transition: filter 0.15s ease, opacity 0.15s ease;
 }
 
-.trusted-logos img:hover {
-  filter: grayscale(0%);
-  opacity: 1;
+@keyframes trusted-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 900px) {
+  .trusted-logos {
+    --trusted-logo-height: 64px;
+    --trusted-logo-max-width: 180px;
+    --trusted-logo-spacing: var(--space-4);
+  }
+}
+
+@media (max-width: 720px) {
+  .trusted-logos {
+    --trusted-logo-height: 52px;
+    --trusted-logo-max-width: 140px;
+    --trusted-logo-spacing: var(--space-3);
+  }
+
+  .trusted-track {
+    animation-duration: 35s;
+  }
+}
+
+/* Reduced motion: stop the loop, drop the duplicate set, and wrap the real
+   logos into a static centered grid. */
+@media (prefers-reduced-motion: reduce) {
+  .trusted-track {
+    animation: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: var(--space-3);
+  }
+
+  .trusted-track img[aria-hidden="true"] {
+    display: none;
+  }
 }
 
 .trusted-cta {
