@@ -283,6 +283,27 @@ h1, h2, h3, h4 {
   display: block;
 }
 
+/* Invisible bridge over the menu's top margin so the pointer can travel
+   from the toggle to the menu without losing :hover. */
+.nav-dropdown-menu::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: calc(var(--space-2) + 1px);
+}
+
+@media (hover: hover) and (min-width: 721px) {
+  .nav-item--dropdown:hover .nav-dropdown-menu {
+    display: block;
+  }
+
+  .nav-item--dropdown:hover .nav-dropdown-caret {
+    transform: rotate(180deg);
+  }
+}
+
 .nav-dropdown-menu a {
   display: block;
   padding: 0.55rem 0.75rem;
