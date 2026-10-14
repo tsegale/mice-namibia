@@ -3,150 +3,404 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy - MICE Namibia</title>
+  <title>Privacy Policy | MICE Namibia</title>
   <meta name="description" content="Privacy Policy for MICE Namibia.">
+  <link rel="preload" href="assets/fonts/fraunces-latin-soft-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="assets/images/zusammen-logo.png">
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
 
-  <header class="site-header">
-    <nav class="nav">
-      <a href="index.html" class="nav-brand">
-        <img src="assets/images/zusammen-logo.png" alt="Zusammen Tours and Travel Agency" class="nav-brand-mark" width="40" height="43">
-        <span class="nav-brand-tagline">Meetings, Incentives, Conferences, Exhibitions</span>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" class="brand-lockup">
+        <img src="assets/images/zusammen-logo.png" alt="Zusammen Tours and Travel Agency, home" width="41" height="44">
+        <span class="brand-lockup-tagline" aria-hidden="true"><span>Meetings, Incentives</span><span>Conferences, Exhibitions</span></span>
       </a>
 
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li class="nav-item nav-item--dropdown">
-          <button type="button" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-            Pages
-            <svg class="nav-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <ul class="nav-dropdown-menu">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="team.html">Meet our Team</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="sponsors.html">Sponsors</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
-          </ul>
-        </li>
-        <li><a href="events.html">Events</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="venues.html">Venues</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-      </ul>
+      <div class="nav-panel" id="site-menu">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li class="nav-item nav-item--dropdown">
+            <button type="button" class="nav-dropdown-toggle active" aria-haspopup="true" aria-expanded="false" aria-controls="pages-menu">
+              Pages
+              <svg class="nav-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <ul class="nav-dropdown-menu" id="pages-menu">
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="partners.html">Our Partners</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="pricing.html">Pricing</a></li>
+              <li><a href="privacy-policy.html" class="active" aria-current="page">Privacy Policy</a></li>
+              <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+            </ul>
+          </li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="venues.html">Venues</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+        <div class="nav-panel-extra">
+          <a href="contact.html?type=proposal#contact-form" class="btn btn-primary">Request a Proposal</a>
+          <a href="tel:+264812455852">+264 81 245 5852</a>
+          <a href="mailto:corporate.events@zusammentravels.com">corporate.events@zusammentravels.com</a>
+        </div>
+      </div>
 
       <div class="nav-actions">
-        <a href="contact.html" class="btn btn-primary">Request a Proposal</a>
-        <button class="nav-toggle" type="button" aria-label="Toggle navigation menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <a href="contact.html?type=proposal#contact-form" class="btn btn-primary">Request a Proposal</a>
+        <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open menu">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
         </button>
       </div>
     </nav>
   </header>
 
-  <main>
+  <main id="main" tabindex="-1">
 
-    <section class="page-header" style="background-image: url('assets/images/venues/the-westin-cape-town/spa.jpg');">
+    <section class="page-header">
+      <picture class="page-header-media">
+        <source type="image/webp" srcset="assets/images/venues/the-westin-cape-town/spa-640.webp 640w, assets/images/venues/the-westin-cape-town/spa-1280.webp 1280w" sizes="100vw">
+        <img src="assets/images/venues/the-westin-cape-town/spa-1280.jpg" srcset="assets/images/venues/the-westin-cape-town/spa-640.jpg 640w, assets/images/venues/the-westin-cape-town/spa-1280.jpg 1280w" sizes="100vw" alt="" width="1280" height="720" fetchpriority="high">
+      </picture>
       <div class="container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li aria-current="page">Privacy Policy</li></ol></nav>
+        <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Legal</p>
         <h1>Privacy Policy</h1>
       </div>
     </section>
 
     <section class="section">
-      <div class="container article-content">
+      <div class="container legal-layout">
+        <nav class="legal-toc" aria-labelledby="toc-title" data-toc>
+          <h2 id="toc-title">On this page</h2>
+          <ol>
+            <li><a href="#section-1">1. Information We Collect</a></li>
+            <li><a href="#section-2">2. How We Collect Information</a></li>
+            <li><a href="#section-3">3. How We Use Your Information</a></li>
+            <li><a href="#section-4">4. Sharing of Personal Information</a></li>
+            <li><a href="#section-5">5. International Transfers</a></li>
+            <li><a href="#section-6">6. Marketing Communications</a></li>
+            <li><a href="#section-7">7. Cookies and Website Technologies</a></li>
+            <li><a href="#section-8">8. Data Security</a></li>
+            <li><a href="#section-9">9. How Long We Keep Your Information</a></li>
+            <li><a href="#section-10">10. Your Privacy Rights</a></li>
+            <li><a href="#section-11">11. Third-Party Websites</a></li>
+            <li><a href="#section-12">12. Children's Privacy</a></li>
+            <li><a href="#section-13">13. Changes to This Privacy Policy</a></li>
+            <li><a href="#section-14">14. Contact Us</a></li>
+            <li><a href="#section-15">15. Governing Law</a></li>
+          </ol>
+        </nav>
 
-        <!-- TODO: replace with client-provided legal text -->
-        <div class="notice">
-          <strong>Full policy text pending.</strong> This page will be updated with Zusammen Travels' official Privacy Policy once it is provided by the client. The section below reflects the structure only, not final legal content.
+        <article class="legal-body">
+          <p class="effective-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>Effective Date: 01 January 2027</p>
+
+          <p><strong>Zusammen Tours and Travel Agency (MICE Department)</strong> ("we", "us" or "our") respects your privacy and is committed to protecting the personal information you provide when using our website and services.</p>
+
+          <p>This Privacy Policy explains how we collect, use, store and protect personal information when you visit our website, submit an enquiry, request a proposal, subscribe to our communications, or otherwise interact with us.</p>
+
+          <h2 id="section-1">1. Information We Collect</h2>
+
+          <p>We may collect personal information that you voluntarily provide to us, including:</p>
+
+          <ul>
+            <li>Full name</li>
+            <li>Company or organisation name</li>
+            <li>Job title or position</li>
+            <li>Email address</li>
+            <li>Telephone or mobile number</li>
+            <li>Country and city</li>
+            <li>Event or conference requirements</li>
+            <li>Preferred event dates</li>
+            <li>Number of delegates or participants</li>
+            <li>Accommodation requirements</li>
+            <li>Venue and meeting requirements</li>
+            <li>Travel and transportation requirements</li>
+            <li>Budget information</li>
+            <li>Any other information you choose to provide when contacting us</li>
+          </ul>
+
+          <p>We may also automatically collect limited technical information when you visit our website, such as your IP address, browser type, device type, pages visited and general website usage information.</p>
+
+          <h2 id="section-2">2. How We Collect Information</h2>
+
+          <p>We may collect information when you:</p>
+
+          <ul>
+            <li>Complete a contact or enquiry form;</li>
+            <li>Request a proposal or quotation;</li>
+            <li>Subscribe to our newsletter or updates;</li>
+            <li>Contact us by email or telephone;</li>
+            <li>Communicate with us regarding a meeting, incentive, conference or exhibition; or</li>
+            <li>Browse or interact with our website.</li>
+          </ul>
+
+          <h2 id="section-3">3. How We Use Your Information</h2>
+
+          <p>We may use your personal information to:</p>
+
+          <ul>
+            <li>Respond to enquiries and requests;</li>
+            <li>Prepare proposals and quotations;</li>
+            <li>Plan and coordinate meetings, incentives, conferences and exhibitions;</li>
+            <li>Arrange venues, accommodation, transportation, activities and related services;</li>
+            <li>Communicate with you regarding your event;</li>
+            <li>Provide customer support;</li>
+            <li>Send newsletters and relevant updates where you have subscribed;</li>
+            <li>Improve our website and services;</li>
+            <li>Maintain business records;</li>
+            <li>Prevent fraud, misuse or security incidents; and</li>
+            <li>Comply with applicable legal and regulatory requirements.</li>
+          </ul>
+
+          <p>We will not use your personal information for purposes that are incompatible with the purpose for which it was collected, except where permitted or required by law.</p>
+
+          <h2 id="section-4">4. Sharing of Personal Information</h2>
+
+          <p>To deliver our services, we may share relevant information with trusted service providers and business partners, including:</p>
+
+          <ul>
+            <li>Hotels and accommodation providers;</li>
+            <li>Conference and event venues;</li>
+            <li>Transportation and transfer providers;</li>
+            <li>Airlines and travel-service providers;</li>
+            <li>Tour operators and activity providers;</li>
+            <li>Event suppliers and contractors;</li>
+            <li>Technology and website service providers; and</li>
+            <li>Other suppliers involved in delivering your requested event or service.</li>
+          </ul>
+
+          <p>We will only share information that is reasonably necessary to provide the requested service.</p>
+
+          <p>We may also disclose personal information where required by law, court order, governmental authority or other lawful process.</p>
+
+          <h2 id="section-5">5. International Transfers</h2>
+
+          <p>Our services may involve international delegates, suppliers and service providers. As a result, personal information may sometimes be shared with service providers or business partners outside Namibia.</p>
+
+          <p>Where this occurs, we will take reasonable steps to ensure that personal information is handled appropriately and only for legitimate business purposes.</p>
+
+          <h2 id="section-6">6. Marketing Communications</h2>
+
+          <p>If you subscribe to our marketing communications, we may send you:</p>
+
+          <ul>
+            <li>Industry updates;</li>
+            <li>Destination information;</li>
+            <li>Conference and event information;</li>
+            <li>Incentive travel information;</li>
+            <li>Special offers;</li>
+            <li>New service announcements; and</li>
+            <li>Other information relevant to business travel and events.</li>
+          </ul>
+
+          <p>You may unsubscribe from marketing communications at any time by using the unsubscribe option provided in the communication or by contacting us directly.</p>
+
+          <h2 id="section-7">7. Cookies and Website Technologies</h2>
+
+          <p>Our website may use cookies or similar technologies to improve functionality, understand website traffic and enhance your browsing experience.</p>
+
+          <p>You can adjust your browser settings to refuse or delete cookies. Disabling certain cookies may, however, affect some website functionality.</p>
+
+          <p>Where third-party analytics or other services are used on our website, those providers may process information in accordance with their own privacy policies.</p>
+
+          <h2 id="section-8">8. Data Security</h2>
+
+          <p>We take reasonable technical and organisational measures to protect personal information against unauthorised access, loss, misuse, alteration or disclosure.</p>
+
+          <p>However, no internet transmission or electronic storage system can be guaranteed to be completely secure.</p>
+
+          <h2 id="section-9">9. How Long We Keep Your Information</h2>
+
+          <p>We retain personal information only for as long as reasonably necessary for the purposes for which it was collected, including providing services, maintaining business records, resolving disputes and complying with legal, accounting or regulatory requirements.</p>
+
+          <p>When information is no longer required, we will take reasonable steps to securely delete, destroy or anonymise it where appropriate.</p>
+
+          <h2 id="section-10">10. Your Privacy Rights</h2>
+
+          <p>Subject to applicable law, you may have the right to:</p>
+
+          <ul>
+            <li>Ask what personal information we hold about you;</li>
+            <li>Request correction of inaccurate or incomplete information;</li>
+            <li>Request deletion of information where there is no legitimate reason for us to retain it;</li>
+            <li>Withdraw consent where processing is based on consent;</li>
+            <li>Opt out of marketing communications; and</li>
+            <li>Raise a concern about how your personal information is being handled.</li>
+          </ul>
+
+          <p>Privacy-related requests can be submitted using the contact details below.</p>
+
+          <h2 id="section-11">11. Third-Party Websites</h2>
+
+          <p>Our website may contain links to third-party websites, including hotels, venues, tourism businesses, suppliers, social-media platforms and other service providers.</p>
+
+          <p>We are not responsible for the privacy practices, security or content of third-party websites. We encourage you to review their privacy policies before providing personal information.</p>
+
+          <h2 id="section-12">12. Children's Privacy</h2>
+
+          <p>Our website and services are primarily intended for businesses, organisations, event organisers and adult travellers.</p>
+
+          <p>We do not knowingly collect personal information from children for marketing purposes.</p>
+
+          <h2 id="section-13">13. Changes to This Privacy Policy</h2>
+
+          <p>We may update this Privacy Policy from time to time to reflect changes in our services, website functionality, legal requirements or privacy practices.</p>
+
+          <p>Any updated version will be published on this page together with a revised effective date.</p>
+
+          <h2 id="section-14">14. Contact Us</h2>
+
+          <p>If you have questions about this Privacy Policy or how your personal information is handled, please contact us:</p>
+
+          <p><strong>Zusammen Tours and Travel Agency (MICE Department)</strong></p>
+
+          <p><strong>Email:</strong> <a href="mailto:corporate.events@zusammentravels.com">corporate.events@zusammentravels.com</a><br>
+          <strong>Telephone:</strong> <a href="tel:+264812455852">+264 81 245 5852</a></p>
+
+          <h2 id="section-15">15. Governing Law</h2>
+
+          <p>This Privacy Policy shall be interpreted in accordance with the applicable laws of the Republic of Namibia.</p>
+
+          <aside class="legal-contact-card" aria-labelledby="legal-contact-title">
+            <div>
+              <h2 id="legal-contact-title">Questions about this policy? Contact us</h2>
+              <p>Email <a href="mailto:corporate.events@zusammentravels.com">corporate.events@zusammentravels.com</a> or call <a href="tel:+264812455852">+264 81 245 5852</a>.</p>
+            </div>
+            <a href="contact.html#contact-form" class="btn btn-primary">Contact Us</a>
+          </aside>
+        </article>
+      </div>
+    </section>
+
+    <!-- Let's Connect (shared on every page) -->
+    <section class="connect-band" aria-labelledby="connect-title">
+      <picture class="connect-band-media">
+        <source type="image/webp" srcset="assets/images/venues/wicc/event-2-640.webp 640w, assets/images/venues/wicc/event-2-1280.webp 1280w, assets/images/venues/wicc/event-2-1920.webp 1920w" sizes="100vw">
+        <img src="assets/images/venues/wicc/event-2-1280.jpg" srcset="assets/images/venues/wicc/event-2-640.jpg 640w, assets/images/venues/wicc/event-2-1280.jpg 1280w, assets/images/venues/wicc/event-2-1920.jpg 1920w" sizes="100vw" alt="" width="1920" height="1279" loading="lazy" decoding="async">
+      </picture>
+      <div class="container connect-band-inner" data-reveal>
+        <p class="eyebrow eyebrow--light"><span class="stripe" aria-hidden="true"></span>Let's Connect</p>
+        <h2 id="connect-title">Want to Know More? <em>Let's</em> Connect</h2>
+        <p>Tell us what you are planning and our team will help you shape it, from the first enquiry to the closing session.</p>
+        <div class="connect-band-actions">
+          <a href="contact.html#contact-form" class="btn btn-primary">Let's Connect</a>
+          <a href="tel:+264812455852" class="text-link text-link--light">Or call +264 81 245 5852 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></a>
         </div>
+      </div>
+    </section>
 
-        <div class="legal-section">
-          <h2>Personal Information</h2>
-          <p>Content pending - to be provided by the client.</p>
+    <!-- Newsletter (shared on every page) -->
+    <section class="newsletter-section" id="newsletter" aria-labelledby="newsletter-title">
+      <div class="container">
+        <div class="newsletter-panel" data-reveal>
+          <div class="newsletter-panel-media">
+            <picture>
+              <source type="image/webp" srcset="assets/images/venues/wicc/event-4-640.webp 640w, assets/images/venues/wicc/event-4-1280.webp 1280w, assets/images/venues/wicc/event-4-1920.webp 1920w" sizes="(max-width: 720px) 100vw, 400px">
+              <img src="assets/images/venues/wicc/event-4-1280.jpg" srcset="assets/images/venues/wicc/event-4-640.jpg 640w, assets/images/venues/wicc/event-4-1280.jpg 1280w, assets/images/venues/wicc/event-4-1920.jpg 1920w" sizes="(max-width: 720px) 100vw, 400px" alt="" width="1920" height="1280" loading="lazy" decoding="async">
+            </picture>
+          </div>
+          <div class="newsletter-panel-body">
+            <p class="eyebrow"><span class="stripe" aria-hidden="true"></span>Event alerts</p>
+            <h2 id="newsletter-title">Stay in the loop</h2>
+            <p>Get event alerts and industry updates straight to your inbox.</p>
+            <!-- TODO: wire this form up to a real email service; no backend yet -->
+            <form class="newsletter-form" data-newsletter-form>
+              <label class="visually-hidden" for="newsletter-email">Email address</label>
+              <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" autocomplete="email" required>
+              <button type="submit" class="btn btn-secondary">Subscribe</button>
+            </form>
+            <p class="newsletter-success" data-newsletter-success role="status" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><polyline points="7.5 12.5 10.5 15.5 16.5 9"/></svg> Thank you for subscribing. Event alerts are on their way to your inbox.</p>
+          </div>
         </div>
-
       </div>
     </section>
 
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <div class="footer-top">
-        <div>
-          <h3>Stay in the loop</h3>
-          <p>Get event alerts and industry updates straight to your inbox.</p>
+    <div class="container footer-main">
+      <div class="footer-brand">
+        <a href="index.html" class="brand-lockup brand-lockup--light">
+          <img src="assets/images/zusammen-logo.png" alt="Zusammen Tours and Travel Agency, home" width="41" height="44" loading="lazy">
+          <span class="brand-lockup-tagline" aria-hidden="true"><span>Meetings, Incentives</span><span>Conferences, Exhibitions</span></span>
+        </a>
+        <p>End-to-end meetings, incentives, conferences and exhibitions management across nine African destinations.</p>
+        <div class="footer-contact">
+          <a href="tel:+264812455852"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+264 81 245 5852</a>
+          <a href="mailto:corporate.events@zusammentravels.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg>corporate.events@zusammentravels.com</a>
         </div>
-        <!-- TODO: wire this form up to a real email service; no backend yet -->
-        <form class="footer-newsletter-form" data-newsletter-form>
-          <input type="email" placeholder="Enter your email" aria-label="Email address" required>
-          <button type="submit" class="btn btn-primary btn-small">Subscribe</button>
-        </form>
-      </div>
-
-      <div class="footer-columns">
-        <div class="footer-brand">
-          <div class="footer-logo-row">
-            <img src="assets/images/zusammen-logo.png" alt="Zusammen Tours and Travel Agency logo" class="footer-logo" width="44" height="47">
-            <a href="index.html" class="nav-logo">MICE <span>Namibia</span></a>
-          </div>
-          <p class="footer-tagline">Meetings, Incentives, Conferences, Exhibitions</p>
-          <p>End-to-end meetings, incentives, conferences and exhibitions management across nine African destinations.</p>
-          <div class="footer-contact">
-            <a href="tel:+264812455852">+264 81 245 5852</a>
-            <a href="mailto:corporate.events@zusammentravels.com">corporate.events@zusammentravels.com</a>
-          </div>
-          <div class="footer-social">
-            <a href="https://www.facebook.com/zusammentours" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 8h-2a2 2 0 0 0-2 2v2H9v3h2v7h3v-7h2.5l.5-3H14v-1.5c0-.83.17-1 1-1H16V8h-1z"/></svg></a>
-            <a href="https://www.instagram.com/zusammentours" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg></a>
-            <a href="https://www.youtube.com/@ZusammenTravels-i1j" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="12" rx="3"/><polygon points="10,9 16,12 10,15" fill="currentColor" stroke="none"/></svg></a>
-            <a href="https://x.com/TravelsZusammen" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg></a>
-            <a href="https://www.linkedin.com/company/zusammen-tours-and-travel-agency/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="9" width="4" height="12"/><circle cx="5" cy="5" r="1.5"/><path d="M11 21v-7a3 3 0 0 1 6 0v7"/><path d="M11 12v9"/></svg></a>
-            <a href="https://www.tripadvisor.co.za/Attraction_Review-g293821-d27952450-Reviews-Zusammen_Tours_and_Travel_Agency-Windhoek_Khomas_Region.html" target="_blank" rel="noopener" aria-label="TripAdvisor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="13" r="3.2"/><circle cx="16" cy="13" r="3.2"/><path d="M11.2 12c0.4-1 1.4-1.6 2.8-1.6s2.4 0.6 2.8 1.6"/><path d="M2 9.5C4 8 6.5 8 8.6 9.2"/><path d="M22 9.5C20 8 17.5 8 15.4 9.2"/></svg></a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>Information</h4>
-          <ul>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="team.html">Meet our Team</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>Company</h4>
-          <ul>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="sponsors.html">Sponsors</a></li>
-            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
-          </ul>
+        <div class="footer-social">
+            <a href="https://www.facebook.com/zusammentours" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path d="M15 8h-2a2 2 0 0 0-2 2v2H9v3h2v7h3v-7h2.5l.5-3H14v-1.5c0-.83.17-1 1-1H16V8h-1z"/></svg></a>
+            <a href="https://www.instagram.com/zusammentours" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://www.youtube.com/@ZusammenTravels-i1j" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="2.5" y="6" width="19" height="12" rx="3"/><polygon points="10,9 16,12 10,15" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://x.com/TravelsZusammen" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg></a>
+            <a href="https://www.linkedin.com/company/zusammen-tours-and-travel-agency/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="3" y="9" width="4" height="12"/><circle cx="5" cy="5" r="1.5"/><path d="M11 21v-7a3 3 0 0 1 6 0v7"/><path d="M11 12v9"/></svg></a>
+            <a href="https://www.tripadvisor.co.za/Attraction_Review-g293821-d27952450-Reviews-Zusammen_Tours_and_Travel_Agency-Windhoek_Khomas_Region.html" target="_blank" rel="noopener" aria-label="TripAdvisor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><circle cx="8" cy="13" r="3.2"/><circle cx="16" cy="13" r="3.2"/><path d="M11.2 12c0.4-1 1.4-1.6 2.8-1.6s2.4 0.6 2.8 1.6"/><path d="M2 9.5C4 8 6.5 8 8.6 9.2"/><path d="M22 9.5C20 8 17.5 8 15.4 9.2"/></svg></a>
         </div>
       </div>
+
+      <nav class="footer-col" aria-labelledby="footer-explore">
+        <h2 id="footer-explore">Explore</h2>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="venues.html">Venues</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-labelledby="footer-resources">
+        <h2 id="footer-resources">Resources</h2>
+        <ul>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="partners.html">Our Partners</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-labelledby="footer-legal">
+        <h2 id="footer-legal">Legal</h2>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="container footer-flags">
+      <p class="footer-flags-label">Nine destinations</p>
+      <ul>
+        <li><img src="assets/images/flags/na.svg" alt="" width="24" height="16" loading="lazy">Namibia</li>
+        <li><img src="assets/images/flags/bw.svg" alt="" width="24" height="16" loading="lazy">Botswana</li>
+        <li><img src="assets/images/flags/za.svg" alt="" width="24" height="16" loading="lazy">South Africa</li>
+        <li><img src="assets/images/flags/zm.svg" alt="" width="24" height="16" loading="lazy">Zambia</li>
+        <li><img src="assets/images/flags/zw.svg" alt="" width="24" height="16" loading="lazy">Zimbabwe</li>
+        <li><img src="assets/images/flags/ke.svg" alt="" width="24" height="16" loading="lazy">Kenya</li>
+        <li><img src="assets/images/flags/tz.svg" alt="" width="24" height="16" loading="lazy">Tanzania</li>
+        <li><img src="assets/images/flags/ug.svg" alt="" width="24" height="16" loading="lazy">Uganda</li>
+        <li><img src="assets/images/flags/rw.svg" alt="" width="24" height="16" loading="lazy">Rwanda</li>
+      </ul>
     </div>
 
     <div class="footer-bottom">
-      <span id="footer-year-copy">Copyright 2026 MICE Namibia. All Rights Reserved.</span>
+      <div class="container">
+        <p>Copyright <span data-current-year>2026</span> Zusammen Tours and Travel Agency (MICE Department). All rights reserved.</p>
+      </div>
     </div>
   </footer>
+
+  <button type="button" class="back-to-top" data-back-to-top aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="6 15 12 9 18 15"/></svg></button>
 
   <script src="js/main.js"></script>
 </body>

@@ -1,0 +1,12 @@
+{
+  "name": "mice-namibia-tools",
+  "private": true,
+  "type": "module",
+  "description": "Dev-only helpers. The site itself has no build step.",
+  "scripts": {
+    "images": "node optimise-images.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.0"
+  }
+}

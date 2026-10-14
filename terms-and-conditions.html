@@ -3,150 +3,570 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terms and Conditions - MICE Namibia</title>
+  <title>Terms and Conditions | MICE Namibia</title>
   <meta name="description" content="Terms and Conditions for MICE Namibia.">
+  <link rel="preload" href="assets/fonts/fraunces-latin-soft-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="assets/images/zusammen-logo.png">
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
 
-  <header class="site-header">
-    <nav class="nav">
-      <a href="index.html" class="nav-brand">
-        <img src="assets/images/zusammen-logo.png" alt="Zusammen Tours and Travel Agency" class="nav-brand-mark" width="40" height="43">
-        <span class="nav-brand-tagline">Meetings, Incentives, Conferences, Exhibitions</span>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" class="brand-lockup">
+        <img src="assets/images/zusammen-logo.png" alt="Zusammen Tours and Travel Agency, home" width="41" height="44">
+        <span class="brand-lockup-tagline" aria-hidden="true"><span>Meetings, Incentives</span><span>Conferences, Exhibitions</span></span>
       </a>
 
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li class="nav-item nav-item--dropdown">
-          <button type="button" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-            Pages
-            <svg class="nav-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <ul class="nav-dropdown-menu">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="team.html">Meet our Team</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="sponsors.html">Sponsors</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
-          </ul>
-        </li>
-        <li><a href="events.html">Events</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="venues.html">Venues</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-      </ul>
+      <div class="nav-panel" id="site-menu">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li class="nav-item nav-item--dropdown">
+            <button type="button" class="nav-dropdown-toggle active" aria-haspopup="true" aria-expanded="false" aria-controls="pages-menu">
+              Pages
+              <svg class="nav-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <ul class="nav-dropdown-menu" id="pages-menu">
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="partners.html">Our Partners</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="pricing.html">Pricing</a></li>
+              <li><a href="privacy-policy.html">Privacy Policy</a></li>
+              <li><a href="terms-and-conditions.html" class="active" aria-current="page">Terms and Conditions</a></li>
+            </ul>
+          </li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="venues.html">Venues</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+        <div class="nav-panel-extra">
+          <a href="contact.html?type=proposal#contact-form" class="btn btn-primary">Request a Proposal</a>
+          <a href="tel:+264812455852">+264 81 245 5852</a>
+          <a href="mailto:corporate.events@zusammentravels.com">corporate.events@zusammentravels.com</a>
+        </div>
+      </div>
 
       <div class="nav-actions">
-        <a href="contact.html" class="btn btn-primary">Request a Proposal</a>
-        <button class="nav-toggle" type="button" aria-label="Toggle navigation menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <a href="contact.html?type=proposal#contact-form" class="btn btn-primary">Request a Proposal</a>
+        <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open menu">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
         </button>
       </div>
     </nav>
   </header>
 
-  <main>
+  <main id="main" tabindex="-1">
 
-    <section class="page-header" style="background-image: url('assets/images/venues/movenpick/poolside.jpg');">
+    <section class="page-header">
+      <picture class="page-header-media">
+        <source type="image/webp" srcset="assets/images/venues/movenpick/poolside-640.webp 640w, assets/images/venues/movenpick/poolside-1280.webp 1280w" sizes="100vw">
+        <img src="assets/images/venues/movenpick/poolside-1280.jpg" srcset="assets/images/venues/movenpick/poolside-640.jpg 640w, assets/images/venues/movenpick/poolside-1280.jpg 1280w" sizes="100vw" alt="" width="1280" height="1920" fetchpriority="high">
+      </picture>
       <div class="container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li aria-current="page">Terms and Conditions</li></ol></nav>
+        <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Legal</p>
         <h1>Terms and Conditions</h1>
       </div>
     </section>
 
     <section class="section">
-      <div class="container article-content">
+      <div class="container legal-layout">
+        <nav class="legal-toc" aria-labelledby="toc-title" data-toc>
+          <h2 id="toc-title">On this page</h2>
+          <ol>
+            <li><a href="#section-1">1. About Our Services</a></li>
+            <li><a href="#section-2">2. Enquiries and Quotations</a></li>
+            <li><a href="#section-3">3. Booking Confirmation</a></li>
+            <li><a href="#section-4">4. Prices and Payments</a></li>
+            <li><a href="#section-5">5. Deposits and Non-Refundable Payments</a></li>
+            <li><a href="#section-6">6. Cancellations and Amendments</a></li>
+            <li><a href="#section-7">7. Changes to an Event</a></li>
+            <li><a href="#section-8">8. Supplier Services</a></li>
+            <li><a href="#section-9">9. Travel Documents and Requirements</a></li>
+            <li><a href="#section-10">10. Travel Insurance</a></li>
+            <li><a href="#section-11">11. Client Responsibilities</a></li>
+            <li><a href="#section-12">12. Delegate and Participant Information</a></li>
+            <li><a href="#section-13">13. Special Requirements</a></li>
+            <li><a href="#section-14">14. Events Outside Our Control</a></li>
+            <li><a href="#section-15">15. Limitation of Liability</a></li>
+            <li><a href="#section-16">16. Website Use</a></li>
+            <li><a href="#section-17">17. Website Content</a></li>
+            <li><a href="#section-18">18. Intellectual Property</a></li>
+            <li><a href="#section-19">19. Third-Party Links</a></li>
+            <li><a href="#section-20">20. Privacy</a></li>
+            <li><a href="#section-21">21. Complaints</a></li>
+            <li><a href="#section-22">22. Termination</a></li>
+            <li><a href="#section-23">23. Changes to These Terms</a></li>
+            <li><a href="#section-24">24. Governing Law</a></li>
+            <li><a href="#section-25">25. Contact Us</a></li>
+          </ol>
+        </nav>
 
-        <!-- TODO: replace with client-provided legal text -->
-        <div class="notice">
-          <strong>Full terms text pending.</strong> This page will be updated with Zusammen Travels' official Terms and Conditions once it is provided by the client. The section below reflects the structure only, not final legal content.
+        <article class="legal-body">
+          <p class="effective-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>Effective Date: 01 January 2027</p>
+
+          <p>These Terms and Conditions ("Terms") govern your use of the website and the services provided by <strong>Zusammen Tours and Travel Agency (MICE Department)</strong> ("we", "us", "our" or "Zusammen").</p>
+
+          <p>By accessing our website, submitting an enquiry, requesting a quotation or proposal, or booking or using our services, you acknowledge that you have read, understood and agreed to these Terms and Conditions.</p>
+
+          <h2 id="section-1">1. About Our Services</h2>
+
+          <p>Zusammen Tours and Travel Agency (MICE Department) provides services relating to meetings, incentives, conferences and exhibitions, as well as associated travel and event services.</p>
+
+          <p>Our services may include, but are not limited to:</p>
+
+          <ul>
+            <li>Conference and meeting planning;</li>
+            <li>Corporate events;</li>
+            <li>Incentive travel programmes;</li>
+            <li>Event and destination management;</li>
+            <li>Venue sourcing and coordination;</li>
+            <li>Accommodation arrangements;</li>
+            <li>Airport transfers and transportation;</li>
+            <li>Tours and excursions;</li>
+            <li>Delegate management;</li>
+            <li>Event logistics;</li>
+            <li>Team-building activities;</li>
+            <li>Registration and event support; and</li>
+            <li>Other travel and event-related services requested by the client.</li>
+          </ul>
+
+          <p>Specific services provided will depend on the client's requirements and will be confirmed in the relevant quotation, proposal, booking confirmation or service agreement.</p>
+
+          <h2 id="section-2">2. Enquiries and Quotations</h2>
+
+          <p>Submitting an enquiry through our website does not constitute a confirmed booking.</p>
+
+          <p>We may provide a quotation or proposal based on the information supplied by the client.</p>
+
+          <p>All quotations and proposals are subject to availability and may be subject to change until the booking has been confirmed in writing.</p>
+
+          <p>Unless otherwise stated in writing, prices quoted are not guaranteed until confirmation and payment requirements have been met.</p>
+
+          <h2 id="section-3">3. Booking Confirmation</h2>
+
+          <p>A booking is considered confirmed only when:</p>
+
+          <ol>
+            <li>The required services have been agreed upon;</li>
+            <li>The client has accepted the applicable quotation, proposal or agreement; and</li>
+            <li>Any required deposit or payment has been received.</li>
+          </ol>
+
+          <p>Zusammen reserves the right to decline or cancel a booking where required payments or documentation have not been received within the agreed period.</p>
+
+          <h2 id="section-4">4. Prices and Payments</h2>
+
+          <p>All prices will be provided in the applicable quotation or proposal.</p>
+
+          <p>Prices may be affected by changes in:</p>
+
+          <ul>
+            <li>Accommodation rates;</li>
+            <li>Venue charges;</li>
+            <li>Transportation costs;</li>
+            <li>Airline fares;</li>
+            <li>Supplier rates;</li>
+            <li>Exchange rates;</li>
+            <li>Government taxes or fees;</li>
+            <li>Fuel costs; and</li>
+            <li>Other supplier or operational charges.</li>
+          </ul>
+
+          <p>The applicable payment schedule, deposit requirements and final payment deadline will be stated in the quotation, proposal, invoice or service agreement.</p>
+
+          <p>The client is responsible for making payments by the agreed deadlines.</p>
+
+          <h2 id="section-5">5. Deposits and Non-Refundable Payments</h2>
+
+          <p>Certain suppliers, including hotels, venues, airlines, transport companies and activity providers, may require deposits or non-refundable payments.</p>
+
+          <p>Where such conditions apply, these will be communicated to the client where reasonably possible.</p>
+
+          <p>Payments made to secure services may be non-refundable where the relevant supplier's cancellation conditions apply.</p>
+
+          <h2 id="section-6">6. Cancellations and Amendments</h2>
+
+          <p>Cancellation and amendment conditions may vary depending on the services booked and the terms imposed by individual suppliers.</p>
+
+          <p>Clients should notify Zusammen as soon as possible of any requested cancellation or amendment.</p>
+
+          <p>Cancellation charges may include:</p>
+
+          <ul>
+            <li>Supplier cancellation fees;</li>
+            <li>Accommodation cancellation fees;</li>
+            <li>Venue cancellation fees;</li>
+            <li>Transportation cancellation fees;</li>
+            <li>Airline or ticketing charges;</li>
+            <li>Activity cancellation fees;</li>
+            <li>Administrative charges; and</li>
+            <li>Other costs incurred as a result of the cancellation or amendment.</li>
+          </ul>
+
+          <p>Any refund due to the client will be subject to the applicable supplier terms and amounts actually recoverable.</p>
+
+          <h2 id="section-7">7. Changes to an Event</h2>
+
+          <p>Clients may request changes to an event after confirmation.</p>
+
+          <p>Zusammen will make reasonable efforts to accommodate requested changes, subject to availability and additional costs.</p>
+
+          <p>Changes may result in additional charges, including supplier fees, administration costs, transportation costs or changes in accommodation and venue rates.</p>
+
+          <p>No changes are guaranteed until confirmed in writing.</p>
+
+          <h2 id="section-8">8. Supplier Services</h2>
+
+          <p>Zusammen may arrange services provided by independent third parties, including hotels, venues, airlines, transportation companies, restaurants, tour operators, activity providers and event suppliers.</p>
+
+          <p>These suppliers operate under their own terms and conditions.</p>
+
+          <p>While we take reasonable care when selecting and coordinating suppliers, we are not responsible for circumstances caused directly by a third-party supplier where such circumstances are outside our reasonable control.</p>
+
+          <p>Where appropriate, we will assist the client in communicating with the relevant supplier and resolving service-related concerns.</p>
+
+          <h2 id="section-9">9. Travel Documents and Requirements</h2>
+
+          <p>Clients and delegates are responsible for ensuring that they have the necessary travel documents and comply with applicable entry requirements.</p>
+
+          <p>Depending on the destination and circumstances, this may include:</p>
+
+          <ul>
+            <li>Valid passports;</li>
+            <li>Visas;</li>
+            <li>Travel permits;</li>
+            <li>Health or vaccination requirements;</li>
+            <li>Travel insurance;</li>
+            <li>Immigration requirements; and</li>
+            <li>Other documents required by relevant authorities.</li>
+          </ul>
+
+          <p>Zusammen may provide general travel information but does not guarantee that a client or delegate will meet the entry requirements of any country.</p>
+
+          <p>Clients should verify applicable requirements with the relevant authorities before travelling.</p>
+
+          <h2 id="section-10">10. Travel Insurance</h2>
+
+          <p>We strongly recommend that clients and delegates obtain appropriate travel insurance covering circumstances such as:</p>
+
+          <ul>
+            <li>Trip cancellation;</li>
+            <li>Medical expenses;</li>
+            <li>Emergency evacuation;</li>
+            <li>Lost or damaged baggage;</li>
+            <li>Travel delays;</li>
+            <li>Personal liability; and</li>
+            <li>Other relevant travel risks.</li>
+          </ul>
+
+          <p>Unless expressly agreed in writing, travel insurance is not included in our services.</p>
+
+          <h2 id="section-11">11. Client Responsibilities</h2>
+
+          <p>The client agrees to:</p>
+
+          <ul>
+            <li>Provide accurate and complete information;</li>
+            <li>Provide required documentation within the agreed timeframes;</li>
+            <li>Make payments when due;</li>
+            <li>Inform us of any relevant requirements or special arrangements;</li>
+            <li>Ensure that delegates comply with applicable event and supplier rules;</li>
+            <li>Ensure that delegate information supplied to us is accurate; and</li>
+            <li>Cooperate with reasonable requests necessary to deliver the services.</li>
+          </ul>
+
+          <p>Zusammen is not responsible for problems resulting from inaccurate, incomplete or late information supplied by the client.</p>
+
+          <h2 id="section-12">12. Delegate and Participant Information</h2>
+
+          <p>For group events, the client may be required to provide information relating to delegates or participants.</p>
+
+          <p>The client confirms that it has the necessary authority to provide such information to Zusammen for the purpose of delivering the requested services.</p>
+
+          <p>Personal information will be handled in accordance with our <strong><a href="privacy-policy.html">Privacy Policy</a></strong>.</p>
+
+          <h2 id="section-13">13. Special Requirements</h2>
+
+          <p>Clients should notify us as early as possible of any special requirements, including:</p>
+
+          <ul>
+            <li>Dietary requirements;</li>
+            <li>Accessibility requirements;</li>
+            <li>Medical or mobility considerations relevant to event arrangements;</li>
+            <li>Room requirements;</li>
+            <li>Transportation requirements; and</li>
+            <li>Other reasonable event-related requirements.</li>
+          </ul>
+
+          <p>We will make reasonable efforts to accommodate such requests, subject to supplier availability and applicable additional costs.</p>
+
+          <h2 id="section-14">14. Events Outside Our Control</h2>
+
+          <p>We will not be liable for failure or delay in providing services where such failure or delay results from circumstances beyond our reasonable control.</p>
+
+          <p>Such circumstances may include:</p>
+
+          <ul>
+            <li>Natural disasters;</li>
+            <li>Severe weather;</li>
+            <li>Pandemics or epidemics;</li>
+            <li>Government restrictions;</li>
+            <li>Political unrest;</li>
+            <li>Civil disturbances;</li>
+            <li>War or terrorism;</li>
+            <li>Strikes or industrial action;</li>
+            <li>Road closures;</li>
+            <li>Airline disruptions;</li>
+            <li>Supplier failures;</li>
+            <li>Power or telecommunications failures;</li>
+            <li>Changes in laws or regulations; or</li>
+            <li>Other unforeseen circumstances beyond our reasonable control.</li>
+          </ul>
+
+          <p>Where such circumstances occur, we will make reasonable efforts to assist the client with alternative arrangements where possible.</p>
+
+          <p>Additional costs arising from changes or alternative arrangements may be payable by the client.</p>
+
+          <h2 id="section-15">15. Limitation of Liability</h2>
+
+          <p>To the extent permitted by applicable law, Zusammen will not be liable for indirect, incidental or consequential losses arising from the provision or non-provision of services.</p>
+
+          <p>This may include loss of profits, loss of business, loss of opportunity or other consequential losses.</p>
+
+          <p>Nothing in these Terms is intended to exclude or limit liability where such exclusion or limitation is prohibited by applicable law.</p>
+
+          <h2 id="section-16">16. Website Use</h2>
+
+          <p>You may use our website for lawful purposes only.</p>
+
+          <p>You agree not to:</p>
+
+          <ul>
+            <li>Use the website for fraudulent or unlawful purposes;</li>
+            <li>Attempt to gain unauthorised access to the website or its systems;</li>
+            <li>Introduce malicious software or harmful code;</li>
+            <li>Copy or reproduce website content without permission;</li>
+            <li>Misuse enquiry or booking forms; or</li>
+            <li>Interfere with the operation or security of the website.</li>
+          </ul>
+
+          <p>We reserve the right to restrict or terminate access to the website where we reasonably believe these Terms have been breached.</p>
+
+          <h2 id="section-17">17. Website Content</h2>
+
+          <p>We make reasonable efforts to ensure that information published on our website is accurate and current.</p>
+
+          <p>However, information relating to destinations, venues, hotels, services, prices, schedules and suppliers may change without notice.</p>
+
+          <p>Website content is provided for general information and should not be considered a guarantee of availability, pricing or service delivery.</p>
+
+          <h2 id="section-18">18. Intellectual Property</h2>
+
+          <p>Unless otherwise stated, the content of our website, including text, logos, graphics, photographs, designs and other materials, is owned by or licensed to Zusammen Tours and Travel Agency (MICE Department).</p>
+
+          <p>You may not reproduce, modify, distribute, publish or commercially exploit our website content without our prior written permission.</p>
+
+          <h2 id="section-19">19. Third-Party Links</h2>
+
+          <p>Our website may contain links to third-party websites.</p>
+
+          <p>These links are provided for convenience and information.</p>
+
+          <p>Zusammen does not control or accept responsibility for the content, availability, security or privacy practices of third-party websites.</p>
+
+          <p>Users access third-party websites at their own risk.</p>
+
+          <h2 id="section-20">20. Privacy</h2>
+
+          <p>Your use of our website and provision of personal information is also governed by our <strong><a href="privacy-policy.html">Privacy Policy</a></strong>.</p>
+
+          <p>Our Privacy Policy explains how we collect, use, store and protect personal information.</p>
+
+          <h2 id="section-21">21. Complaints</h2>
+
+          <p>If you experience a problem with our services, please notify us as soon as reasonably possible.</p>
+
+          <p>We will make reasonable efforts to investigate the matter and work with the client and relevant suppliers to resolve legitimate complaints.</p>
+
+          <p>Complaints should preferably be submitted in writing and include sufficient details to allow us to investigate the matter.</p>
+
+          <h2 id="section-22">22. Termination</h2>
+
+          <p>We may terminate or suspend services where:</p>
+
+          <ul>
+            <li>The client fails to make required payments;</li>
+            <li>The client provides materially false or misleading information;</li>
+            <li>The client engages in unlawful or abusive conduct;</li>
+            <li>A supplier is unable to provide the required service; or</li>
+            <li>Circumstances outside our reasonable control make service delivery impossible.</li>
+          </ul>
+
+          <p>Any financial consequences of termination will be determined in accordance with the applicable booking, quotation, supplier and cancellation conditions.</p>
+
+          <h2 id="section-23">23. Changes to These Terms</h2>
+
+          <p>We reserve the right to update these Terms and Conditions from time to time.</p>
+
+          <p>Any revised Terms will be published on our website with an updated effective date.</p>
+
+          <p>The Terms applicable to a confirmed booking will generally be those communicated to and accepted by the client at the time of booking, unless otherwise required by law or agreed in writing.</p>
+
+          <h2 id="section-24">24. Governing Law</h2>
+
+          <p>These Terms and Conditions shall be governed by and interpreted in accordance with the applicable laws of the <strong>Republic of Namibia</strong>.</p>
+
+          <p>Any dispute arising from these Terms or our services shall, where appropriate, be subject to the jurisdiction of the competent courts of Namibia.</p>
+
+          <h2 id="section-25">25. Contact Us</h2>
+
+          <p>For questions regarding these Terms and Conditions, bookings or our services, please contact:</p>
+
+          <p><strong>Zusammen Tours and Travel Agency (MICE Department)</strong></p>
+
+          <p><strong>Email:</strong> <a href="mailto:corporate.events@zusammentravels.com">corporate.events@zusammentravels.com</a><br>
+          <strong>Telephone:</strong> <a href="tel:+264812455852">+264 81 245 5852</a></p>
+
+          <aside class="legal-contact-card" aria-labelledby="legal-contact-title">
+            <div>
+              <h2 id="legal-contact-title">Questions about these terms? Contact us</h2>
+              <p>Email <a href="mailto:corporate.events@zusammentravels.com">corporate.events@zusammentravels.com</a> or call <a href="tel:+264812455852">+264 81 245 5852</a>.</p>
+            </div>
+            <a href="contact.html#contact-form" class="btn btn-primary">Contact Us</a>
+          </aside>
+        </article>
+      </div>
+    </section>
+
+    <!-- Let's Connect (shared on every page) -->
+    <section class="connect-band" aria-labelledby="connect-title">
+      <picture class="connect-band-media">
+        <source type="image/webp" srcset="assets/images/venues/wicc/event-2-640.webp 640w, assets/images/venues/wicc/event-2-1280.webp 1280w, assets/images/venues/wicc/event-2-1920.webp 1920w" sizes="100vw">
+        <img src="assets/images/venues/wicc/event-2-1280.jpg" srcset="assets/images/venues/wicc/event-2-640.jpg 640w, assets/images/venues/wicc/event-2-1280.jpg 1280w, assets/images/venues/wicc/event-2-1920.jpg 1920w" sizes="100vw" alt="" width="1920" height="1279" loading="lazy" decoding="async">
+      </picture>
+      <div class="container connect-band-inner" data-reveal>
+        <p class="eyebrow eyebrow--light"><span class="stripe" aria-hidden="true"></span>Let's Connect</p>
+        <h2 id="connect-title">Want to Know More? <em>Let's</em> Connect</h2>
+        <p>Tell us what you are planning and our team will help you shape it, from the first enquiry to the closing session.</p>
+        <div class="connect-band-actions">
+          <a href="contact.html#contact-form" class="btn btn-primary">Let's Connect</a>
+          <a href="tel:+264812455852" class="text-link text-link--light">Or call +264 81 245 5852 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></a>
         </div>
+      </div>
+    </section>
 
-        <div class="legal-section">
-          <h2>Your Registration Obligations</h2>
-          <p>Content pending - to be provided by the client.</p>
+    <!-- Newsletter (shared on every page) -->
+    <section class="newsletter-section" id="newsletter" aria-labelledby="newsletter-title">
+      <div class="container">
+        <div class="newsletter-panel" data-reveal>
+          <div class="newsletter-panel-media">
+            <picture>
+              <source type="image/webp" srcset="assets/images/venues/wicc/event-4-640.webp 640w, assets/images/venues/wicc/event-4-1280.webp 1280w, assets/images/venues/wicc/event-4-1920.webp 1920w" sizes="(max-width: 720px) 100vw, 400px">
+              <img src="assets/images/venues/wicc/event-4-1280.jpg" srcset="assets/images/venues/wicc/event-4-640.jpg 640w, assets/images/venues/wicc/event-4-1280.jpg 1280w, assets/images/venues/wicc/event-4-1920.jpg 1920w" sizes="(max-width: 720px) 100vw, 400px" alt="" width="1920" height="1280" loading="lazy" decoding="async">
+            </picture>
+          </div>
+          <div class="newsletter-panel-body">
+            <p class="eyebrow"><span class="stripe" aria-hidden="true"></span>Event alerts</p>
+            <h2 id="newsletter-title">Stay in the loop</h2>
+            <p>Get event alerts and industry updates straight to your inbox.</p>
+            <!-- TODO: wire this form up to a real email service; no backend yet -->
+            <form class="newsletter-form" data-newsletter-form>
+              <label class="visually-hidden" for="newsletter-email">Email address</label>
+              <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" autocomplete="email" required>
+              <button type="submit" class="btn btn-secondary">Subscribe</button>
+            </form>
+            <p class="newsletter-success" data-newsletter-success role="status" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><polyline points="7.5 12.5 10.5 15.5 16.5 9"/></svg> Thank you for subscribing. Event alerts are on their way to your inbox.</p>
+          </div>
         </div>
-
       </div>
     </section>
 
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <div class="footer-top">
-        <div>
-          <h3>Stay in the loop</h3>
-          <p>Get event alerts and industry updates straight to your inbox.</p>
+    <div class="container footer-main">
+      <div class="footer-brand">
+        <a href="index.html" class="brand-lockup brand-lockup--light">
+          <img src="assets/images/zusammen-logo.png" alt="Zusammen Tours and Travel Agency, home" width="41" height="44" loading="lazy">
+          <span class="brand-lockup-tagline" aria-hidden="true"><span>Meetings, Incentives</span><span>Conferences, Exhibitions</span></span>
+        </a>
+        <p>End-to-end meetings, incentives, conferences and exhibitions management across nine African destinations.</p>
+        <div class="footer-contact">
+          <a href="tel:+264812455852"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+264 81 245 5852</a>
+          <a href="mailto:corporate.events@zusammentravels.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg>corporate.events@zusammentravels.com</a>
         </div>
-        <!-- TODO: wire this form up to a real email service; no backend yet -->
-        <form class="footer-newsletter-form" data-newsletter-form>
-          <input type="email" placeholder="Enter your email" aria-label="Email address" required>
-          <button type="submit" class="btn btn-primary btn-small">Subscribe</button>
-        </form>
-      </div>
-
-      <div class="footer-columns">
-        <div class="footer-brand">
-          <div class="footer-logo-row">
-            <img src="assets/images/zusammen-logo.png" alt="Zusammen Tours and Travel Agency logo" class="footer-logo" width="44" height="47">
-            <a href="index.html" class="nav-logo">MICE <span>Namibia</span></a>
-          </div>
-          <p class="footer-tagline">Meetings, Incentives, Conferences, Exhibitions</p>
-          <p>End-to-end meetings, incentives, conferences and exhibitions management across nine African destinations.</p>
-          <div class="footer-contact">
-            <a href="tel:+264812455852">+264 81 245 5852</a>
-            <a href="mailto:corporate.events@zusammentravels.com">corporate.events@zusammentravels.com</a>
-          </div>
-          <div class="footer-social">
-            <a href="https://www.facebook.com/zusammentours" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 8h-2a2 2 0 0 0-2 2v2H9v3h2v7h3v-7h2.5l.5-3H14v-1.5c0-.83.17-1 1-1H16V8h-1z"/></svg></a>
-            <a href="https://www.instagram.com/zusammentours" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg></a>
-            <a href="https://www.youtube.com/@ZusammenTravels-i1j" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="12" rx="3"/><polygon points="10,9 16,12 10,15" fill="currentColor" stroke="none"/></svg></a>
-            <a href="https://x.com/TravelsZusammen" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg></a>
-            <a href="https://www.linkedin.com/company/zusammen-tours-and-travel-agency/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="9" width="4" height="12"/><circle cx="5" cy="5" r="1.5"/><path d="M11 21v-7a3 3 0 0 1 6 0v7"/><path d="M11 12v9"/></svg></a>
-            <a href="https://www.tripadvisor.co.za/Attraction_Review-g293821-d27952450-Reviews-Zusammen_Tours_and_Travel_Agency-Windhoek_Khomas_Region.html" target="_blank" rel="noopener" aria-label="TripAdvisor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="13" r="3.2"/><circle cx="16" cy="13" r="3.2"/><path d="M11.2 12c0.4-1 1.4-1.6 2.8-1.6s2.4 0.6 2.8 1.6"/><path d="M2 9.5C4 8 6.5 8 8.6 9.2"/><path d="M22 9.5C20 8 17.5 8 15.4 9.2"/></svg></a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>Information</h4>
-          <ul>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="team.html">Meet our Team</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>Company</h4>
-          <ul>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="sponsors.html">Sponsors</a></li>
-            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
-          </ul>
+        <div class="footer-social">
+            <a href="https://www.facebook.com/zusammentours" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path d="M15 8h-2a2 2 0 0 0-2 2v2H9v3h2v7h3v-7h2.5l.5-3H14v-1.5c0-.83.17-1 1-1H16V8h-1z"/></svg></a>
+            <a href="https://www.instagram.com/zusammentours" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://www.youtube.com/@ZusammenTravels-i1j" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="2.5" y="6" width="19" height="12" rx="3"/><polygon points="10,9 16,12 10,15" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://x.com/TravelsZusammen" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg></a>
+            <a href="https://www.linkedin.com/company/zusammen-tours-and-travel-agency/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="3" y="9" width="4" height="12"/><circle cx="5" cy="5" r="1.5"/><path d="M11 21v-7a3 3 0 0 1 6 0v7"/><path d="M11 12v9"/></svg></a>
+            <a href="https://www.tripadvisor.co.za/Attraction_Review-g293821-d27952450-Reviews-Zusammen_Tours_and_Travel_Agency-Windhoek_Khomas_Region.html" target="_blank" rel="noopener" aria-label="TripAdvisor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><circle cx="8" cy="13" r="3.2"/><circle cx="16" cy="13" r="3.2"/><path d="M11.2 12c0.4-1 1.4-1.6 2.8-1.6s2.4 0.6 2.8 1.6"/><path d="M2 9.5C4 8 6.5 8 8.6 9.2"/><path d="M22 9.5C20 8 17.5 8 15.4 9.2"/></svg></a>
         </div>
       </div>
+
+      <nav class="footer-col" aria-labelledby="footer-explore">
+        <h2 id="footer-explore">Explore</h2>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="venues.html">Venues</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-labelledby="footer-resources">
+        <h2 id="footer-resources">Resources</h2>
+        <ul>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="partners.html">Our Partners</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-labelledby="footer-legal">
+        <h2 id="footer-legal">Legal</h2>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="container footer-flags">
+      <p class="footer-flags-label">Nine destinations</p>
+      <ul>
+        <li><img src="assets/images/flags/na.svg" alt="" width="24" height="16" loading="lazy">Namibia</li>
+        <li><img src="assets/images/flags/bw.svg" alt="" width="24" height="16" loading="lazy">Botswana</li>
+        <li><img src="assets/images/flags/za.svg" alt="" width="24" height="16" loading="lazy">South Africa</li>
+        <li><img src="assets/images/flags/zm.svg" alt="" width="24" height="16" loading="lazy">Zambia</li>
+        <li><img src="assets/images/flags/zw.svg" alt="" width="24" height="16" loading="lazy">Zimbabwe</li>
+        <li><img src="assets/images/flags/ke.svg" alt="" width="24" height="16" loading="lazy">Kenya</li>
+        <li><img src="assets/images/flags/tz.svg" alt="" width="24" height="16" loading="lazy">Tanzania</li>
+        <li><img src="assets/images/flags/ug.svg" alt="" width="24" height="16" loading="lazy">Uganda</li>
+        <li><img src="assets/images/flags/rw.svg" alt="" width="24" height="16" loading="lazy">Rwanda</li>
+      </ul>
     </div>
 
     <div class="footer-bottom">
-      <span id="footer-year-copy">Copyright 2026 MICE Namibia. All Rights Reserved.</span>
+      <div class="container">
+        <p>Copyright <span data-current-year>2026</span> Zusammen Tours and Travel Agency (MICE Department). All rights reserved.</p>
+      </div>
     </div>
   </footer>
+
+  <button type="button" class="back-to-top" data-back-to-top aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="6 15 12 9 18 15"/></svg></button>
 
   <script src="js/main.js"></script>
 </body>
