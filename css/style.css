@@ -1739,6 +1739,88 @@ h2 em.accent,
   padding: var(--space-4);
 }
 
+/* Homepage service cards: photo on top, icon badge overlapping the photo's
+   bottom edge, whole card clickable via the title link. */
+.service-card--home {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  border: 0;
+  box-shadow: var(--shadow-1);
+  transition: box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.service-card--home:hover,
+.service-card--home:focus-within {
+  border-color: transparent;
+  box-shadow: var(--shadow-2);
+  transform: translateY(-4px);
+}
+
+.service-card--home .service-card-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--mist-50);
+}
+
+.service-card--home .service-card-media picture,
+.service-card--home .service-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-card--home .service-card-media img {
+  transition: transform 0.6s var(--ease);
+}
+
+.service-card--home:hover .service-card-media img,
+.service-card--home:focus-within .service-card-media img {
+  transform: scale(1.04);
+}
+
+.service-card--home .service-icon {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 var(--space-3);
+  border-radius: 50%;
+  background: var(--orange-500);
+  box-shadow: 0 0 0 4px var(--white);
+}
+
+.service-card--home .service-icon svg {
+  stroke: var(--navy-900);
+}
+
+.service-card--home .service-card-body {
+  padding: var(--space-2) var(--space-3) var(--space-3);
+}
+
+.service-card--home h3 {
+  font-size: var(--step-1);
+}
+
+.service-card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.service-card-link:focus-visible {
+  outline: none;
+}
+
+.service-card--home:has(.service-card-link:focus-visible) {
+  outline: 3px solid var(--orange-700);
+  outline-offset: 3px;
+}
+
 /* About */
 
 .about {
