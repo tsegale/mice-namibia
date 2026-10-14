@@ -1345,7 +1345,7 @@ h2 em.accent,
 
 .footer-flags img {
   width: 24px;
-  height: 16px;
+  height: 18px;
   object-fit: cover;
   border-radius: 2px;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
@@ -2605,7 +2605,7 @@ h2 em.accent,
 
 .destination-chip img {
   width: 48px;
-  height: 32px;
+  height: 36px;
   flex-shrink: 0;
   object-fit: cover;
   border-radius: 3px;
