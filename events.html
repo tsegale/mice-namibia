@@ -77,51 +77,94 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section events-archive">
       <div class="container">
 
-        <div class="events-toolbar">
+        <form class="events-toolbar" role="search" data-events-search-form hidden>
           <div class="events-search">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="search" placeholder="Search for events" aria-label="Search for events" data-event-search>
-            <button type="button" class="btn btn-primary btn-small" data-event-search-btn>Find Events</button>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <label class="visually-hidden" for="event-search">Search for events by name, city or country</label>
+            <input type="search" id="event-search" placeholder="Search for events" autocomplete="off" data-event-search>
+            <button type="submit" class="btn btn-primary btn-small">Find Events</button>
           </div>
-
-          <div class="events-view-toggle" role="tablist">
-            <button type="button" class="events-view-btn active" data-view="list" role="tab" aria-selected="true">List</button>
-            <button type="button" class="events-view-btn" data-view="month" role="tab" aria-selected="false">Month</button>
-            <button type="button" class="events-view-btn" data-view="day" role="tab" aria-selected="false">Day</button>
+          <div class="events-view-toggle" role="tablist" aria-label="Events view">
+            <button type="button" role="tab" id="events-tab-list" class="events-view-btn active" aria-controls="events-panel" aria-selected="true" tabindex="0" data-view="list">List</button>
+            <button type="button" role="tab" id="events-tab-month" class="events-view-btn" aria-controls="events-panel" aria-selected="false" tabindex="-1" data-view="month">Month</button>
+            <button type="button" role="tab" id="events-tab-day" class="events-view-btn" aria-controls="events-panel" aria-selected="false" tabindex="-1" data-view="day">Day</button>
           </div>
-        </div>
+        </form>
 
-        <div class="events-nav">
-          <button type="button" class="events-nav-btn" aria-label="Previous period">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <div class="events-nav" data-events-nav hidden>
+          <button type="button" class="events-nav-btn" data-events-prev aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
-          <button type="button" class="events-nav-btn" aria-label="Next period">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <button type="button" class="events-nav-btn" data-events-next aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
-          <button type="button" class="btn btn-outline btn-small">Today</button>
-          <span class="events-range">
-            Now &ndash; Upcoming
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </span>
+          <button type="button" class="btn btn-outline btn-small" data-events-today>Today</button>
+          <h2 class="events-range" data-events-range aria-live="polite">Upcoming events</h2>
         </div>
 
-        <div id="events-view-list" class="events-panel">
-          <div class="events-list" data-events-list></div>
+        <div id="events-panel" class="events-panel" role="tabpanel" aria-labelledby="events-tab-list" data-events-panel>
+<!-- conferences:list:start -->
+        <div class="events-month">
+          <h2 class="events-month-pill"><span>January 2027</span></h2>
+          <article class="event-row">
+            <div class="event-row-date" aria-hidden="true"><span class="event-row-dow">FRI</span><span class="event-row-day">8</span></div>
+            <div class="event-row-body">
+              <p class="event-row-when"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg><time datetime="2027-01-08T08:30:00+02:00">January 8, 2027 @ 08:30 to 15:30</time></p>
+              <h3 class="event-row-title"><a href="event-edulearn-2027.html">International Conference on Education and New Learning Technologies (EDULEARN)</a></h3>
+              <p class="event-row-where"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg><img src="assets/images/flags/na.svg" alt="" width="24" height="18">Swakopmund, Namibia</p>
+              <p class="event-row-excerpt">An in-person gathering in Swakopmund where global participants share ideas and experience, and build research and business relations for future collaboration.</p>
+              <a href="event-edulearn-2027.html" class="text-link">Read More<span class="visually-hidden">: EDULEARN 2027</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></a>
+            </div>
+            <a href="event-edulearn-2027.html" class="event-row-media" tabindex="-1" aria-hidden="true">
+              <picture>
+                <source type="image/webp" srcset="assets/images/conferences/edulearn-2027/cover-640.webp 640w, assets/images/conferences/edulearn-2027/cover-1280.webp 1280w, assets/images/conferences/edulearn-2027/cover-1920.webp 1920w" sizes="(max-width: 900px) 100vw, 360px">
+                <img src="assets/images/conferences/edulearn-2027/cover-1280.jpg" srcset="assets/images/conferences/edulearn-2027/cover-640.jpg 640w, assets/images/conferences/edulearn-2027/cover-1280.jpg 1280w, assets/images/conferences/edulearn-2027/cover-1920.jpg 1920w" sizes="(max-width: 900px) 100vw, 360px" alt="" width="1920" height="1280" loading="lazy" decoding="async">
+              </picture>
+            </a>
+          </article>
+          <article class="event-row">
+            <div class="event-row-date" aria-hidden="true"><span class="event-row-dow">FRI</span><span class="event-row-day">8</span></div>
+            <div class="event-row-body">
+              <p class="event-row-when"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg><time datetime="2027-01-08T08:30:00+02:00">January 8, 2027 @ 08:30 to 15:15</time></p>
+              <h3 class="event-row-title"><a href="event-icsdeg-2027.html">International Conference on Sustainable Development and Economic Growth (ICSDEG)</a></h3>
+              <p class="event-row-where"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg><img src="assets/images/flags/na.svg" alt="" width="24" height="18">Swakopmund, Namibia</p>
+              <p class="event-row-excerpt">A platform in Swakopmund for professionals in sustainable development and economic growth to exchange knowledge on current technology, techniques and solutions.</p>
+              <a href="event-icsdeg-2027.html" class="text-link">Read More<span class="visually-hidden">: ICSDEG 2027</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></a>
+            </div>
+            <a href="event-icsdeg-2027.html" class="event-row-media" tabindex="-1" aria-hidden="true">
+              <picture>
+                <source type="image/webp" srcset="assets/images/conferences/icsdeg-2027/cover-640.webp 640w, assets/images/conferences/icsdeg-2027/cover-1280.webp 1280w, assets/images/conferences/icsdeg-2027/cover-1920.webp 1920w" sizes="(max-width: 900px) 100vw, 360px">
+                <img src="assets/images/conferences/icsdeg-2027/cover-1280.jpg" srcset="assets/images/conferences/icsdeg-2027/cover-640.jpg 640w, assets/images/conferences/icsdeg-2027/cover-1280.jpg 1280w, assets/images/conferences/icsdeg-2027/cover-1920.jpg 1920w" sizes="(max-width: 900px) 100vw, 360px" alt="" width="1920" height="1280" loading="lazy" decoding="async">
+              </picture>
+            </a>
+          </article>
+          <article class="event-row">
+            <div class="event-row-date" aria-hidden="true"><span class="event-row-dow">SUN</span><span class="event-row-day">10</span></div>
+            <div class="event-row-body">
+              <p class="event-row-when"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg><time datetime="2027-01-10T08:30:00+03:00">January 10, 2027 @ 08:30 to 15:15</time></p>
+              <h3 class="event-row-title"><a href="event-iccrsgt-2027.html">International Conference on Climate Resilience, Sustainability &amp; Green Technologies (ICCRSGT)</a></h3>
+              <p class="event-row-where"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg><img src="assets/images/flags/ke.svg" alt="" width="24" height="18">Nairobi, Kenya</p>
+              <p class="event-row-excerpt">Researchers, practitioners and educators meet in Nairobi to present and discuss the latest innovations and solutions in climate resilience, sustainability and green technologies.</p>
+              <a href="event-iccrsgt-2027.html" class="text-link">Read More<span class="visually-hidden">: ICCRSGT 2027</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></a>
+            </div>
+            <a href="event-iccrsgt-2027.html" class="event-row-media" tabindex="-1" aria-hidden="true">
+              <picture>
+                <source type="image/webp" srcset="assets/images/conferences/iccrsgt-2027/cover-640.webp 640w, assets/images/conferences/iccrsgt-2027/cover-1280.webp 1280w, assets/images/conferences/iccrsgt-2027/cover-1920.webp 1920w" sizes="(max-width: 900px) 100vw, 360px">
+                <img src="assets/images/conferences/iccrsgt-2027/cover-1280.jpg" srcset="assets/images/conferences/iccrsgt-2027/cover-640.jpg 640w, assets/images/conferences/iccrsgt-2027/cover-1280.jpg 1280w, assets/images/conferences/iccrsgt-2027/cover-1920.jpg 1920w" sizes="(max-width: 900px) 100vw, 360px" alt="" width="1920" height="1280" loading="lazy" decoding="async">
+              </picture>
+            </a>
+          </article>
         </div>
-
-        <!-- TODO: implement Month/Day calendar views once real event data arrives -->
-        <div id="events-view-month" class="events-panel" hidden>
-          <p class="events-empty">Month view is coming soon.</p>
-        </div>
-
-        <div id="events-view-day" class="events-panel" hidden>
-          <p class="events-empty">Day view is coming soon.</p>
+<!-- conferences:list:end -->
         </div>
 
       </div>
+<!-- conferences:data:start -->
+  <script type="application/json" id="conference-data">[{"slug":"edulearn-2027","title":"International Conference on Education and New Learning Technologies (EDULEARN)","short_title":"EDULEARN 2027","starts_at":"2027-01-08T08:30:00+02:00","ends_at":"2027-01-08T15:30:00+02:00","timezone":"Africa/Windhoek","city":"Swakopmund","country":"Namibia","country_iso2":"na","excerpt":"An in-person gathering in Swakopmund where global participants share ideas and experience, and build research and business relations for future collaboration.","url":"event-edulearn-2027.html","cover":{"src":"assets/images/conferences/edulearn-2027/cover-1280.jpg","srcset":"assets/images/conferences/edulearn-2027/cover-640.jpg 640w, assets/images/conferences/edulearn-2027/cover-1280.jpg 1280w, assets/images/conferences/edulearn-2027/cover-1920.jpg 1920w","webp":"assets/images/conferences/edulearn-2027/cover-640.webp 640w, assets/images/conferences/edulearn-2027/cover-1280.webp 1280w, assets/images/conferences/edulearn-2027/cover-1920.webp 1920w","width":1920,"height":1280}},{"slug":"icsdeg-2027","title":"International Conference on Sustainable Development and Economic Growth (ICSDEG)","short_title":"ICSDEG 2027","starts_at":"2027-01-08T08:30:00+02:00","ends_at":"2027-01-08T15:15:00+02:00","timezone":"Africa/Windhoek","city":"Swakopmund","country":"Namibia","country_iso2":"na","excerpt":"A platform in Swakopmund for professionals in sustainable development and economic growth to exchange knowledge on current technology, techniques and solutions.","url":"event-icsdeg-2027.html","cover":{"src":"assets/images/conferences/icsdeg-2027/cover-1280.jpg","srcset":"assets/images/conferences/icsdeg-2027/cover-640.jpg 640w, assets/images/conferences/icsdeg-2027/cover-1280.jpg 1280w, assets/images/conferences/icsdeg-2027/cover-1920.jpg 1920w","webp":"assets/images/conferences/icsdeg-2027/cover-640.webp 640w, assets/images/conferences/icsdeg-2027/cover-1280.webp 1280w, assets/images/conferences/icsdeg-2027/cover-1920.webp 1920w","width":1920,"height":1280}},{"slug":"iccrsgt-2027","title":"International Conference on Climate Resilience, Sustainability & Green Technologies (ICCRSGT)","short_title":"ICCRSGT 2027","starts_at":"2027-01-10T08:30:00+03:00","ends_at":"2027-01-10T15:15:00+03:00","timezone":"Africa/Nairobi","city":"Nairobi","country":"Kenya","country_iso2":"ke","excerpt":"Researchers, practitioners and educators meet in Nairobi to present and discuss the latest innovations and solutions in climate resilience, sustainability and green technologies.","url":"event-iccrsgt-2027.html","cover":{"src":"assets/images/conferences/iccrsgt-2027/cover-1280.jpg","srcset":"assets/images/conferences/iccrsgt-2027/cover-640.jpg 640w, assets/images/conferences/iccrsgt-2027/cover-1280.jpg 1280w, assets/images/conferences/iccrsgt-2027/cover-1920.jpg 1920w","webp":"assets/images/conferences/iccrsgt-2027/cover-640.webp 640w, assets/images/conferences/iccrsgt-2027/cover-1280.webp 1280w, assets/images/conferences/iccrsgt-2027/cover-1920.webp 1920w","width":1920,"height":1280}}]</script>
+<!-- conferences:data:end -->
     </section>
 
     <!-- Let's Connect (shared on every page) -->

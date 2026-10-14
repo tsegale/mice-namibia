@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Zusammen Tours and Travel Agency//MICE Events//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:iccrsgt-2027@zusammentravels.com
+DTSTAMP:20270110T053000Z
+DTSTART:20270110T053000Z
+DTEND:20270110T121500Z
+SUMMARY:International Conference on Climate Resilience\, Sustainability & G
+ reen Technologies (ICCRSGT)
+LOCATION:Nairobi\, Kenya
+DESCRIPTION:Researchers\, practitioners and educators meet in Nairobi to pr
+ esent and discuss the latest innovations and solutions in climate resilien
+ ce\, sustainability and green technologies.\n\nOrganised by Academicsworld
+ .\nhttps://tsegale.github.io/mice-namibia/event-iccrsgt-2027.html
+URL:https://tsegale.github.io/mice-namibia/event-iccrsgt-2027.html
+END:VEVENT
+END:VCALENDAR

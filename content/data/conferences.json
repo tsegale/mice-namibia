@@ -1,0 +1,116 @@
+{
+  "site_url": "https://tsegale.github.io/mice-namibia/",
+  "conferences": [
+    {
+      "slug": "edulearn-2027",
+      "title": "International Conference on Education and New Learning Technologies (EDULEARN)",
+      "short_title": "EDULEARN 2027",
+      "starts_at": "2027-01-08T08:30:00+02:00",
+      "ends_at": "2027-01-08T15:30:00+02:00",
+      "timezone": "Africa/Windhoek",
+      "city": "Swakopmund",
+      "country": "Namibia",
+      "country_iso2": "na",
+      "organiser": "World Research Society",
+      "excerpt": "An in-person gathering in Swakopmund where global participants share ideas and experience, and build research and business relations for future collaboration.",
+      "body": [
+        "International Conference on Education and New Learning Technologies (EDULEARN), on 8th Jan 2027 at Swakopmund, Namibia. The key intention of EDULEARN is to provide opportunity for the global participants to share their ideas and experience in person with their peers expected to join from different parts on the world. In addition this gathering will help the delegates to establish research or business relations as well as to find international linkage for future collaborations in their career path. We hope that EDULEARN outcome will lead to significant contributions to the knowledge base in these up-to-date scientific fields in scope. This event will be organized by World Research Society at the city of Swakopmund, Namibia."
+      ],
+      "pull_quote": "With delegates expected from different parts of the world, EDULEARN 2027 is an exciting opportunity to share ideas, exchange experiences, establish research and business connections, and create international partnerships for future collaboration.",
+      "cover": {
+        "src": "assets/images/conferences/edulearn-2027/cover.jpg",
+        "alt": "Conference room set in classroom style with rows of tables and chairs facing a stage"
+      },
+      "gallery": [
+        {
+          "src": "assets/images/conferences/edulearn-2027/gallery-1.jpg",
+          "alt": "Boardroom with leather chairs and a projection screen at a Swakopmund conference centre"
+        },
+        {
+          "src": "assets/images/conferences/edulearn-2027/gallery-2.jpg",
+          "alt": "Red dunes of the Namib Desert under a blue sky"
+        },
+        {
+          "src": "assets/images/conferences/edulearn-2027/gallery-3.jpg",
+          "alt": "Historic Swakopmund hotel building with palm trees and a pool at dusk"
+        }
+      ],
+      "images_are_stand_ins": true,
+      "status": "upcoming"
+    },
+    {
+      "slug": "icsdeg-2027",
+      "title": "International Conference on Sustainable Development and Economic Growth (ICSDEG)",
+      "short_title": "ICSDEG 2027",
+      "starts_at": "2027-01-08T08:30:00+02:00",
+      "ends_at": "2027-01-08T15:15:00+02:00",
+      "timezone": "Africa/Windhoek",
+      "city": "Swakopmund",
+      "country": "Namibia",
+      "country_iso2": "na",
+      "organiser": "World Research Society",
+      "excerpt": "A platform in Swakopmund for professionals in sustainable development and economic growth to exchange knowledge on current technology, techniques and solutions.",
+      "body": [
+        "International Conference on Sustainable Development and Economic Growth (ICSDEG), on 8th Jan 2027 at Swakopmund, Namibia. The conference provides a platform for professionals involved in Sustainable Development and Economic Growth to exchange knowledge and gain an insight into the state of the art in the current technology, techniques and solutions in Sustainable Development and Economic Growth as they have been developed and applied in different countries. Participants include a wide variety of stakeholders from research and academia, to industrial sectors as well as government organizations. This event will be organized by World Research Society at the city of Swakopmund, Namibia."
+      ],
+      "pull_quote": "ICSDEG provides an excellent platform to exchange knowledge, share innovative ideas, explore new technologies and solutions, and build valuable professional connections in the fields of sustainable development and economic growth.",
+      "cover": {
+        "src": "assets/images/conferences/icsdeg-2027/cover.jpg",
+        "alt": "Delegates seated in a conference audience"
+      },
+      "gallery": [
+        {
+          "src": "assets/images/conferences/icsdeg-2027/gallery-1.jpg",
+          "alt": "Candlelit gala dinner table with wine and flowers"
+        },
+        {
+          "src": "assets/images/conferences/icsdeg-2027/gallery-2.jpg",
+          "alt": "Meeting room set with white-draped chairs and tables"
+        },
+        {
+          "src": "assets/images/conferences/icsdeg-2027/gallery-3.jpg",
+          "alt": "Large conference hall set in classroom style with red chairs and two screens"
+        }
+      ],
+      "images_are_stand_ins": true,
+      "status": "upcoming"
+    },
+    {
+      "slug": "iccrsgt-2027",
+      "title": "International Conference on Climate Resilience, Sustainability & Green Technologies (ICCRSGT)",
+      "short_title": "ICCRSGT 2027",
+      "starts_at": "2027-01-10T08:30:00+03:00",
+      "ends_at": "2027-01-10T15:15:00+03:00",
+      "timezone": "Africa/Nairobi",
+      "city": "Nairobi",
+      "country": "Kenya",
+      "country_iso2": "ke",
+      "organiser": "Academicsworld",
+      "excerpt": "Researchers, practitioners and educators meet in Nairobi to present and discuss the latest innovations and solutions in climate resilience, sustainability and green technologies.",
+      "body": [
+        "International Conference on Climate Resilience, Sustainability & Green Technologies (ICCRSGT), on 10th Jan 2027 at Nairobi, Kenya. The Academics World International Conference on Climate Resilience, Sustainability & Green Technologies ICCRSGT aims to bring together leading academic scientists, researchers and research scholars to exchange and share their experiences and research results about all aspects of Development in Science and Technology. It also provides the premier interdisciplinary forum for researchers, practitioners and educators to present and discuss the most recent innovations, trends, and concerns, practical challenges encountered and the solutions adopted in the fields of Climate Resilience, Sustainability & Green Technologies. This event will be organized by Academicsworld at the city of Nairobi, Kenya."
+      ],
+      "pull_quote": "This important international gathering brings together academics, scientists, researchers, practitioners, and educators from around the world to exchange knowledge, share research, explore emerging technologies, and discuss practical solutions for a more sustainable and climate-resilient future.",
+      "cover": {
+        "src": "assets/images/conferences/iccrsgt-2027/cover.jpg",
+        "alt": "Ballroom set with round banquet tables and white chairs"
+      },
+      "gallery": [
+        {
+          "src": "assets/images/conferences/iccrsgt-2027/gallery-1.jpg",
+          "alt": "Training room set in classroom style with black chairs"
+        },
+        {
+          "src": "assets/images/conferences/iccrsgt-2027/gallery-2.jpg",
+          "alt": "Boardroom with a long table and executive chairs"
+        },
+        {
+          "src": "assets/images/conferences/iccrsgt-2027/gallery-3.jpg",
+          "alt": "Meeting room set in a U-shape with black chairs"
+        }
+      ],
+      "images_are_stand_ins": true,
+      "status": "upcoming"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Zusammen Tours and Travel Agency//MICE Events//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:icsdeg-2027@zusammentravels.com
+DTSTAMP:20270108T063000Z
+DTSTART:20270108T063000Z
+DTEND:20270108T131500Z
+SUMMARY:International Conference on Sustainable Development and Economic Gr
+ owth (ICSDEG)
+LOCATION:Swakopmund\, Namibia
+DESCRIPTION:A platform in Swakopmund for professionals in sustainable devel
+ opment and economic growth to exchange knowledge on current technology\, t
+ echniques and solutions.\n\nOrganised by World Research Society.\nhttps://
+ tsegale.github.io/mice-namibia/event-icsdeg-2027.html
+URL:https://tsegale.github.io/mice-namibia/event-icsdeg-2027.html
+END:VEVENT
+END:VCALENDAR
