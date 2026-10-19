@@ -339,20 +339,31 @@ ${others.map(moreCard).join("\n")}
 
 /* Homepage cards ---------------------------------------------------------------------------- */
 
+// Horizontal card on the homepage's navy band (client's reference layout).
 function homeCard(c) {
-  return `          <article class="conference-card conference-card--event">
-            <a href="${c.url}" class="conference-card-media conference-card-media--photo" tabindex="-1" aria-hidden="true">
-${picture(c.coverSet, { sizes: "(max-width: 720px) 100vw, (max-width: 900px) 50vw, 380px", indent: "              " })}
+  return `          <article class="conference-row">
+            <a href="${c.url}" class="conference-row-media" tabindex="-1" aria-hidden="true">
+${picture(c.coverSet, { sizes: "(max-width: 720px) 100vw, 320px", indent: "              " })}
               <span class="date-badge"><span>${dayNum(c)}</span>${fmtUS(c.starts_at, c.timezone, { month: "short" })}</span>
             </a>
-            <div class="conference-card-body">
-              <p class="conference-mini-when">${ICON.clock}${timeRange(c)}</p>
+            <div class="conference-row-body">
+              <p class="conference-row-when">${ICON.clock}<span>${timeRange(c)}</span><span class="conference-row-date">${weekdayLong(c)}, ${dateLong(c)}</span></p>
               <h3><a href="${c.url}">${esc(c.title)}</a></h3>
-              <p class="conference-mini-where">${ICON.pin}${flag(c)}${place(c)}</p>
-              <a href="${c.url}" class="text-link">Read More<span class="visually-hidden">: ${esc(c.short_title)}</span> ${ICON.arrow}</a>
+              <p class="conference-row-excerpt">${esc(c.excerpt)}</p>
+              <p class="conference-row-where">${ICON.pin}${flag(c)}${place(c)}</p>
+            </div>
+            <div class="conference-row-action">
+              <a href="${c.url}" class="btn btn-primary">Read More<span class="visually-hidden">: ${esc(c.short_title)}</span></a>
             </div>
           </article>`;
 }
+
+// Shown on the homepage when nothing is upcoming.
+const HOME_EMPTY = `          <div class="conference-empty">
+            <p class="conference-empty-title">New conferences are being confirmed</p>
+            <p>Get the alerts and be the first to hear when the next one is announced.</p>
+            <a href="#newsletter" class="btn btn-primary">Get event alerts</a>
+          </div>`;
 
 /* Write everything -------------------------------------------------------------------------------- */
 
@@ -389,7 +400,9 @@ await writeFile(rel("events.html"), events);
 console.log("updated events.html");
 
 let home = await readFile(rel("index.html"), "utf8");
-home = replaceBetween(home, "home", upcoming.slice(0, 3).map(homeCard).join("\n"), "index.html");
+home = replaceBetween(home, "home", upcoming.length ? upcoming.slice(0, 3).map(homeCard).join("\n") : HOME_EMPTY, "index.html");
+// Keep the hero's "Upcoming conferences" stat in step with the data.
+home = home.replace(/data-count-to="\d+" data-conference-count>\d+</, `data-count-to="${upcoming.length}" data-conference-count>${upcoming.length}<`);
 await writeFile(rel("index.html"), home);
 console.log("updated index.html");
 

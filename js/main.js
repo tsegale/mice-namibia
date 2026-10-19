@@ -23,6 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
   initCountdowns();
   initLightboxes();
   initBlogFilters();
+  initHeroSlider();
+  initCarousels();
 });
 
 /* Header: mobile panel and compact-on-scroll ------------------------------ */
@@ -951,4 +953,187 @@ function initGallery(gallery) {
   if (slides.length > 1) {
     startAutoSlide();
   }
+}
+
+/* Homepage hero slideshow: [data-hero] ------------------------------------
+   Crossfade every 7s, pauses on hover/focus, pause button, dot buttons,
+   swipe. Under reduced motion it never auto-advances. */
+
+function initHeroSlider() {
+  var hero = document.querySelector("[data-hero]");
+  if (!hero) return;
+  var slides = Array.prototype.slice.call(hero.querySelectorAll("[data-hero-slide]"));
+  var dots = Array.prototype.slice.call(hero.querySelectorAll("[data-hero-dot]"));
+  var pauseBtn = hero.querySelector("[data-hero-pause]");
+  if (slides.length < 2) return;
+
+  var INTERVAL = 7000;
+  var current = 0;
+  var timer = null;
+  var userPaused = REDUCED_MOTION;
+  var hoverPaused = false;
+
+  function show(index) {
+    current = (index + slides.length) % slides.length;
+    slides.forEach(function (slide, i) {
+      var active = i === current;
+      slide.classList.toggle("is-active", active);
+      if (active) slide.removeAttribute("aria-hidden");
+      else slide.setAttribute("aria-hidden", "true");
+    });
+    dots.forEach(function (dot, i) {
+      if (i === current) dot.setAttribute("aria-current", "true");
+      else dot.removeAttribute("aria-current");
+    });
+  }
+
+  function stop() {
+    window.clearInterval(timer);
+    timer = null;
+  }
+
+  function start() {
+    stop();
+    if (userPaused || hoverPaused) return;
+    timer = window.setInterval(function () {
+      show(current + 1);
+    }, INTERVAL);
+  }
+
+  function syncPauseButton() {
+    hero.classList.toggle("is-paused", userPaused);
+    if (pauseBtn) {
+      pauseBtn.setAttribute("aria-label", userPaused ? "Play slideshow" : "Pause slideshow");
+      pauseBtn.setAttribute("aria-pressed", userPaused ? "true" : "false");
+    }
+  }
+
+  dots.forEach(function (dot) {
+    dot.addEventListener("click", function () {
+      show(parseInt(dot.getAttribute("data-hero-dot"), 10) || 0);
+      start();
+    });
+  });
+
+  if (pauseBtn) {
+    pauseBtn.addEventListener("click", function () {
+      userPaused = !userPaused;
+      syncPauseButton();
+      start();
+    });
+  }
+
+  hero.addEventListener("mouseenter", function () { hoverPaused = true; stop(); });
+  hero.addEventListener("mouseleave", function () { hoverPaused = false; start(); });
+  hero.addEventListener("focusin", function () { hoverPaused = true; stop(); });
+  hero.addEventListener("focusout", function (event) {
+    if (!hero.contains(event.relatedTarget)) { hoverPaused = false; start(); }
+  });
+
+  var touchX = null;
+  hero.addEventListener("touchstart", function (event) {
+    touchX = event.touches[0].clientX;
+  }, { passive: true });
+  hero.addEventListener("touchend", function (event) {
+    if (touchX === null) return;
+    var dx = event.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(dx) < 40) return;
+    show(dx < 0 ? current + 1 : current - 1);
+    start();
+  });
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) stop();
+    else start();
+  });
+
+  show(0);
+  syncPauseButton();
+  start();
+}
+
+/* Horizontal scroll-snap carousels: [data-carousel] -----------------------
+   Prev/next buttons (matched by aria-controls), drag with a mouse, arrow
+   keys when the track has focus. Touch uses native scrolling. */
+
+function initCarousels() {
+  document.querySelectorAll("[data-carousel]").forEach(function (track) {
+    var id = track.id;
+    var prev = id ? document.querySelector('[data-carousel-prev][aria-controls="' + id + '"]') : null;
+    var next = id ? document.querySelector('[data-carousel-next][aria-controls="' + id + '"]') : null;
+
+    function step() {
+      var first = track.children[0];
+      if (!first) return track.clientWidth;
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return first.getBoundingClientRect().width + gap;
+    }
+
+    function scrollByStep(direction) {
+      track.scrollBy({ left: direction * step(), behavior: REDUCED_MOTION ? "auto" : "smooth" });
+    }
+
+    function update() {
+      var max = track.scrollWidth - track.clientWidth - 2;
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= max;
+    }
+
+    if (prev) prev.addEventListener("click", function () { scrollByStep(-1); });
+    if (next) next.addEventListener("click", function () { scrollByStep(1); });
+
+    track.addEventListener("keydown", function (event) {
+      if (event.target !== track) return;
+      if (event.key === "ArrowRight") { event.preventDefault(); scrollByStep(1); }
+      if (event.key === "ArrowLeft") { event.preventDefault(); scrollByStep(-1); }
+    });
+
+    var scrollTicking = false;
+    track.addEventListener("scroll", function () {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      window.requestAnimationFrame(function () { update(); scrollTicking = false; });
+    }, { passive: true });
+    window.addEventListener("resize", update);
+
+    // Mouse drag (pointer devices only).
+    var dragStartX = 0;
+    var dragStartScroll = 0;
+    var dragging = false;
+    var moved = false;
+    track.addEventListener("pointerdown", function (event) {
+      if (event.pointerType !== "mouse" || event.button !== 0) return;
+      dragging = true;
+      moved = false;
+      dragStartX = event.clientX;
+      dragStartScroll = track.scrollLeft;
+    });
+    window.addEventListener("pointermove", function (event) {
+      if (!dragging) return;
+      var dx = event.clientX - dragStartX;
+      if (!moved && Math.abs(dx) > 5) {
+        moved = true;
+        track.classList.add("is-dragging");
+      }
+      if (moved) track.scrollLeft = dragStartScroll - dx;
+    });
+    window.addEventListener("pointerup", function () {
+      if (!dragging) return;
+      dragging = false;
+      if (moved) {
+        track.classList.remove("is-dragging");
+        // Snap to the nearest card after a drag.
+        var s = step();
+        track.scrollTo({ left: Math.round(track.scrollLeft / s) * s, behavior: "smooth" });
+      }
+    });
+    // A drag must not also follow the card link underneath.
+    track.addEventListener("click", function (event) {
+      if (moved) { event.preventDefault(); event.stopPropagation(); moved = false; }
+    }, true);
+    track.addEventListener("dragstart", function (event) { event.preventDefault(); });
+
+    update();
+  });
 }
