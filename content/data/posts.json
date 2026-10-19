@@ -1,0 +1,134 @@
+{
+  "site_url": "https://tsegale.github.io/mice-namibia/",
+  "order": "Newest first = highest n (no publish dates yet)",
+  "placements": {
+    "home": "latest:3",
+    "services": [
+      "blog-02",
+      "blog-05",
+      "blog-03"
+    ]
+  },
+  "posts": [
+    {
+      "slug": "blog-01",
+      "n": 1,
+      "title": "Why Namibia Is Becoming Africa’s Next MICE Destination",
+      "category": "Destinations",
+      "excerpt": "From boardrooms in Windhoek to unforgettable experiences in the Namib Desert, Namibia is redefining what business events in Africa can look like.",
+      "image": {
+        "base": "assets/images/blog/blog-01-why-namibia-next-mice-destination",
+        "alt": ""
+      },
+      "reading_minutes": 9
+    },
+    {
+      "slug": "blog-02",
+      "n": 2,
+      "title": "The Ultimate Guide to Hosting a Conference in Namibia",
+      "category": "Planning",
+      "excerpt": "Everything international and local event planners need to know about venues, accommodation, transport, activities, logistics and delivering a successful conference in Namibia.",
+      "image": {
+        "base": "assets/images/blog/blog-02-ultimate-guide-hosting-conference-namibia",
+        "alt": ""
+      },
+      "reading_minutes": 11
+    },
+    {
+      "slug": "blog-03",
+      "n": 3,
+      "title": "Top 10 Conference & Meeting Venues in Namibia",
+      "category": "Venues",
+      "excerpt": "From large-scale international conferences in Windhoek to executive retreats on the coast, these are 10 conference and meeting venues worth considering for your next event in Namibia.",
+      "image": {
+        "base": "assets/images/blog/blog-03-top-conference-meeting-venues-namibia",
+        "alt": ""
+      },
+      "reading_minutes": 10
+    },
+    {
+      "slug": "blog-04",
+      "n": 4,
+      "title": "Why Namibia Is Perfect for Incentive Travel",
+      "category": "Travel",
+      "excerpt": "Where extraordinary landscapes, unforgettable experiences and authentic African hospitality come together to create incentive programmes delegates will never forget.",
+      "image": {
+        "base": "assets/images/blog/blog-04-why-namibia-perfect-incentive-travel",
+        "alt": ""
+      },
+      "reading_minutes": 10
+    },
+    {
+      "slug": "blog-05",
+      "n": 5,
+      "title": "How to Plan a Successful Corporate Event in Namibia",
+      "category": "Planning",
+      "excerpt": "From executive meetings and product launches to workshops, team retreats and corporate functions, discover how to plan a professional and memorable event in Namibia.",
+      "image": {
+        "base": "assets/images/blog/blog-05-successful-corporate-event-namibia",
+        "alt": ""
+      },
+      "reading_minutes": 11
+    },
+    {
+      "slug": "blog-06",
+      "n": 6,
+      "title": "Namibia MICE Visa: What International Delegates Need to Know",
+      "category": "Travel",
+      "excerpt": "A practical guide to Namibia's MICE visa facilitation process for international conference, meeting, incentive and exhibition delegates.",
+      "image": {
+        "base": "assets/images/blog/blog-06-namibia-mice-visa-guide",
+        "alt": ""
+      },
+      "reading_minutes": 10
+    },
+    {
+      "slug": "blog-07",
+      "n": 7,
+      "title": "Best Team-Building Activities in Namibia for Corporate Groups",
+      "category": "Team Building",
+      "excerpt": "Take your team beyond the boardroom and into one of Africa’s most extraordinary destinations.",
+      "image": {
+        "base": "assets/images/blog/blog-07-team-building-activities-namibia",
+        "alt": ""
+      },
+      "reading_minutes": 4
+    },
+    {
+      "slug": "blog-08",
+      "n": 8,
+      "title": "Sustainable MICE Events in Namibia: How to Plan a Greener Conference",
+      "category": "Sustainability",
+      "excerpt": "A practical guide to reducing the environmental impact of conferences, meetings and corporate events in Namibia.",
+      "image": {
+        "base": "assets/images/blog/blog-08-sustainable-mice-events-namibia",
+        "alt": ""
+      },
+      "reading_minutes": 6
+    },
+    {
+      "slug": "blog-09",
+      "n": 9,
+      "title": "Windhoek vs Swakopmund: Which Is Better for Your Next Conference?",
+      "category": "Destinations",
+      "excerpt": "Two of Namibia's most popular business destinations offer very different conference experiences. So, which one is right for your next event?",
+      "image": {
+        "base": "assets/images/blog/blog-09-windhoek-vs-swakopmund-conference",
+        "alt": ""
+      },
+      "reading_minutes": 5
+    },
+    {
+      "slug": "blog-10",
+      "n": 10,
+      "title": "How to Organise a Corporate Incentive Trip to Namibia: A Step-by-Step Guide",
+      "category": "Travel",
+      "excerpt": "A practical guide for companies and international planners looking to reward, motivate and inspire their teams in Namibia.",
+      "image": {
+        "base": "assets/images/blog/blog-10-organise-corporate-incentive-trip-namibia",
+        "alt": ""
+      },
+      "reading_minutes": 6
+    }
+  ]
+}
