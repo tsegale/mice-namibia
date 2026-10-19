@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initCountdowns();
   initLightboxes();
   initGalleryFilter();
+  initFaqSearch();
   initBlogFilters();
   initHeroSlider();
   initCarousels();
@@ -793,6 +794,50 @@ function initGalleryFilter() {
   buttons.forEach(function (b) {
     b.addEventListener("click", function () { apply(b.getAttribute("data-filter")); });
   });
+}
+
+/* FAQ page: live search across questions and answers. Groups with no
+   matches hide; an empty state offers a reset. */
+
+function initFaqSearch() {
+  var input = document.querySelector("[data-faq-search]");
+  if (!input) return;
+  var groups = Array.prototype.slice.call(document.querySelectorAll("[data-faq-group]"));
+  var empty = document.querySelector("[data-faq-empty]");
+  var status = document.querySelector("[data-faq-status]");
+  var reset = document.querySelector("[data-faq-reset]");
+  var total = document.querySelectorAll(".faq-group .faq-item").length;
+
+  function norm(str) {
+    return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function apply() {
+    var terms = norm(input.value.trim()).split(/\s+/).filter(Boolean);
+    var shown = 0;
+    groups.forEach(function (g) {
+      var inGroup = 0;
+      g.querySelectorAll(".faq-item").forEach(function (item) {
+        var text = norm(item.textContent);
+        var on = terms.every(function (t) { return text.indexOf(t) !== -1; });
+        item.hidden = !on;
+        if (on) inGroup++;
+      });
+      g.hidden = inGroup === 0;
+      shown += inGroup;
+    });
+    if (empty) empty.hidden = shown !== 0;
+    if (status) status.textContent = terms.length ? shown + " of " + total + " questions match" : "";
+  }
+
+  input.addEventListener("input", apply);
+  if (reset) {
+    reset.addEventListener("click", function () {
+      input.value = "";
+      apply();
+      input.focus();
+    });
+  }
 }
 
 function initLightboxes() {
