@@ -77,94 +77,171 @@
       </div>
     </section>
 
-    <section class="section" id="contact-form">
-      <div class="container contact-grid">
+    <section class="section contact-section" id="contact-form" aria-labelledby="contact-title">
+      <div class="container contact-layout">
 
-        <div class="contact-col">
-          <h2>What we do, we deliver with perfection.</h2>
-          <p>Driven by passion, precision, and expertise, we manage every detail with excellence to ensure your event is flawlessly executed from concept to completion.</p>
-
-          <div class="contact-map">
-            <iframe
-              src="https://www.google.com/maps?q=Windhoek,Namibia&output=embed"
-              title="Map showing Windhoek, Namibia"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-          </div>
+        <aside class="contact-panel" aria-labelledby="contact-panel-title">
+          <picture>
+            <source type="image/webp" srcset="assets/images/venues/wicc/gallery-09-640.webp 640w, assets/images/venues/wicc/gallery-09-1280.webp 1280w, assets/images/venues/wicc/gallery-09-1920.webp 1920w" sizes="(max-width: 1080px) 100vw, 480px">
+            <img src="assets/images/venues/wicc/gallery-09-1280.jpg" srcset="assets/images/venues/wicc/gallery-09-640.jpg 640w, assets/images/venues/wicc/gallery-09-1280.jpg 1280w, assets/images/venues/wicc/gallery-09-1920.jpg 1920w" sizes="(max-width: 1080px) 100vw, 480px" alt="" width="1280" height="853" loading="lazy" decoding="async">
+          </picture>
+          <div class="contact-panel-body">
+            <p class="eyebrow eyebrow--light"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">02</span>&nbsp;/ Talk to our team</p>
+            <h2 id="contact-panel-title">What we do, we deliver with perfection.</h2>
+            <p>Driven by passion, precision, and expertise, we manage every detail with excellence to ensure your event is flawlessly executed from concept to completion.</p>
+            <ul class="contact-lines">
+              <li><span class="contact-line-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span><span class="contact-line-label">Phone</span><a href="tel:+264812455852">+264 81 245 5852</a></span></li>
+              <li><span class="contact-line-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg></span><span><span class="contact-line-label">Email</span><a href="mailto:corporate.events@zusammentravels.com">corporate.events@zusammentravels.com</a></span></li>
+              <li><span class="contact-line-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg></span><span><span class="contact-line-label">Main address</span>Windhoek, Namibia</span></li>
+            </ul>
+            <div class="footer-social contact-social">
+          <a href="https://www.facebook.com/zusammentours" class="social-link social-link--facebook" target="_blank" rel="noopener" aria-label="Zusammen Travels on Facebook (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg></a>
+          <a href="https://www.instagram.com/zusammentours" class="social-link social-link--instagram" target="_blank" rel="noopener" aria-label="Zusammen Travels on Instagram (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg></a>
+          <a href="https://www.youtube.com/@ZusammenTravels-i1j" class="social-link social-link--youtube" target="_blank" rel="noopener" aria-label="Zusammen Travels on YouTube (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+          <a href="https://x.com/TravelsZusammen" class="social-link social-link--x" target="_blank" rel="noopener" aria-label="Zusammen Travels on X (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a>
+          <a href="https://www.linkedin.com/company/zusammen-tours-and-travel-agency/" class="social-link social-link--linkedin" target="_blank" rel="noopener" aria-label="Zusammen Travels on LinkedIn (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a href="https://www.tripadvisor.co.za/Attraction_Review-g293821-d27952450-Reviews-Zusammen_Tours_and_Travel_Agency-Windhoek_Khomas_Region.html" class="social-link social-link--tripadvisor" target="_blank" rel="noopener" aria-label="Zusammen Travels on TripAdvisor (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.006 4.295c-2.67 0-5.338.784-7.645 2.353H0l1.963 2.135a5.997 5.997 0 0 0 4.04 10.43 5.976 5.976 0 0 0 4.075-1.6L12 19.705l1.922-2.09a5.972 5.972 0 0 0 4.072 1.598 6 6 0 0 0 6-5.998 5.982 5.982 0 0 0-1.957-4.432L24 6.648h-4.35a13.573 13.573 0 0 0-7.644-2.353zM12 6.255c1.531 0 3.063.303 4.504.903C13.943 8.138 12 10.43 12 13.1c0-2.671-1.942-4.962-4.504-5.942A11.72 11.72 0 0 1 12 6.256zM6.002 9.157a4.059 4.059 0 1 1 0 8.118 4.059 4.059 0 0 1 0-8.118zm11.992.002a4.057 4.057 0 1 1 .003 8.115 4.057 4.057 0 0 1-.003-8.115zm-11.992 1.93a2.128 2.128 0 0 0 0 4.256 2.128 2.128 0 0 0 0-4.256zm11.992 0a2.128 2.128 0 0 0 0 4.256 2.128 2.128 0 0 0 0-4.256z"/></svg></a>
         </div>
+          </div>
+        </aside>
 
-        <div class="contact-col">
-          <h2>Get In Touch</h2>
+        <div class="contact-card">
+          <h2 id="contact-title">Get In Touch</h2>
           <p class="contact-subheading">Make Today Count</p>
           <p>Don't wait for the right moment. Reach out, reconnect, and take action today, because tomorrow is never guaranteed.</p>
 
-          <form class="contact-form" data-contact-form>
+          <form class="contact-form" data-contact-form novalidate>
+            <fieldset class="enquiry-switch">
+              <legend class="visually-hidden">What can we help with?</legend>
+              <label><input type="radio" name="enquiry-type" value="general" checked data-enquiry-mode><span>General Enquiry</span></label>
+              <label><input type="radio" name="enquiry-type" value="proposal" data-enquiry-mode><span>Request a Proposal</span></label>
+            </fieldset>
+
             <div class="form-row">
               <div class="form-field">
                 <label for="first-name">First Name*</label>
-                <input type="text" id="first-name" name="first-name" required>
+                <input type="text" id="first-name" name="first-name" autocomplete="given-name" required>
               </div>
               <div class="form-field">
                 <label for="last-name">Last Name*</label>
-                <input type="text" id="last-name" name="last-name" required>
+                <input type="text" id="last-name" name="last-name" autocomplete="family-name" required>
               </div>
             </div>
 
-            <div class="form-field">
-              <label for="email">Email*</label>
-              <input type="email" id="email" name="email" required>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="email">Email*</label>
+                <input type="email" id="email" name="email" autocomplete="email" required>
+              </div>
+              <div class="form-field">
+                <label for="phone">Phone*</label>
+                <input type="tel" id="phone" name="phone" autocomplete="tel" required>
+              </div>
             </div>
 
-            <div class="form-field">
-              <label for="phone">Phone*</label>
-              <input type="tel" id="phone" name="phone" required>
-            </div>
+            <fieldset class="proposal-fields" data-proposal-only hidden disabled>
+              <legend class="proposal-legend">About your event</legend>
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="organisation">Company or organisation</label>
+                  <input type="text" id="organisation" name="organisation" autocomplete="organization">
+                </div>
+                <div class="form-field">
+                  <label for="event-type">Type of event*</label>
+                  <select id="event-type" name="event-type" required>
+                    <option value="">Select</option>
+                    <option>Meeting</option>
+                    <option>Incentive trip</option>
+                    <option>Conference</option>
+                    <option>Exhibition or trade show</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row form-row--3">
+                <div class="form-field">
+                  <label for="destination">Destination</label>
+                  <select id="destination" name="destination">
+                    <option value="">Not sure yet</option>
+                    <option value="Namibia">Namibia</option>
+                    <option value="Botswana">Botswana</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="Zambia">Zambia</option>
+                    <option value="Zimbabwe">Zimbabwe</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="Tanzania">Tanzania</option>
+                    <option value="Uganda">Uganda</option>
+                    <option value="Rwanda">Rwanda</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="dates">Preferred dates</label>
+                  <input type="text" id="dates" name="dates" placeholder="e.g. March 2027">
+                </div>
+                <div class="form-field">
+                  <label for="delegates">Delegates</label>
+                  <input type="number" id="delegates" name="delegates" min="1" inputmode="numeric" placeholder="e.g. 120">
+                </div>
+              </div>
+              <div class="form-field">
+                <span class="form-label" id="services-label">Services you need</span>
+                <div class="check-chips" role="group" aria-labelledby="services-label">
+                  <label class="check-chip"><input type="checkbox" name="services" value="Meeting Planning"><span>Meeting Planning</span></label>
+                  <label class="check-chip"><input type="checkbox" name="services" value="Incentive Travel"><span>Incentive Travel</span></label>
+                  <label class="check-chip"><input type="checkbox" name="services" value="Conference Management"><span>Conference Management</span></label>
+                  <label class="check-chip"><input type="checkbox" name="services" value="Exhibitions and Trade Shows"><span>Exhibitions and Trade Shows</span></label>
+                  <label class="check-chip"><input type="checkbox" name="services" value="Corporate Travel Management"><span>Corporate Travel Management</span></label>
+                  <label class="check-chip"><input type="checkbox" name="services" value="Event Logistics and Coordination"><span>Event Logistics and Coordination</span></label>
+                  <label class="check-chip"><input type="checkbox" name="services" value="Destination Management Services"><span>Destination Management Services</span></label>
+                  <label class="check-chip"><input type="checkbox" name="services" value="Accommodation and Venue Booking"><span>Accommodation and Venue Booking</span></label>
+                  <label class="check-chip"><input type="checkbox" name="services" value="Transportation Services"><span>Transportation Services</span></label>
+                  <label class="check-chip"><input type="checkbox" name="services" value="Post-Event Evaluation"><span>Post-Event Evaluation</span></label>
+                </div>
+              </div>
+            </fieldset>
 
             <div class="form-field">
               <label for="message">Message</label>
               <textarea id="message" name="message" rows="5"></textarea>
             </div>
 
-            <!-- TODO: wire this form to a backend/email service (Zusammen Travels may
-                 already have a Node.js/Nodemailer setup on their main site worth reusing) -->
-            <button type="submit" class="btn btn-primary btn-large">Submit</button>
+            <p class="form-error" role="alert" hidden data-form-error>Please fill in the highlighted fields.</p>
+
+            <!-- TODO: wire this form to the Node/Express backend (Phase 2). -->
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-large" data-submit-label>Send Enquiry</button>
+              <p class="form-note">Your details are handled under our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+            </div>
           </form>
-          <p class="form-confirmation" data-form-confirmation hidden>Thanks, we'll be in touch.</p>
+          <div class="form-confirmation" data-form-confirmation hidden tabindex="-1">
+            <p class="form-confirmation-title">Thank you, your message is on its way.</p>
+            <p>Our team will be in touch shortly.</p>
+          </div>
         </div>
 
       </div>
     </section>
 
-    <section class="section section-alt">
-      <div class="container">
-        <div class="info-cards">
-
-          <div class="info-card">
-            <div class="info-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </div>
-            <h3>Phone Number</h3>
-            <a href="tel:+264812455852">+264 81 245 5852</a>
-          </div>
-
-          <div class="info-card">
-            <div class="info-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg>
-            </div>
-            <h3>Email Address</h3>
-            <a href="mailto:corporate.events@zusammentravels.com">corporate.events@zusammentravels.com</a>
-          </div>
-
-          <div class="info-card">
-            <div class="info-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
-            </div>
-            <h3>Main Address</h3>
-            <p>Windhoek, Namibia</p>
-            <span class="info-card-caption">We work remotely and provide support online. Our team is ready to assist you virtually.</span>
-          </div>
-
+    <section class="section section--mist" aria-labelledby="find-us-title">
+      <div class="container find-us">
+        <div class="find-us-map">
+          <iframe src="https://www.google.com/maps?q=Windhoek,Namibia&amp;output=embed" title="Map showing Windhoek, Namibia" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="find-us-text">
+          <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">03</span>&nbsp;/ Where we are</p>
+          <h2 id="find-us-title">Based in Windhoek, working across <em class="accent">Africa</em></h2>
+          <p>We work remotely and provide support online. Our team is ready to assist you virtually.</p>
+          <ul class="find-us-flags" aria-label="Destinations we serve">
+            <li><a href="contact.html?type=proposal&amp;destination=Namibia#contact-form"><img src="assets/images/flags/na.svg" alt="" width="24" height="18">Namibia</a></li>
+            <li><a href="contact.html?type=proposal&amp;destination=Botswana#contact-form"><img src="assets/images/flags/bw.svg" alt="" width="24" height="18">Botswana</a></li>
+            <li><a href="contact.html?type=proposal&amp;destination=South%20Africa#contact-form"><img src="assets/images/flags/za.svg" alt="" width="24" height="18">South Africa</a></li>
+            <li><a href="contact.html?type=proposal&amp;destination=Zambia#contact-form"><img src="assets/images/flags/zm.svg" alt="" width="24" height="18">Zambia</a></li>
+            <li><a href="contact.html?type=proposal&amp;destination=Zimbabwe#contact-form"><img src="assets/images/flags/zw.svg" alt="" width="24" height="18">Zimbabwe</a></li>
+            <li><a href="contact.html?type=proposal&amp;destination=Kenya#contact-form"><img src="assets/images/flags/ke.svg" alt="" width="24" height="18">Kenya</a></li>
+            <li><a href="contact.html?type=proposal&amp;destination=Tanzania#contact-form"><img src="assets/images/flags/tz.svg" alt="" width="24" height="18">Tanzania</a></li>
+            <li><a href="contact.html?type=proposal&amp;destination=Uganda#contact-form"><img src="assets/images/flags/ug.svg" alt="" width="24" height="18">Uganda</a></li>
+            <li><a href="contact.html?type=proposal&amp;destination=Rwanda#contact-form"><img src="assets/images/flags/rw.svg" alt="" width="24" height="18">Rwanda</a></li>
+          </ul>
         </div>
       </div>
     </section>

@@ -328,12 +328,37 @@ function initContactForm() {
   var contactForm = document.querySelector("[data-contact-form]");
   var contactConfirmation = document.querySelector("[data-form-confirmation]");
   if (!contactForm || !contactConfirmation) return;
+  var error = contactForm.querySelector("[data-form-error]");
 
   contactForm.addEventListener("submit", function (event) {
     event.preventDefault();
+    // novalidate turns off the browser bubbles; mark invalid fields ourselves.
+    var invalid = Array.prototype.filter.call(contactForm.elements, function (el) {
+      if (!el.willValidate) return false;
+      var bad = !el.checkValidity();
+      el.setAttribute("aria-invalid", bad ? "true" : "false");
+      return bad;
+    });
+    if (invalid.length) {
+      if (error) error.hidden = false;
+      invalid[0].focus();
+      return;
+    }
+    if (error) error.hidden = true;
+    // TODO (Phase 2): POST to the Express backend instead of resetting.
     contactForm.reset();
     contactForm.hidden = true;
+    var note = document.querySelector(".enquiry-context");
+    if (note) note.hidden = true;
     contactConfirmation.hidden = false;
+    contactConfirmation.focus();
+  });
+
+  contactForm.addEventListener("input", function (event) {
+    var el = event.target;
+    if (el.getAttribute && el.getAttribute("aria-invalid") === "true" && el.checkValidity()) {
+      el.setAttribute("aria-invalid", "false");
+    }
   });
 }
 
@@ -930,9 +955,28 @@ function initLightboxes() {
 
 /* Contact form prefill from ?type=proposal&event=&venue=&destination=&service= */
 
+function setEnquiryMode(form, mode) {
+  var proposal = mode === "proposal";
+  form.querySelectorAll("[data-enquiry-mode]").forEach(function (r) {
+    r.checked = r.value === mode;
+  });
+  form.querySelectorAll("[data-proposal-only]").forEach(function (el) {
+    el.hidden = !proposal;
+    el.disabled = !proposal;
+  });
+  var label = form.querySelector("[data-submit-label]");
+  if (label) label.textContent = proposal ? "Request Proposal" : "Send Enquiry";
+}
+
 function initContactPrefill() {
   var form = document.querySelector("[data-contact-form]");
-  if (!form || !window.URLSearchParams) return;
+  if (!form) return;
+  form.querySelectorAll("[data-enquiry-mode]").forEach(function (r) {
+    r.addEventListener("change", function () {
+      if (r.checked) setEnquiryMode(form, r.value);
+    });
+  });
+  if (!window.URLSearchParams) return;
   var params = new URLSearchParams(window.location.search);
   var type = params.get("type");
   var eventSlug = params.get("event");
@@ -948,50 +992,52 @@ function initContactPrefill() {
     })[0] || null;
   }
 
+  // Any context (an event, venue, destination or service) is a proposal request.
+  setEnquiryMode(form, "proposal");
+
   var lines = [];
   var summary = [];
-  if (type === "proposal") lines.push("I would like to request a proposal.");
   if (conference) {
     lines.push("Conference: " + conference.title + " (" + conference.city + ", " + conference.country + ")");
-    summary.push("Register interest: " + conference.short_title);
+    destination = destination || conference.country;
+    var eventType = form.querySelector("#event-type");
+    if (eventType) eventType.value = "Conference";
   }
   if (venue) {
     lines.push("Venue: " + venue);
     summary.push("Venue: " + venue);
   }
   if (destination) {
-    lines.push("Destination: " + destination);
+    var select = form.querySelector("#destination");
+    var match = select && Array.prototype.filter.call(select.options, function (o) {
+      return o.value.toLowerCase() === destination.toLowerCase();
+    })[0];
+    if (match) select.value = match.value;
+    else lines.push("Destination: " + destination);
     summary.push("Destination: " + destination);
   }
   if (service) {
-    lines.push("Service: " + service);
+    var box = Array.prototype.filter.call(form.querySelectorAll('input[name="services"]'), function (c) {
+      return c.value.toLowerCase() === service.toLowerCase();
+    })[0];
+    if (box) box.checked = true;
+    else lines.push("Service: " + service);
     summary.push("Service: " + service);
   }
 
   var message = form.querySelector("#message");
   if (message && !message.value && lines.length) message.value = lines.join("\n") + "\n\n";
 
-  var hidden = document.createElement("input");
-  hidden.type = "hidden";
-  hidden.name = "enquiry-type";
-  hidden.value = type === "proposal" ? "proposal" : "general";
-  form.appendChild(hidden);
-
-  if (summary.length || type === "proposal") {
-    var note = document.createElement("p");
-    note.className = "enquiry-context";
-    note.innerHTML =
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
-    var text = document.createElement("span");
-    var details = summary.filter(function (s) {
-      return s.indexOf("Register interest") !== 0;
-    });
-    text.textContent =
-      (conference ? "You are registering interest in " + conference.short_title + "." : type === "proposal" ? "You are requesting a proposal." : "Your enquiry.") +
-      (details.length ? " " + details.join(" | ") : "");
-    note.appendChild(text);
-    form.parentNode.insertBefore(note, form);
-  }
+  var note = document.createElement("p");
+  note.className = "enquiry-context";
+  note.innerHTML =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
+  var text = document.createElement("span");
+  text.textContent =
+    (conference ? "You are registering interest in " + conference.short_title + "." : "You are requesting a proposal.") +
+    (summary.length ? " " + summary.join(" | ") : "");
+  note.appendChild(text);
+  form.parentNode.insertBefore(note, form);
 }
 
 /* Venue photo slideshow -------------------------------------------------- */
