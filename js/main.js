@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initLightboxes();
   initGalleryFilter();
   initFaqSearch();
+  initTicketPicker();
   initBlogFilters();
   initHeroSlider();
   initCarousels();
@@ -865,6 +866,26 @@ function initFaqSearch() {
   }
 }
 
+/* Pricing: the "Tickets for" picker retitles the tiers and points their
+   Request Pricing links at the chosen conference. */
+
+function initTicketPicker() {
+  var picker = document.querySelector("[data-ticket-picker]");
+  if (!picker) return;
+  function apply() {
+    var checked = picker.querySelector('input[name="ticket-conference"]:checked');
+    if (!checked) return;
+    document.querySelectorAll("[data-ticket-for]").forEach(function (el) {
+      el.textContent = checked.getAttribute("data-title");
+    });
+    document.querySelectorAll("[data-ticket-link]").forEach(function (a) {
+      a.href = a.getAttribute("href").replace(/event=[^&#]*/, "event=" + encodeURIComponent(checked.value));
+    });
+  }
+  picker.addEventListener("change", apply);
+  apply();
+}
+
 function initLightboxes() {
   var groups = document.querySelectorAll("[data-lightbox]");
   if (!groups.length || typeof HTMLDialogElement !== "function") return;
@@ -983,6 +1004,7 @@ function initContactPrefill() {
   var venue = params.get("venue");
   var destination = params.get("destination");
   var service = params.get("service");
+  var tier = params.get("tier");
   if (!type && !eventSlug && !venue && !destination && !service) return;
 
   var conference = null;
@@ -1002,6 +1024,10 @@ function initContactPrefill() {
     destination = destination || conference.country;
     var eventType = form.querySelector("#event-type");
     if (eventType) eventType.value = "Conference";
+  }
+  if (tier) {
+    lines.push("Ticket plan: " + tier);
+    summary.push("Ticket plan: " + tier);
   }
   if (venue) {
     lines.push("Venue: " + venue);

@@ -67,68 +67,140 @@
 
     <section class="page-header">
       <picture class="page-header-media">
-        <source type="image/webp" srcset="assets/images/venues/windhoek-country-club-resort-casino/golf-course-640.webp 640w, assets/images/venues/windhoek-country-club-resort-casino/golf-course-1280.webp 1280w, assets/images/venues/windhoek-country-club-resort-casino/golf-course-1920.webp 1920w" sizes="100vw">
-        <img src="assets/images/venues/windhoek-country-club-resort-casino/golf-course-1280.jpg" srcset="assets/images/venues/windhoek-country-club-resort-casino/golf-course-640.jpg 640w, assets/images/venues/windhoek-country-club-resort-casino/golf-course-1280.jpg 1280w, assets/images/venues/windhoek-country-club-resort-casino/golf-course-1920.jpg 1920w" sizes="100vw" alt="" width="1920" height="1281" fetchpriority="high">
+        <source type="image/webp" srcset="assets/images/venues/wicc/gallery-07-640.webp 640w, assets/images/venues/wicc/gallery-07-1280.webp 1280w, assets/images/venues/wicc/gallery-07-1920.webp 1920w" sizes="100vw">
+        <img src="assets/images/venues/wicc/gallery-07-1280.jpg" srcset="assets/images/venues/wicc/gallery-07-640.jpg 640w, assets/images/venues/wicc/gallery-07-1280.jpg 1280w, assets/images/venues/wicc/gallery-07-1920.jpg 1920w" sizes="100vw" alt="" width="1920" height="1280" fetchpriority="high">
       </picture>
       <div class="container">
         <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li aria-current="page">Pricing</li></ol></nav>
         <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Pricing</p>
         <h1>Pricing</h1>
+        <p class="page-subtitle">Ticket plans for our upcoming conferences in Africa.</p>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" aria-labelledby="pricing-title">
       <div class="container">
         <div class="section-header">
-          <h2>Flexible Ticket Plans for Every Attendee</h2>
+          <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">02</span>&nbsp;/ Ticket plans</p>
+          <h2 id="pricing-title">Flexible Ticket Plans for Every <em class="accent">Attendee</em></h2>
           <p>Choose the perfect ticket and get full access to talks, sessions, and networking opportunities.</p>
         </div>
-
-        <!-- TODO: add an event-name field above the tiers once there's a specific
-             event to sell tickets for; see content/specs/01-home-page-spec.pdf page 7.
-             "Buy Ticket" links to the contact form for now since there is no
-             ticketing/payment backend or live event yet. -->
-        <div class="pricing-grid">
-
-          <div class="pricing-card">
+        <div class="pricing-picker-wrap">
+<!-- conferences:pricing:start -->
+          <fieldset class="ticket-picker" data-ticket-picker>
+            <legend>Tickets for</legend>
+            <div class="ticket-options">
+            <label class="ticket-option">
+              <input type="radio" name="ticket-conference" value="edulearn-2027" data-title="EDULEARN 2027" checked>
+              <span class="ticket-option-card">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/conferences/edulearn-2027/cover-640.webp 640w, assets/images/conferences/edulearn-2027/cover-1280.webp 1280w, assets/images/conferences/edulearn-2027/cover-1920.webp 1920w" sizes="120px">
+                  <img src="assets/images/conferences/edulearn-2027/cover-1280.jpg" srcset="assets/images/conferences/edulearn-2027/cover-640.jpg 640w, assets/images/conferences/edulearn-2027/cover-1280.jpg 1280w, assets/images/conferences/edulearn-2027/cover-1920.jpg 1920w" sizes="120px" alt="" width="1920" height="1280" loading="lazy" decoding="async">
+                </picture>
+                <span class="ticket-option-body">
+                  <span class="ticket-option-date">Jan 8, 2027</span>
+                  <span class="ticket-option-title">EDULEARN 2027</span>
+                  <span class="ticket-option-place"><img src="assets/images/flags/na.svg" alt="" width="20" height="15">Swakopmund, Namibia</span>
+                </span>
+              </span>
+            </label>
+            <label class="ticket-option">
+              <input type="radio" name="ticket-conference" value="icsdeg-2027" data-title="ICSDEG 2027">
+              <span class="ticket-option-card">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/conferences/icsdeg-2027/cover-640.webp 640w, assets/images/conferences/icsdeg-2027/cover-1280.webp 1280w, assets/images/conferences/icsdeg-2027/cover-1920.webp 1920w" sizes="120px">
+                  <img src="assets/images/conferences/icsdeg-2027/cover-1280.jpg" srcset="assets/images/conferences/icsdeg-2027/cover-640.jpg 640w, assets/images/conferences/icsdeg-2027/cover-1280.jpg 1280w, assets/images/conferences/icsdeg-2027/cover-1920.jpg 1920w" sizes="120px" alt="" width="1920" height="1280" loading="lazy" decoding="async">
+                </picture>
+                <span class="ticket-option-body">
+                  <span class="ticket-option-date">Jan 8, 2027</span>
+                  <span class="ticket-option-title">ICSDEG 2027</span>
+                  <span class="ticket-option-place"><img src="assets/images/flags/na.svg" alt="" width="20" height="15">Swakopmund, Namibia</span>
+                </span>
+              </span>
+            </label>
+            <label class="ticket-option">
+              <input type="radio" name="ticket-conference" value="iccrsgt-2027" data-title="ICCRSGT 2027">
+              <span class="ticket-option-card">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/conferences/iccrsgt-2027/cover-640.webp 640w, assets/images/conferences/iccrsgt-2027/cover-1280.webp 1280w, assets/images/conferences/iccrsgt-2027/cover-1920.webp 1920w" sizes="120px">
+                  <img src="assets/images/conferences/iccrsgt-2027/cover-1280.jpg" srcset="assets/images/conferences/iccrsgt-2027/cover-640.jpg 640w, assets/images/conferences/iccrsgt-2027/cover-1280.jpg 1280w, assets/images/conferences/iccrsgt-2027/cover-1920.jpg 1920w" sizes="120px" alt="" width="1920" height="1280" loading="lazy" decoding="async">
+                </picture>
+                <span class="ticket-option-body">
+                  <span class="ticket-option-date">Jan 10, 2027</span>
+                  <span class="ticket-option-title">ICCRSGT 2027</span>
+                  <span class="ticket-option-place"><img src="assets/images/flags/ke.svg" alt="" width="20" height="15">Nairobi, Kenya</span>
+                </span>
+              </span>
+            </label>
+            </div>
+          </fieldset>
+<!-- conferences:pricing:end -->
+        </div>
+        <!-- TODO: real ticket prices pending from the client; tiers show "Price on request". -->
+        <div class="pricing-grid" data-reveal-stagger>
+          <article class="pricing-card">
             <h3 class="pricing-card-name">Early Bird</h3>
-            <div class="pricing-card-price">$29<span>/mo</span></div>
+            <p class="pricing-card-for">Tickets for <strong data-ticket-for>EDULEARN 2027</strong></p>
+            <p class="pricing-card-price">Price on request</p>
             <p class="pricing-card-desc">Perfect for early planners who want full conference access at the best price.</p>
             <ul class="pricing-card-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Full 3-day conference access</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All keynote sessions</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Networking events</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Event materials</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Full conference access</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>All keynote sessions</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Networking events</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Event materials</span></li>
             </ul>
-            <a href="contact.html" class="btn btn-outline">Buy Ticket</a>
-          </div>
-
-          <div class="pricing-card pricing-card--featured">
+            <a data-ticket-link href="contact.html?type=proposal&amp;event=edulearn-2027&amp;tier=Early%20Bird#contact-form" class="btn btn-secondary">Request Pricing<span class="visually-hidden">: Early Bird</span></a>
+          </article>
+          <article class="pricing-card pricing-card--featured">
+            <span class="pricing-badge">Most popular</span>
             <h3 class="pricing-card-name">Standard</h3>
-            <div class="pricing-card-price">$199<span>/mo</span></div>
+            <p class="pricing-card-for">Tickets for <strong data-ticket-for>EDULEARN 2027</strong></p>
+            <p class="pricing-card-price">Price on request</p>
             <p class="pricing-card-desc">Best value ticket with complete access to sessions and workshops.</p>
             <ul class="pricing-card-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All Early Bird features</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Hands-on workshops</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Speaker meet &amp; greet</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Session recordings</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>All Early Bird features</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Hands-on workshops</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Speaker meet &amp; greet</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Session recordings</span></li>
             </ul>
-            <a href="contact.html" class="btn btn-primary">Buy Ticket</a>
-          </div>
-
-          <div class="pricing-card">
+            <a data-ticket-link href="contact.html?type=proposal&amp;event=edulearn-2027&amp;tier=Standard#contact-form" class="btn btn-primary">Request Pricing<span class="visually-hidden">: Standard</span></a>
+          </article>
+          <article class="pricing-card">
             <h3 class="pricing-card-name">VIP</h3>
-            <div class="pricing-card-price">$299<span>/mo</span></div>
+            <p class="pricing-card-for">Tickets for <strong data-ticket-for>EDULEARN 2027</strong></p>
+            <p class="pricing-card-price">Price on request</p>
             <p class="pricing-card-desc">Premium experience with exclusive access and VIP privileges.</p>
             <ul class="pricing-card-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All Standard features</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>VIP seating</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Exclusive networking dinner</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Priority registration</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>All Standard features</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>VIP seating</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Exclusive networking dinner</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Priority registration</span></li>
             </ul>
-            <a href="contact.html" class="btn btn-outline">Buy Ticket</a>
-          </div>
+            <a data-ticket-link href="contact.html?type=proposal&amp;event=edulearn-2027&amp;tier=VIP#contact-form" class="btn btn-secondary">Request Pricing<span class="visually-hidden">: VIP</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
 
+    <section class="section section--sand" aria-labelledby="delegations-title">
+      <div class="container delegations">
+        <div class="delegations-media">
+          <picture>
+            <source type="image/webp" srcset="assets/images/venues/wicc/gallery-05-640.webp 640w, assets/images/venues/wicc/gallery-05-1280.webp 1280w, assets/images/venues/wicc/gallery-05-1920.webp 1920w" sizes="(max-width: 1080px) 100vw, 560px">
+            <img src="assets/images/venues/wicc/gallery-05-1280.jpg" srcset="assets/images/venues/wicc/gallery-05-640.jpg 640w, assets/images/venues/wicc/gallery-05-1280.jpg 1280w, assets/images/venues/wicc/gallery-05-1920.jpg 1920w" sizes="(max-width: 1080px) 100vw, 560px" alt="Delegates at a plenary session with stage screens" width="1280" height="853" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="delegations-text">
+          <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">03</span>&nbsp;/ Delegations</p>
+          <h2 id="delegations-title">Bringing a team? We handle the <em class="accent">whole trip</em></h2>
+          <p>Combine conference tickets with flights, accommodation, airport transfers and leisure activities in one proposal for your group.</p>
+          <ul class="delegations-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Accommodation and venue booking</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Corporate travel management</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Transportation services</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Event logistics and coordination</span></li>
+          </ul>
+          <a href="contact.html?type=proposal&amp;service=Corporate%20Travel%20Management#contact-form" class="btn btn-primary">Plan a Delegation</a>
         </div>
       </div>
     </section>

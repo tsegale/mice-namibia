@@ -358,6 +358,35 @@ ${picture(c.coverSet, { sizes: "(max-width: 720px) 100vw, 320px", indent: "     
           </article>`;
 }
 
+
+// Pricing page: "Tickets for" conference picker (spec 01 p.7, pricing tiers).
+function pricingPicker(items) {
+  if (!items.length) {
+    return `          <div class="conference-empty">
+            <p class="conference-empty-title">New conferences are being confirmed</p>
+            <p>Ticket plans open as soon as the next conference is announced.</p>
+            <a href="#newsletter" class="btn btn-primary">Get event alerts</a>
+          </div>`;
+  }
+  const opts = items.map((c, i) => `            <label class="ticket-option">
+              <input type="radio" name="ticket-conference" value="${c.slug}" data-title="${esc(c.short_title)}"${i === 0 ? " checked" : ""}>
+              <span class="ticket-option-card">
+${picture(c.coverSet, { sizes: "120px", indent: "                " })}
+                <span class="ticket-option-body">
+                  <span class="ticket-option-date">${fmtUS(c.starts_at, c.timezone, { day: "numeric", month: "short", year: "numeric" })}</span>
+                  <span class="ticket-option-title">${esc(c.short_title)}</span>
+                  <span class="ticket-option-place">${flag(c, 20, 15)}${place(c)}</span>
+                </span>
+              </span>
+            </label>`).join("\n");
+  return `          <fieldset class="ticket-picker" data-ticket-picker>
+            <legend>Tickets for</legend>
+            <div class="ticket-options">
+${opts}
+            </div>
+          </fieldset>`;
+}
+
 // Shown on the homepage when nothing is upcoming.
 const HOME_EMPTY = `          <div class="conference-empty">
             <p class="conference-empty-title">New conferences are being confirmed</p>
@@ -411,6 +440,16 @@ let about = await readFile(rel("about.html"), "utf8");
 about = about.replace(/data-count-to="\d+" data-conference-count>\d+</, `data-count-to="${upcoming.length}" data-conference-count>${upcoming.length}<`);
 await writeFile(rel("about.html"), about);
 console.log("updated about.html");
+
+let pricing = await readFile(rel("pricing.html"), "utf8");
+pricing = replaceBetween(pricing, "pricing", pricingPicker(upcoming), "pricing.html");
+if (upcoming.length) {
+  const first = upcoming[0];
+  pricing = pricing.replace(/(data-ticket-for>)[^<]*</g, `$1${esc(first.short_title)}<`);
+  pricing = pricing.replace(/(data-ticket-link href="contact\.html\?type=proposal&amp;event=)[^&"]*/g, `$1${first.slug}`);
+}
+await writeFile(rel("pricing.html"), pricing);
+console.log("updated pricing.html");
 
 let contact = await readFile(rel("contact.html"), "utf8");
 contact = replaceBetween(contact, "data", `  <script type="application/json" id="conference-data">${embedded}</script>`, "contact.html");
