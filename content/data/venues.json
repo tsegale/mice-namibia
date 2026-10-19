@@ -1,0 +1,124 @@
+{
+  "site_url": "https://tsegale.github.io/mice-namibia/",
+  "notes": "Categories and product categories come from content/specs/06-venues-spec.pdf. The per-venue category/tag assignments are our reading of each venue's facilities; adjust here (or in the admin later) if the client classifies them differently.",
+  "venue_categories": ["Hotels", "Convention Centres", "Conference Centres", "Exhibition Centres", "Resorts", "Banquet Halls", "Corporate Meeting Facilities", "Stadiums and Arenas", "Unique Venues (Museums, Galleries, Heritage Sites)", "Outdoor Venues (Gardens, Parks, Beaches)"],
+  "countries": [["na", "Namibia"], ["bw", "Botswana"], ["za", "South Africa"], ["zm", "Zambia"], ["zw", "Zimbabwe"], ["tz", "Tanzania"], ["ke", "Kenya"], ["rw", "Rwanda"], ["ug", "Uganda"]],
+  "venues": [
+    {
+      "slug": "wicc",
+      "file": "venue-wicc.html",
+      "name": "WICC",
+      "full_name": "Windhoek International Convention Centre",
+      "category": "Convention Centres",
+      "tags": ["Convention halls", "Congress centres", "Multi-purpose event centres", "Exhibition halls", "Ballrooms", "Gala dinner venues"],
+      "city": "Windhoek",
+      "country_iso2": "na",
+      "description": [
+        "The WICC (Windhoek International Convention Centre) is built for larger conferences, exhibitions and trade shows, with adaptable event floors capable of hosting keynote sessions, breakout meetings and exhibition stands under one roof.",
+        "Its central Windhoek location and dedicated event infrastructure make it a natural fit for organisations hosting multi-day conferences or large-scale corporate gatherings."
+      ],
+      "map_query": "Windhoek International Convention Centre, Windhoek, Namibia",
+      "card_image": "assets/images/venues/wicc/gallery-01",
+      "gallery_dir": "assets/images/venues/wicc",
+      "gallery": [
+        "Keynote address on the main stage at a WICC conference",
+        "WICC ballroom set for a banquet",
+        "Main hall in classroom layout",
+        "Meeting room in a U-shape layout",
+        "Plenary session with delegates and stage screens",
+        "Exhibition stands in the conference foyer",
+        "Panel discussion on stage",
+        "Evening reception under lit marquees",
+        "Delegates gathered on stage for a group photograph",
+        "Gala dinner in the ballroom"
+      ]
+    },
+    {
+      "slug": "windhoek-country-club",
+      "file": "venue-windhoek-country-club.html",
+      "name": "Windhoek Country Club Resort & Casino",
+      "full_name": "Windhoek Country Club Resort & Casino",
+      "category": "Resorts",
+      "tags": ["Golf resorts", "Business hotels", "Boardrooms", "Training rooms", "Function halls", "Gala dinner venues"],
+      "city": "Windhoek",
+      "country_iso2": "na",
+      "description": [
+        "Windhoek Country Club Resort & Casino combines resort-style grounds with dedicated conference facilities, making it well suited to residential conferences, incentive programmes and corporate golf days.",
+        "Delegates can move easily between meeting space, dining venues and the resort's leisure facilities, giving organisers flexibility when building an agenda that blends business with downtime."
+      ],
+      "map_query": "Windhoek Country Club Resort, Windhoek, Namibia",
+      "card_image": "assets/images/venues/windhoek-country-club-resort-casino/gallery-01",
+      "gallery_dir": "assets/images/venues/windhoek-country-club-resort-casino",
+      "gallery": [
+        "Resort buildings and lawns at dusk",
+        "Oryx conference room set with banquet chairs",
+        "Boardroom with a projection screen",
+        "Conference room in classroom layout",
+        "Conference room with round tables",
+        "Resort water feature at dusk",
+        "Swimming pool lit at night",
+        "Golf course at the resort",
+        "Dinner table in the wine cellar",
+        "Casino floor"
+      ]
+    },
+    {
+      "slug": "movenpick",
+      "file": "venue-movenpick.html",
+      "name": "Movenpick",
+      "full_name": "Movenpick Hotel Windhoek",
+      "category": "Hotels",
+      "tags": ["Business hotels", "Luxury hotels", "Meeting suites", "Boardrooms"],
+      "city": "Windhoek",
+      "country_iso2": "na",
+      "description": [
+        "Movenpick offers a polished hotel setting suited to corporate meetings, small conferences and incentive groups travelling through Namibia. Guests have access to well-appointed function space, on-site dining and outdoor areas that make for relaxed networking breaks between sessions.",
+        "Its combination of comfortable accommodation and flexible event space makes it a dependable choice for organisations looking to pair business sessions with a high standard of hospitality."
+      ],
+      "map_query": "Movenpick Hotel Windhoek, Namibia",
+      "card_image": "assets/images/venues/movenpick/gallery-01",
+      "gallery_dir": "assets/images/venues/movenpick",
+      "gallery": [
+        "Movenpick Hotel Windhoek at dusk",
+        "Hotel driveway lined with palms",
+        "Hotel entrance lit at dusk",
+        "Guests relaxing by the pool",
+        "Dinner for two in the restaurant",
+        "Restaurant dining room",
+        "Waiter serving guests in the restaurant",
+        "Barista at the Drift coffee bar",
+        "Outdoor wellness session in the gardens",
+        "Evening dinner in the restaurant"
+      ]
+    },
+    {
+      "slug": "westin-cape-town",
+      "file": "venue-westin-cape-town.html",
+      "name": "The Westin Cape Town",
+      "full_name": "The Westin Cape Town",
+      "category": "Hotels",
+      "tags": ["Luxury hotels", "Business hotels", "Ballrooms", "Meeting suites", "Executive boardrooms"],
+      "city": "Cape Town",
+      "country_iso2": "za",
+      "description": [
+        "The Westin Cape Town provides well-appointed conference facilities in a full-service hotel setting, suited to corporate meetings, conferences and incentive groups travelling into South Africa.",
+        "With on-site dining, a spa and comfortable accommodation alongside its event space, it offers a convenient single-venue solution for multi-day business events."
+      ],
+      "map_query": "The Westin Cape Town, South Africa",
+      "card_image": "assets/images/venues/the-westin-cape-town/gallery-01",
+      "gallery_dir": "assets/images/venues/the-westin-cape-town",
+      "gallery": [
+        "The Westin Cape Town tower at dusk",
+        "Ballroom set for a banquet",
+        "Meeting room in a U-shape layout",
+        "Conference room in theatre style",
+        "Executive boardroom",
+        "Grand staircase in the conference foyer",
+        "Louis B's restaurant and bar",
+        "Indoor pool at the Heavenly Spa",
+        "Heavenly Spa reception",
+        "Suite with views of Table Mountain"
+      ]
+    }
+  ]
+}

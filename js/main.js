@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
   initCarousels();
   initAfricaMaps();
   initPartnerFilter();
+  initVenueGalleries();
+  initVenueFilters();
 });
 
 /* Header: mobile panel and compact-on-scroll ------------------------------ */
@@ -1249,4 +1251,162 @@ function initPartnerFilter() {
     clearMapPin();
     apply(turnOn ? "regional" : null);
   });
+}
+
+/* Venue page gallery: [data-venue-gallery]. Auto-rolls every 5s (client spec
+   06), pauses on hover/focus or with the pause button, prev/next, thumbnails,
+   arrow keys, swipe. Slides are [data-lightbox-item] links, so a click opens
+   the shared lightbox. */
+
+function initVenueGalleries() {
+  document.querySelectorAll("[data-venue-gallery]").forEach(function (root) {
+    var slides = Array.prototype.slice.call(root.querySelectorAll("[data-venue-slide]"));
+    var thumbs = Array.prototype.slice.call(root.querySelectorAll("[data-venue-thumb]"));
+    var counter = root.querySelector("[data-venue-counter]");
+    var pauseBtn = root.querySelector("[data-venue-pause]");
+    if (slides.length < 2) return;
+    var current = 0;
+    var timer = null;
+    var userPaused = REDUCED_MOTION;
+    var hover = false;
+
+    function show(i) {
+      current = (i + slides.length) % slides.length;
+      slides.forEach(function (s, k) {
+        var on = k === current;
+        s.classList.toggle("is-active", on);
+        if (on) { s.removeAttribute("aria-hidden"); s.removeAttribute("tabindex"); }
+        else { s.setAttribute("aria-hidden", "true"); s.setAttribute("tabindex", "-1"); }
+      });
+      thumbs.forEach(function (t, k) {
+        t.classList.toggle("is-active", k === current);
+        if (k === current) t.setAttribute("aria-current", "true"); else t.removeAttribute("aria-current");
+      });
+      if (counter) counter.textContent = current + 1 + " / " + slides.length;
+      // Load the next image early so the crossfade never shows a gap.
+      var next = slides[(current + 1) % slides.length].querySelector("img");
+      if (next && next.loading === "lazy") next.loading = "eager";
+    }
+
+    function stop() { window.clearInterval(timer); timer = null; }
+    function start() {
+      stop();
+      if (userPaused || hover) return;
+      timer = window.setInterval(function () { show(current + 1); }, 5000);
+    }
+    function sync() {
+      root.classList.toggle("is-paused", userPaused);
+      if (pauseBtn) {
+        pauseBtn.setAttribute("aria-pressed", userPaused ? "true" : "false");
+        pauseBtn.setAttribute("aria-label", userPaused ? "Play slideshow" : "Pause slideshow");
+      }
+    }
+
+    root.querySelector("[data-venue-prev]").addEventListener("click", function () { show(current - 1); start(); });
+    root.querySelector("[data-venue-next]").addEventListener("click", function () { show(current + 1); start(); });
+    thumbs.forEach(function (t) {
+      t.addEventListener("click", function () { show(parseInt(t.getAttribute("data-venue-thumb"), 10)); start(); });
+    });
+    if (pauseBtn) pauseBtn.addEventListener("click", function () { userPaused = !userPaused; sync(); start(); });
+    root.addEventListener("mouseenter", function () { hover = true; stop(); });
+    root.addEventListener("mouseleave", function () { hover = false; start(); });
+    root.addEventListener("focusin", function () { hover = true; stop(); });
+    root.addEventListener("focusout", function (e) { if (!root.contains(e.relatedTarget)) { hover = false; start(); } });
+    root.addEventListener("keydown", function (e) {
+      if (e.target.closest("[data-venue-thumb]") || e.target.closest("[data-venue-slide]") || e.target === root) {
+        if (e.key === "ArrowRight") { e.preventDefault(); show(current + 1); }
+        if (e.key === "ArrowLeft") { e.preventDefault(); show(current - 1); }
+      }
+    });
+    var sx = null;
+    var stage = root.querySelector(".venue-gallery-stage");
+    stage.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener("touchend", function (e) {
+      if (sx === null) return;
+      var dx = e.changedTouches[0].clientX - sx;
+      sx = null;
+      if (Math.abs(dx) > 40) { show(dx < 0 ? current + 1 : current - 1); start(); }
+    });
+    document.addEventListener("visibilitychange", function () { if (document.hidden) stop(); else start(); });
+
+    show(0);
+    sync();
+    start();
+  });
+}
+
+/* Venues listing: category, country and product-category filters + sort. */
+
+function initVenueFilters() {
+  var root = document.querySelector("[data-venue-filters]");
+  if (!root) return;
+  var list = root.querySelector("[data-venue-list]");
+  var cards = Array.prototype.slice.call(list.querySelectorAll("[data-venue]"));
+  var count = root.querySelector("[data-venue-count]");
+  var empty = root.querySelector("[data-venue-empty]");
+  var sort = root.querySelector("[data-venue-sort]");
+  var state = { category: "", country: "", tags: [] };
+
+  function render() {
+    var shown = 0;
+    cards.forEach(function (c) {
+      var tags = c.getAttribute("data-tags").split("|");
+      var ok = (!state.category || c.getAttribute("data-category") === state.category) &&
+        (!state.country || c.getAttribute("data-country") === state.country) &&
+        state.tags.every(function (t) { return tags.indexOf(t) !== -1; });
+      c.hidden = !ok;
+      if (ok) shown++;
+    });
+    var filtered = state.category || state.country || state.tags.length;
+    count.textContent = filtered ? "Showing " + shown + " of " + cards.length + " results" : "Showing all " + cards.length + " results";
+    empty.hidden = shown !== 0;
+  }
+
+  root.querySelectorAll(".venue-filter-opt").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var key = btn.getAttribute("data-filter");
+      state[key] = btn.getAttribute("data-value");
+      root.querySelectorAll('.venue-filter-opt[data-filter="' + key + '"]').forEach(function (b) {
+        var on = b === btn;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      render();
+    });
+  });
+
+  root.querySelectorAll(".venue-tag").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var v = btn.getAttribute("data-value");
+      var on = btn.getAttribute("aria-pressed") !== "true";
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      state.tags = on ? state.tags.concat(v) : state.tags.filter(function (t) { return t !== v; });
+      render();
+    });
+  });
+
+  root.querySelector("[data-venue-reset]").addEventListener("click", function () {
+    state = { category: "", country: "", tags: [] };
+    root.querySelectorAll(".venue-filter-opt").forEach(function (b) {
+      var on = b.getAttribute("data-value") === "";
+      b.classList.toggle("is-active", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    root.querySelectorAll(".venue-tag").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+    render();
+  });
+
+  sort.addEventListener("change", function () {
+    var key = sort.value;
+    cards.slice().sort(function (a, b) {
+      if (key === "name") return a.getAttribute("data-name").localeCompare(b.getAttribute("data-name"));
+      if (key === "country") return a.getAttribute("data-country").localeCompare(b.getAttribute("data-country")) || a.getAttribute("data-name").localeCompare(b.getAttribute("data-name"));
+      return a.getAttribute("data-order") - b.getAttribute("data-order");
+    }).forEach(function (c) { list.appendChild(c); });
+  });
+
+  // venues.html?country=na (from destination links)
+  var q = new URLSearchParams(window.location.search).get("country");
+  var pre = q && root.querySelector('.venue-filter-opt[data-filter="country"][data-value="' + q + '"]:not(:disabled)');
+  if (pre) pre.click();
 }

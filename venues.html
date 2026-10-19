@@ -78,86 +78,139 @@
       </div>
     </section>
 
-    <!-- TODO: add category/country filters once more venues are added -->
-    <section class="section">
+    <section class="section" aria-labelledby="venues-intro-title">
       <div class="container">
-        <div class="intro-header">
+        <div class="venues-intro">
+          <div>
+            <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">02</span>&nbsp;/ Our venues</p>
+            <h2 id="venues-intro-title">Discover Spaces That Bring Events to <em class="accent">Life</em></h2>
+          </div>
           <p>Every successful event starts with the right venue. As part of Zusammen Tours and Travel Agency's MICE segment, we offer a carefully selected collection of conference centres, meeting rooms, exhibition venues, hotels and distinctive event spaces to suit a wide range of business events and occasions. Whether you're organising a corporate meeting, incentive trip, conference, exhibition or gala dinner, our venue listings make it easy to find the ideal setting. Discover spaces that inspire collaboration, create lasting impressions and provide the perfect backdrop for successful events across Namibia.</p>
         </div>
-        <div class="venues-grid">
-
-          <article class="venue-card">
-            <div class="venue-card-media">
-              <picture>
-                <source type="image/webp" srcset="assets/images/venues/movenpick/exterior-facade-640.webp 640w, assets/images/venues/movenpick/exterior-facade-1280.webp 1280w" sizes="(max-width: 720px) 100vw, 580px">
-                <img src="assets/images/venues/movenpick/exterior-facade-1280.jpg" srcset="assets/images/venues/movenpick/exterior-facade-640.jpg 640w, assets/images/venues/movenpick/exterior-facade-1280.jpg 1280w" sizes="(max-width: 720px) 100vw, 580px" alt="Exterior of Movenpick" width="1280" height="1920" loading="lazy" decoding="async">
-              </picture>
+        <div class="venues-layout" data-venue-filters>
+          <aside class="venue-filters" aria-label="Filter venues">
+            <div class="venue-filter">
+              <h2 class="venue-filter-title" id="vf-category">Venue Category</h2>
+              <ul aria-labelledby="vf-category">
+                <li><button type="button" class="venue-filter-opt is-active" data-filter="category" data-value="" aria-pressed="true">All categories <span>4</span></button></li>
+                <li><button type="button" class="venue-filter-opt" data-filter="category" data-value="Hotels" aria-pressed="false">Hotels <span>2</span></button></li>
+                <li><button type="button" class="venue-filter-opt" data-filter="category" data-value="Convention Centres" aria-pressed="false">Convention Centres <span>1</span></button></li>
+                <li><button type="button" class="venue-filter-opt" data-filter="category" data-value="Resorts" aria-pressed="false">Resorts <span>1</span></button></li>
+              </ul>
             </div>
-            <div class="venue-card-body">
-              <span class="venue-card-type">Hotel</span>
-              <h3>Movenpick</h3>
-              <div class="venue-card-country">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
-                <span>Namibia</span>
+            <div class="venue-filter">
+              <h2 class="venue-filter-title" id="vf-country">Filter by Country</h2>
+              <ul aria-labelledby="vf-country">
+                <li><button type="button" class="venue-filter-opt is-active" data-filter="country" data-value="" aria-pressed="true">All countries <span>4</span></button></li>
+                <li><button type="button" class="venue-filter-opt" data-filter="country" data-value="na" aria-pressed="false"><img src="assets/images/flags/na.svg" alt="" width="20" height="15">Namibia <span>3</span></button></li>
+                <li><button type="button" class="venue-filter-opt" data-filter="country" data-value="bw" aria-pressed="false" disabled><img src="assets/images/flags/bw.svg" alt="" width="20" height="15">Botswana <span>0</span></button></li>
+                <li><button type="button" class="venue-filter-opt" data-filter="country" data-value="za" aria-pressed="false"><img src="assets/images/flags/za.svg" alt="" width="20" height="15">South Africa <span>1</span></button></li>
+                <li><button type="button" class="venue-filter-opt" data-filter="country" data-value="zm" aria-pressed="false" disabled><img src="assets/images/flags/zm.svg" alt="" width="20" height="15">Zambia <span>0</span></button></li>
+                <li><button type="button" class="venue-filter-opt" data-filter="country" data-value="zw" aria-pressed="false" disabled><img src="assets/images/flags/zw.svg" alt="" width="20" height="15">Zimbabwe <span>0</span></button></li>
+                <li><button type="button" class="venue-filter-opt" data-filter="country" data-value="tz" aria-pressed="false" disabled><img src="assets/images/flags/tz.svg" alt="" width="20" height="15">Tanzania <span>0</span></button></li>
+                <li><button type="button" class="venue-filter-opt" data-filter="country" data-value="ke" aria-pressed="false" disabled><img src="assets/images/flags/ke.svg" alt="" width="20" height="15">Kenya <span>0</span></button></li>
+                <li><button type="button" class="venue-filter-opt" data-filter="country" data-value="rw" aria-pressed="false" disabled><img src="assets/images/flags/rw.svg" alt="" width="20" height="15">Rwanda <span>0</span></button></li>
+                <li><button type="button" class="venue-filter-opt" data-filter="country" data-value="ug" aria-pressed="false" disabled><img src="assets/images/flags/ug.svg" alt="" width="20" height="15">Uganda <span>0</span></button></li>
+              </ul>
+            </div>
+            <div class="venue-filter">
+              <h2 class="venue-filter-title" id="vf-tags">Product Categories</h2>
+              <ul class="venue-tag-list" aria-labelledby="vf-tags">
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Ballrooms" aria-pressed="false">Ballrooms</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Boardrooms" aria-pressed="false">Boardrooms</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Business hotels" aria-pressed="false">Business hotels</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Congress centres" aria-pressed="false">Congress centres</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Convention halls" aria-pressed="false">Convention halls</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Executive boardrooms" aria-pressed="false">Executive boardrooms</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Exhibition halls" aria-pressed="false">Exhibition halls</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Function halls" aria-pressed="false">Function halls</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Gala dinner venues" aria-pressed="false">Gala dinner venues</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Golf resorts" aria-pressed="false">Golf resorts</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Luxury hotels" aria-pressed="false">Luxury hotels</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Meeting suites" aria-pressed="false">Meeting suites</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Multi-purpose event centres" aria-pressed="false">Multi-purpose event centres</button></li>
+                <li><button type="button" class="venue-tag" data-filter="tag" data-value="Training rooms" aria-pressed="false">Training rooms</button></li>
+              </ul>
+            </div>
+          </aside>
+          <div class="venues-results">
+            <div class="venues-toolbar">
+              <p class="venues-count" aria-live="polite" data-venue-count>Showing all 4 results</p>
+              <label class="venues-sort">
+                <span class="visually-hidden">Sort venues</span>
+                <select data-venue-sort>
+                  <option value="default">Default sorting</option>
+                  <option value="name">Sort by name</option>
+                  <option value="country">Sort by country</option>
+                </select>
+              </label>
+            </div>
+            <div class="venue-grid-lg" data-venue-list>
+            <article class="venue-card-lg" data-venue data-category="Convention Centres" data-country="na" data-tags="Convention halls|Congress centres|Multi-purpose event centres|Exhibition halls|Ballrooms|Gala dinner venues" data-name="WICC" data-order="0">
+              <div class="venue-card-lg-media">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/venues/wicc/gallery-01-640.webp 640w, assets/images/venues/wicc/gallery-01-1280.webp 1280w, assets/images/venues/wicc/gallery-01-1920.webp 1920w" sizes="(max-width: 900px) 100vw, 440px">
+                  <img src="assets/images/venues/wicc/gallery-01-1280.jpg" srcset="assets/images/venues/wicc/gallery-01-640.jpg 640w, assets/images/venues/wicc/gallery-01-1280.jpg 1280w, assets/images/venues/wicc/gallery-01-1920.jpg 1920w" sizes="(max-width: 900px) 100vw, 440px" alt="Keynote address on the main stage at a WICC conference" width="1280" height="853" loading="lazy" decoding="async">
+                </picture>
+                <span class="chip chip--category">Convention Centre</span>
               </div>
-              <a href="venue-movenpick.html" class="btn btn-outline">View Details</a>
-            </div>
-          </article>
-
-          <article class="venue-card">
-            <div class="venue-card-media">
-              <picture>
-  <source type="image/webp" srcset="assets/images/venues/wicc/event-3-640.webp 640w, assets/images/venues/wicc/event-3-1280.webp 1280w, assets/images/venues/wicc/event-3-1920.webp 1920w" sizes="(max-width: 720px) 100vw, 580px">
-  <img src="assets/images/venues/wicc/event-3-1280.jpg" srcset="assets/images/venues/wicc/event-3-640.jpg 640w, assets/images/venues/wicc/event-3-1280.jpg 1280w, assets/images/venues/wicc/event-3-1920.jpg 1920w" sizes="(max-width: 720px) 100vw, 580px" alt="Event space at WICC" width="1920" height="1280" loading="lazy" decoding="async">
-</picture>
-            </div>
-            <div class="venue-card-body">
-              <span class="venue-card-type">Convention Centre</span>
-              <h3>WICC</h3>
-              <div class="venue-card-country">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
-                <span>Namibia</span>
+              <div class="venue-card-lg-body">
+                <h3><a href="venue-wicc.html" class="card-link">WICC</a></h3>
+                <p class="venue-card-lg-country"><img src="assets/images/flags/na.svg" alt="" width="24" height="18"><span>Windhoek, Namibia</span></p>
+                <span class="btn btn-secondary venue-card-lg-btn" aria-hidden="true">View Details</span>
               </div>
-              <a href="venue-wicc.html" class="btn btn-outline">View Details</a>
-            </div>
-          </article>
-
-          <article class="venue-card">
-            <div class="venue-card-media">
-              <picture>
-  <source type="image/webp" srcset="assets/images/venues/windhoek-country-club-resort-casino/exterior-640.webp 640w, assets/images/venues/windhoek-country-club-resort-casino/exterior-1280.webp 1280w, assets/images/venues/windhoek-country-club-resort-casino/exterior-1920.webp 1920w" sizes="(max-width: 720px) 100vw, 580px">
-  <img src="assets/images/venues/windhoek-country-club-resort-casino/exterior-1280.jpg" srcset="assets/images/venues/windhoek-country-club-resort-casino/exterior-640.jpg 640w, assets/images/venues/windhoek-country-club-resort-casino/exterior-1280.jpg 1280w, assets/images/venues/windhoek-country-club-resort-casino/exterior-1920.jpg 1920w" sizes="(max-width: 720px) 100vw, 580px" alt="Exterior of Windhoek Country Club Resort & Casino" width="1920" height="1281" loading="lazy" decoding="async">
-</picture>
-            </div>
-            <div class="venue-card-body">
-              <span class="venue-card-type">Resort</span>
-              <h3>Windhoek Country Club Resort &amp; Casino</h3>
-              <div class="venue-card-country">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
-                <span>Namibia</span>
+            </article>
+            <article class="venue-card-lg" data-venue data-category="Resorts" data-country="na" data-tags="Golf resorts|Business hotels|Boardrooms|Training rooms|Function halls|Gala dinner venues" data-name="Windhoek Country Club Resort &amp; Casino" data-order="1">
+              <div class="venue-card-lg-media">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/venues/windhoek-country-club-resort-casino/gallery-01-640.webp 640w, assets/images/venues/windhoek-country-club-resort-casino/gallery-01-1280.webp 1280w, assets/images/venues/windhoek-country-club-resort-casino/gallery-01-1920.webp 1920w" sizes="(max-width: 900px) 100vw, 440px">
+                  <img src="assets/images/venues/windhoek-country-club-resort-casino/gallery-01-1280.jpg" srcset="assets/images/venues/windhoek-country-club-resort-casino/gallery-01-640.jpg 640w, assets/images/venues/windhoek-country-club-resort-casino/gallery-01-1280.jpg 1280w, assets/images/venues/windhoek-country-club-resort-casino/gallery-01-1920.jpg 1920w" sizes="(max-width: 900px) 100vw, 440px" alt="Resort buildings and lawns at dusk" width="1280" height="854" loading="lazy" decoding="async">
+                </picture>
+                <span class="chip chip--category">Resort</span>
               </div>
-              <a href="venue-windhoek-country-club.html" class="btn btn-outline">View Details</a>
-            </div>
-          </article>
-
-          <article class="venue-card">
-            <div class="venue-card-media">
-              <picture>
-  <source type="image/webp" srcset="assets/images/venues/the-westin-cape-town/exterior-640.webp 640w, assets/images/venues/the-westin-cape-town/exterior-1280.webp 1280w, assets/images/venues/the-westin-cape-town/exterior-1920.webp 1920w" sizes="(max-width: 720px) 100vw, 580px">
-  <img src="assets/images/venues/the-westin-cape-town/exterior-1280.jpg" srcset="assets/images/venues/the-westin-cape-town/exterior-640.jpg 640w, assets/images/venues/the-westin-cape-town/exterior-1280.jpg 1280w, assets/images/venues/the-westin-cape-town/exterior-1920.jpg 1920w" sizes="(max-width: 720px) 100vw, 580px" alt="Exterior of The Westin Cape Town" width="1920" height="1183" loading="lazy" decoding="async">
-</picture>
-            </div>
-            <div class="venue-card-body">
-              <span class="venue-card-type">Hotel</span>
-              <h3>The Westin Cape Town</h3>
-              <div class="venue-card-country">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
-                <span>South Africa</span>
+              <div class="venue-card-lg-body">
+                <h3><a href="venue-windhoek-country-club.html" class="card-link">Windhoek Country Club Resort &amp; Casino</a></h3>
+                <p class="venue-card-lg-country"><img src="assets/images/flags/na.svg" alt="" width="24" height="18"><span>Windhoek, Namibia</span></p>
+                <span class="btn btn-secondary venue-card-lg-btn" aria-hidden="true">View Details</span>
               </div>
-              <a href="venue-westin-cape-town.html" class="btn btn-outline">View Details</a>
+            </article>
+            <article class="venue-card-lg" data-venue data-category="Hotels" data-country="na" data-tags="Business hotels|Luxury hotels|Meeting suites|Boardrooms" data-name="Movenpick" data-order="2">
+              <div class="venue-card-lg-media">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/venues/movenpick/gallery-01-640.webp 640w, assets/images/venues/movenpick/gallery-01-1280.webp 1280w, assets/images/venues/movenpick/gallery-01-1920.webp 1920w" sizes="(max-width: 900px) 100vw, 440px">
+                  <img src="assets/images/venues/movenpick/gallery-01-1280.jpg" srcset="assets/images/venues/movenpick/gallery-01-640.jpg 640w, assets/images/venues/movenpick/gallery-01-1280.jpg 1280w, assets/images/venues/movenpick/gallery-01-1920.jpg 1920w" sizes="(max-width: 900px) 100vw, 440px" alt="Movenpick Hotel Windhoek at dusk" width="1280" height="853" loading="lazy" decoding="async">
+                </picture>
+                <span class="chip chip--category">Hotel</span>
+              </div>
+              <div class="venue-card-lg-body">
+                <h3><a href="venue-movenpick.html" class="card-link">Movenpick</a></h3>
+                <p class="venue-card-lg-country"><img src="assets/images/flags/na.svg" alt="" width="24" height="18"><span>Windhoek, Namibia</span></p>
+                <span class="btn btn-secondary venue-card-lg-btn" aria-hidden="true">View Details</span>
+              </div>
+            </article>
+            <article class="venue-card-lg" data-venue data-category="Hotels" data-country="za" data-tags="Luxury hotels|Business hotels|Ballrooms|Meeting suites|Executive boardrooms" data-name="The Westin Cape Town" data-order="3">
+              <div class="venue-card-lg-media">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/venues/the-westin-cape-town/gallery-01-640.webp 640w, assets/images/venues/the-westin-cape-town/gallery-01-1280.webp 1280w, assets/images/venues/the-westin-cape-town/gallery-01-1920.webp 1920w" sizes="(max-width: 900px) 100vw, 440px">
+                  <img src="assets/images/venues/the-westin-cape-town/gallery-01-1280.jpg" srcset="assets/images/venues/the-westin-cape-town/gallery-01-640.jpg 640w, assets/images/venues/the-westin-cape-town/gallery-01-1280.jpg 1280w, assets/images/venues/the-westin-cape-town/gallery-01-1920.jpg 1920w" sizes="(max-width: 900px) 100vw, 440px" alt="The Westin Cape Town tower at dusk" width="1280" height="815" loading="lazy" decoding="async">
+                </picture>
+                <span class="chip chip--category">Hotel</span>
+              </div>
+              <div class="venue-card-lg-body">
+                <h3><a href="venue-westin-cape-town.html" class="card-link">The Westin Cape Town</a></h3>
+                <p class="venue-card-lg-country"><img src="assets/images/flags/za.svg" alt="" width="24" height="18"><span>Cape Town, South Africa</span></p>
+                <span class="btn btn-secondary venue-card-lg-btn" aria-hidden="true">View Details</span>
+              </div>
+            </article>
             </div>
-          </article>
-
+            <div class="venues-empty" data-venue-empty hidden>
+              <p><strong>No venues match these filters yet.</strong> We add venues across all nine destinations regularly, and we can source one for you.</p>
+              <div class="venues-empty-actions">
+                <button type="button" class="btn btn-ghost" data-venue-reset>Clear filters</button>
+                <a href="contact.html?type=proposal#contact-form" class="btn btn-primary">Ask us to source a venue</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
