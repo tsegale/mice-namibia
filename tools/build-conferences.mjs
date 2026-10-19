@@ -406,6 +406,12 @@ home = home.replace(/data-count-to="\d+" data-conference-count>\d+</, `data-coun
 await writeFile(rel("index.html"), home);
 console.log("updated index.html");
 
+// The About page repeats the stats band.
+let about = await readFile(rel("about.html"), "utf8");
+about = about.replace(/data-count-to="\d+" data-conference-count>\d+</, `data-count-to="${upcoming.length}" data-conference-count>${upcoming.length}<`);
+await writeFile(rel("about.html"), about);
+console.log("updated about.html");
+
 let contact = await readFile(rel("contact.html"), "utf8");
 contact = replaceBetween(contact, "data", `  <script type="application/json" id="conference-data">${embedded}</script>`, "contact.html");
 await writeFile(rel("contact.html"), contact);

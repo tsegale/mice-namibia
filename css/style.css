@@ -7641,3 +7641,8 @@ h2 em.accent,
     max-width: 560px;
   }
 }
+
+/* About: the stats band overlaps the page header, so keep the header copy clear of it. */
+.page-header:has(+ .hero-stats-wrap) > .container {
+  padding-bottom: 4rem;
+}
