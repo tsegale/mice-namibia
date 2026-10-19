@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initEventsArchive();
   initCountdowns();
   initLightboxes();
+  initGalleryFilter();
   initBlogFilters();
   initHeroSlider();
   initCarousels();
@@ -763,6 +764,37 @@ var LIGHTBOX_ICON = {
   close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>',
 };
 
+/* Gallery page: category chips filter the photo grid.
+   [data-gallery-filter] buttons carry data-filter; figures carry data-category. */
+
+function initGalleryFilter() {
+  var group = document.querySelector("[data-gallery-filter]");
+  var grid = document.querySelector("[data-gallery-grid]");
+  if (!group || !grid) return;
+  var buttons = Array.prototype.slice.call(group.querySelectorAll("[data-filter]"));
+  var figures = Array.prototype.slice.call(grid.querySelectorAll("[data-category]"));
+  var status = document.querySelector("[data-gallery-status]");
+
+  function apply(cat) {
+    var shown = 0;
+    figures.forEach(function (f) {
+      var on = cat === "all" || f.getAttribute("data-category") === cat;
+      f.hidden = !on;
+      if (on) shown++;
+    });
+    buttons.forEach(function (b) {
+      var on = b.getAttribute("data-filter") === cat;
+      b.classList.toggle("is-active", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    if (status) status.textContent = "Showing " + shown + " photos";
+  }
+
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () { apply(b.getAttribute("data-filter")); });
+  });
+}
+
 function initLightboxes() {
   var groups = document.querySelectorAll("[data-lightbox]");
   if (!groups.length || typeof HTMLDialogElement !== "function") return;
@@ -839,9 +871,10 @@ function initLightboxes() {
       item.setAttribute("aria-haspopup", "dialog");
       item.addEventListener("click", function (event) {
         event.preventDefault();
-        items = groupItems;
+        // Skip items hidden by a filter (e.g. the gallery category chips).
+        items = groupItems.filter(function (el) { return !el.closest("[hidden]"); });
         opener = item;
-        show(i);
+        show(Math.max(0, items.indexOf(item)));
         dialog.showModal();
         document.body.classList.add("menu-open");
         dialog.querySelector("[data-lightbox-next]").focus();
