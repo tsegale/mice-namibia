@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initBlogFilters();
   initHeroSlider();
   initCarousels();
+  initAfricaMaps();
 });
 
 /* Header: mobile panel and compact-on-scroll ------------------------------ */
@@ -334,43 +335,58 @@ function initContactForm() {
 /* Blog listing filters --------------------------------------------------- */
 
 function initBlogFilters() {
-  var cards = document.querySelectorAll("[data-blog-list] .blog-card");
+  var list = document.querySelector("[data-blog-list]");
+  if (!list) return;
+  var cards = Array.prototype.slice.call(list.querySelectorAll("[data-post]"));
   var searchInput = document.querySelector("[data-blog-search]");
-  var categoryButtons = document.querySelectorAll("[data-blog-categories] .category-filter");
+  var buttons = Array.prototype.slice.call(document.querySelectorAll("[data-blog-categories] [data-category]"));
   var emptyState = document.querySelector("[data-blog-empty]");
-  if (!cards.length) return;
-
+  var reset = document.querySelector("[data-blog-reset]");
   var activeCategory = "all";
+
+  function setCategory(cat) {
+    activeCategory = cat;
+    buttons.forEach(function (b) {
+      var on = b.getAttribute("data-category") === cat;
+      b.classList.toggle("is-active", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
 
   function applyFilters() {
     var term = (searchInput ? searchInput.value : "").trim().toLowerCase();
     var visibleCount = 0;
-
     cards.forEach(function (card) {
-      var matchesCategory = activeCategory === "all" || card.dataset.category === activeCategory;
-      var matchesSearch = term === "" || card.dataset.search.indexOf(term) !== -1;
+      var matchesCategory = activeCategory === "all" || card.getAttribute("data-category") === activeCategory;
+      var matchesSearch = term === "" || card.getAttribute("data-search").indexOf(term) !== -1;
       var visible = matchesCategory && matchesSearch;
       card.hidden = !visible;
       if (visible) visibleCount++;
     });
-
     if (emptyState) emptyState.hidden = visibleCount !== 0;
   }
 
-  if (searchInput) {
-    searchInput.addEventListener("input", applyFilters);
-  }
-
-  categoryButtons.forEach(function (btn) {
+  if (searchInput) searchInput.addEventListener("input", applyFilters);
+  buttons.forEach(function (btn) {
     btn.addEventListener("click", function () {
-      categoryButtons.forEach(function (b) {
-        b.classList.remove("active");
-      });
-      btn.classList.add("active");
-      activeCategory = btn.dataset.category;
+      setCategory(btn.getAttribute("data-category"));
       applyFilters();
     });
   });
+  if (reset) {
+    reset.addEventListener("click", function () {
+      if (searchInput) searchInput.value = "";
+      setCategory("all");
+      applyFilters();
+    });
+  }
+
+  // blog.html?category=Planning (links from the article sidebars)
+  var fromUrl = new URLSearchParams(window.location.search).get("category");
+  if (fromUrl && buttons.some(function (b) { return b.getAttribute("data-category") === fromUrl; })) {
+    setCategory(fromUrl);
+    applyFilters();
+  }
 }
 
 /* Conference data embedded by tools/build-conferences.mjs ------------------ */
@@ -1135,5 +1151,49 @@ function initCarousels() {
     track.addEventListener("dragstart", function (event) { event.preventDefault(); });
 
     update();
+  });
+}
+
+/* Africa map: [data-africa-map] container with .africa-map-country.is-dest
+   paths (data-iso) and [data-map-iso] tiles. Hover/focus on either side
+   highlights both; clicking a tile pins it (aria-pressed). Pages can listen
+   for the "map:select" event (detail.iso or null) to filter content. */
+
+function initAfricaMaps() {
+  document.querySelectorAll("[data-africa-map]").forEach(function (root) {
+    var tiles = Array.prototype.slice.call(root.querySelectorAll("[data-map-iso]"));
+    var paths = Array.prototype.slice.call(root.querySelectorAll(".africa-map-country.is-dest"));
+    var pinned = null;
+
+    function highlight(iso) {
+      var active = iso || pinned;
+      paths.forEach(function (p) { p.classList.toggle("is-active", p.getAttribute("data-iso") === active); });
+      tiles.forEach(function (t) { t.classList.toggle("is-active", t.getAttribute("data-map-iso") === active); });
+    }
+
+    function pin(iso) {
+      pinned = pinned === iso ? null : iso;
+      tiles.forEach(function (t) {
+        t.setAttribute("aria-pressed", t.getAttribute("data-map-iso") === pinned ? "true" : "false");
+      });
+      highlight(null);
+      root.dispatchEvent(new CustomEvent("map:select", { detail: { iso: pinned }, bubbles: true }));
+    }
+
+    tiles.forEach(function (t) {
+      var iso = t.getAttribute("data-map-iso");
+      t.addEventListener("mouseenter", function () { highlight(iso); });
+      t.addEventListener("mouseleave", function () { highlight(null); });
+      t.addEventListener("focus", function () { highlight(iso); });
+      t.addEventListener("blur", function () { highlight(null); });
+      t.addEventListener("click", function () { pin(iso); });
+    });
+
+    paths.forEach(function (p) {
+      var iso = p.getAttribute("data-iso");
+      p.addEventListener("mouseenter", function () { highlight(iso); });
+      p.addEventListener("mouseleave", function () { highlight(null); });
+      p.addEventListener("click", function () { pin(iso); });
+    });
   });
 }
