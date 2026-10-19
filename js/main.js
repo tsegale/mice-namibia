@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initHeroSlider();
   initCarousels();
   initAfricaMaps();
+  initPartnerFilter();
 });
 
 /* Header: mobile panel and compact-on-scroll ------------------------------ */
@@ -1195,5 +1196,57 @@ function initAfricaMaps() {
       p.addEventListener("mouseleave", function () { highlight(null); });
       p.addEventListener("click", function () { pin(iso); });
     });
+  });
+}
+
+/* Partners: filter the partner cards by the map/flag selection, "Regional
+   brands" or "All". [data-partner-filter] holds the map; cards carry
+   data-country (iso2 or "regional"). */
+
+function initPartnerFilter() {
+  var mapRoot = document.querySelector("[data-partner-filter]");
+  var list = document.querySelector("[data-partner-list]");
+  if (!mapRoot || !list) return;
+  var cards = Array.prototype.slice.call(list.querySelectorAll("[data-country]"));
+  var count = document.querySelector("[data-partner-count]");
+  var allBtn = document.querySelector("[data-partner-all]");
+  var regionalBtn = document.querySelector("[data-partner-regional]");
+  var names = {};
+  mapRoot.querySelectorAll("[data-map-iso]").forEach(function (t) {
+    names[t.getAttribute("data-map-iso")] = t.querySelector(".reach-tile-name").textContent;
+  });
+
+  function setPressed(btn, on) {
+    if (!btn) return;
+    btn.classList.toggle("is-active", on);
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+  }
+
+  function apply(country) {
+    var shown = 0;
+    cards.forEach(function (c) {
+      var on = !country || c.getAttribute("data-country") === country;
+      c.hidden = !on;
+      if (on) shown++;
+    });
+    setPressed(allBtn, !country);
+    setPressed(regionalBtn, country === "regional");
+    if (count) {
+      count.textContent = !country ? "Showing all " + shown + " partners"
+        : country === "regional" ? "Showing " + shown + " regional brands"
+        : "Showing " + shown + " partner" + (shown === 1 ? "" : "s") + " in " + names[country];
+    }
+  }
+
+  function clearMapPin() {
+    mapRoot.querySelectorAll("[data-map-iso][aria-pressed='true']").forEach(function (t) { t.click(); });
+  }
+
+  mapRoot.addEventListener("map:select", function (e) { apply(e.detail.iso); });
+  if (allBtn) allBtn.addEventListener("click", function () { clearMapPin(); apply(null); });
+  if (regionalBtn) regionalBtn.addEventListener("click", function () {
+    var turnOn = regionalBtn.getAttribute("aria-pressed") !== "true";
+    clearMapPin();
+    apply(turnOn ? "regional" : null);
   });
 }

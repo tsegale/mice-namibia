@@ -6696,3 +6696,144 @@ h2 em.accent,
     flex-basis: 100%;
   }
 }
+
+/* ---- Partners ------------------------------------------------------------- */
+.partners-hint {
+  margin: var(--space-2) 0 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.partner-list-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.partner-list-head h2 {
+  font-size: var(--step-3);
+}
+
+.partner-list-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.partner-count {
+  margin: 0 0.5rem 0 0;
+  color: var(--navy-700);
+  font-weight: 700;
+}
+
+.partner-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.partner-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow: var(--shadow-1);
+  transition: box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.partner-card:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-3px);
+}
+
+.partner-card-logo {
+  display: grid;
+  place-items: center;
+  height: 110px;
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.partner-card-logo img {
+  max-width: 85%;
+  max-height: 90px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* White-on-transparent logos (Mercure) need a dark field. */
+.partner-card-logo--dark {
+  margin: calc(var(--space-3) * -1) calc(var(--space-3) * -1) var(--space-2);
+  padding: var(--space-3);
+  border-bottom: 0;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  background: var(--navy-700);
+  height: calc(110px + var(--space-3));
+}
+
+.partner-card-name {
+  margin: 0;
+  color: var(--navy-700);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.partner-card-place {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.35rem 0 0;
+  color: var(--text-muted-tint);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.partner-card-place img {
+  border-radius: 2px;
+}
+
+.venue-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.venue-mini-place {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.venue-mini h3 {
+  margin: 0.35rem 0 0.5rem;
+  font-size: var(--step-1);
+}
+
+@media (max-width: 1080px) {
+  .partner-cards,
+  .venue-mini-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .partner-cards,
+  .venue-mini-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
