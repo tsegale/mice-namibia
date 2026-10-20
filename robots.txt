@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /team.html
+
+Sitemap: https://tsegale.github.io/mice-namibia/sitemap.xml
