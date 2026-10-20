@@ -39,6 +39,9 @@ function jpegSize(file) {
   throw new Error("no size: " + file);
 }
 
+// Largest generated JPG (sources narrower than 1920px have no -1920 variant).
+const largest = (base) => `${base}-${[1920, 1280, 640].find((w) => existsSync(rel(`${base}-${w}.jpg`)))}.jpg`;
+
 function picture(base, { sizes, alt = "", lazy = true, priority = false, indent = "" }) {
   const ws = [640, 1280, 1920].filter((w) => existsSync(rel(`${base}-${w}.jpg`)));
   if (!ws.length) throw new Error("no variants for " + base);
@@ -179,7 +182,7 @@ ${picture(g[0].base, { sizes: "100vw", alt: "", lazy: false, priority: true, ind
       <div class="container venue-detail-grid">
         <div class="venue-gallery" data-venue-gallery data-lightbox aria-roledescription="carousel" aria-label="${esc(v.name)} photo gallery">
           <div class="venue-gallery-stage">
-${g.map((im, i) => `            <a href="${im.base}-1920.jpg" class="venue-gallery-slide${i === 0 ? " is-active" : ""}" data-venue-slide data-lightbox-item data-caption="${esc(im.alt)}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${g.length}: ${esc(im.alt)}"${i === 0 ? "" : ' aria-hidden="true" tabindex="-1"'}>
+${g.map((im, i) => `            <a href="${largest(im.base)}" class="venue-gallery-slide${i === 0 ? " is-active" : ""}" data-venue-slide data-lightbox-item data-caption="${esc(im.alt)}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${g.length}: ${esc(im.alt)}"${i === 0 ? "" : ' aria-hidden="true" tabindex="-1"'}>
 ${picture(im.base, { sizes: "(max-width: 1080px) 100vw, 680px", alt: im.alt, lazy: i !== 0, indent: "              " })}
             </a>`).join("\n")}
             <button type="button" class="venue-gallery-nav venue-gallery-nav--prev" data-venue-prev aria-label="Previous photo">${ICON.prev}</button>
