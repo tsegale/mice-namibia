@@ -8819,3 +8819,51 @@ h2 em.accent,
   gap: 0.75rem;
   margin-top: var(--space-4);
 }
+
+/* Venues on phones: filters become compact, horizontally scrolling chip rows
+   so the results start within the first screen. */
+@media (max-width: 720px) {
+  .venue-filters {
+    gap: 0.75rem;
+  }
+  .venue-filter {
+    padding: 0.75rem 0 0.75rem 0.75rem;
+  }
+  .venue-filter-title {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+  .venue-filter ul,
+  .venue-tag-list {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 0.4rem !important;
+    overflow-x: auto;
+    padding-right: 0.75rem !important;
+    padding-bottom: 0.25rem !important;
+    scrollbar-width: none;
+  }
+  .venue-filter ul::-webkit-scrollbar {
+    display: none;
+  }
+  .venue-filter li {
+    flex: none;
+  }
+  .venue-filter-opt {
+    width: auto;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-pill);
+    background: var(--white);
+    white-space: nowrap;
+  }
+  .venue-filter-opt:disabled {
+    display: none;
+  }
+  .venue-filter-opt span {
+    margin-left: 0.15rem;
+  }
+  .venue-tag {
+    white-space: nowrap;
+  }
+}
