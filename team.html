@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex">
   <title>Meet Our Team | MICE Namibia</title>
   <meta name="description" content="Meet the CEO, team and speakers behind MICE Namibia.">
   <link rel="preload" href="assets/fonts/fraunces-latin-soft-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -27,12 +26,13 @@
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
           <li class="nav-item nav-item--dropdown">
-            <button type="button" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="pages-menu">
+            <button type="button" class="nav-dropdown-toggle active" aria-haspopup="true" aria-expanded="false" aria-controls="pages-menu">
               Pages
               <svg class="nav-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <ul class="nav-dropdown-menu" id="pages-menu">
               <li><a href="about.html">About Us</a></li>
+              <li><a href="team.html" class="active" aria-current="page">Meet the Team</a></li>
               <li><a href="partners.html">Our Partners</a></li>
               <li><a href="gallery.html">Gallery</a></li>
               <li><a href="faq.html">FAQ</a></li>
@@ -78,135 +78,180 @@
       </div>
     </section>
 
-    <!-- TODO: CEO name and photo pending from client -->
+    <!-- CEO: name and photo pending from the client. No stock photo stands in for a real person. -->
     <section class="section">
       <div class="container about">
         <div class="about-visual">
           <div class="image-placeholder">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+            <span class="placeholder-label">Photo coming soon</span>
           </div>
         </div>
         <div class="about-content">
+          <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">02</span>&nbsp;/ Leadership</p>
           <h2>Meet Our CEO</h2>
           <p>Meet our CEO: the passionate leader behind our mission, bringing experience, vision, and a commitment to helping our company grow and succeed.</p>
+          <p class="placeholder-note">Name, photo and full bio to follow once confirmed by the client.</p>
         </div>
       </div>
     </section>
 
-    <!-- TODO: team photos pending from client -->
-    <section class="section section-alt">
+    <!-- Our Team: hiring is still underway, so this is a sliding carousel of empty-state slots rather than real photos. -->
+    <section class="section section-alt" aria-labelledby="team-title">
+      <div class="container">
+        <div class="team-head">
+          <div>
+            <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">03</span>&nbsp;/ Our Team</p>
+            <h2 id="team-title">Our Team</h2>
+            <p>The faces behind every event are still joining us. Team profiles will appear here as hiring is completed.</p>
+          </div>
+          <div class="carousel-controls">
+            <button type="button" class="carousel-btn" data-carousel-prev aria-controls="team-carousel" aria-label="Previous team member"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button type="button" class="carousel-btn" data-carousel-next aria-controls="team-carousel" aria-label="Next team member"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <ul class="venue-carousel" id="team-carousel" data-carousel tabindex="0" role="region" aria-label="Our team, scroll horizontally">
+          <li class="venue-slide">
+            <article class="team-slide-card">
+              <div class="image-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+              </div>
+              <p class="team-slide-caption">Team member coming soon</p>
+            </article>
+          </li>
+          <li class="venue-slide">
+            <article class="team-slide-card">
+              <div class="image-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+              </div>
+              <p class="team-slide-caption">Team member coming soon</p>
+            </article>
+          </li>
+          <li class="venue-slide">
+            <article class="team-slide-card">
+              <div class="image-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+              </div>
+              <p class="team-slide-caption">Team member coming soon</p>
+            </article>
+          </li>
+          <li class="venue-slide">
+            <article class="team-slide-card">
+              <div class="image-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+              </div>
+              <p class="team-slide-caption">Team member coming soon</p>
+            </article>
+          </li>
+      </ul>
+    </section>
+
+    <!-- Speakers: 4 sample stock portraits (Unsplash License, credits in assets/images/CREDITS.md; not real speakers) plus 4 open slots, matching the original 8-slot spec. -->
+    <section class="section" aria-labelledby="speakers-title">
       <div class="container">
         <div class="section-header">
-          <h2>Our Team</h2>
+          <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">04</span>&nbsp;/ Speakers</p>
+          <h2 id="speakers-title">Speakers</h2>
+          <p>Speaker profiles will appear here once each speaker is confirmed and has given consent.</p>
+          <div class="speakers-soon">
+            <p class="speakers-soon-title">Speaker line-up announcing soon</p>
+            <p>The first four cards are a sample of the layout, not confirmed speakers. The remaining slots are still open.</p>
+          </div>
         </div>
-        <div class="team-grid">
-          <div class="team-card">
-            <div class="image-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+        <div class="speakers-grid" data-reveal-stagger>
+          <div class="speaker-card">
+            <div class="speaker-card-media">
+              <picture>
+                <source type="image/webp" srcset="assets/images/speakers/sample-speaker-01-640.webp 640w" sizes="(max-width: 720px) 100vw, (max-width: 900px) 50vw, 280px">
+                <img src="assets/images/speakers/sample-speaker-01-640.jpg" alt="" width="640" height="640" loading="lazy" decoding="async">
+              </picture>
+              <span class="speaker-sample-badge">Sample</span>
+            </div>
+            <div class="speaker-card-body">
+              <h3>Speaker to be announced</h3>
+              <span>Keynote Speaker</span>
             </div>
           </div>
-          <div class="team-card">
-            <div class="image-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+          <div class="speaker-card">
+            <div class="speaker-card-media">
+              <picture>
+                <source type="image/webp" srcset="assets/images/speakers/sample-speaker-02-640.webp 640w" sizes="(max-width: 720px) 100vw, (max-width: 900px) 50vw, 280px">
+                <img src="assets/images/speakers/sample-speaker-02-640.jpg" alt="" width="640" height="640" loading="lazy" decoding="async">
+              </picture>
+              <span class="speaker-sample-badge">Sample</span>
+            </div>
+            <div class="speaker-card-body">
+              <h3>Speaker to be announced</h3>
+              <span>Panel Speaker</span>
             </div>
           </div>
-          <div class="team-card">
-            <div class="image-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+          <div class="speaker-card">
+            <div class="speaker-card-media">
+              <picture>
+                <source type="image/webp" srcset="assets/images/speakers/sample-speaker-03-640.webp 640w" sizes="(max-width: 720px) 100vw, (max-width: 900px) 50vw, 280px">
+                <img src="assets/images/speakers/sample-speaker-03-640.jpg" alt="" width="640" height="640" loading="lazy" decoding="async">
+              </picture>
+              <span class="speaker-sample-badge">Sample</span>
+            </div>
+            <div class="speaker-card-body">
+              <h3>Speaker to be announced</h3>
+              <span>Workshop Lead</span>
             </div>
           </div>
-          <div class="team-card">
-            <div class="image-placeholder">
+          <div class="speaker-card">
+            <div class="speaker-card-media">
+              <picture>
+                <source type="image/webp" srcset="assets/images/speakers/sample-speaker-04-640.webp 640w" sizes="(max-width: 720px) 100vw, (max-width: 900px) 50vw, 280px">
+                <img src="assets/images/speakers/sample-speaker-04-640.jpg" alt="" width="640" height="640" loading="lazy" decoding="async">
+              </picture>
+              <span class="speaker-sample-badge">Sample</span>
+            </div>
+            <div class="speaker-card-body">
+              <h3>Speaker to be announced</h3>
+              <span>Guest Speaker</span>
+            </div>
+          </div>
+          <div class="speaker-card">
+            <div class="speaker-card-media image-placeholder">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+            </div>
+            <div class="speaker-card-body">
+              <h3>Speaker slot open</h3>
+              <span>Awaiting confirmation</span>
+            </div>
+          </div>
+          <div class="speaker-card">
+            <div class="speaker-card-media image-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+            </div>
+            <div class="speaker-card-body">
+              <h3>Speaker slot open</h3>
+              <span>Awaiting confirmation</span>
+            </div>
+          </div>
+          <div class="speaker-card">
+            <div class="speaker-card-media image-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+            </div>
+            <div class="speaker-card-body">
+              <h3>Speaker slot open</h3>
+              <span>Awaiting confirmation</span>
+            </div>
+          </div>
+          <div class="speaker-card">
+            <div class="speaker-card-media image-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+            </div>
+            <div class="speaker-card-body">
+              <h3>Speaker slot open</h3>
+              <span>Awaiting confirmation</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TODO: speaker details pending client consent and Drive link -->
-    <section class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Speakers</h2>
-          <p>Speaker profiles will appear here once details are confirmed.</p>
-        </div>
-        <div class="speakers-grid">
-          <div class="speaker-card">
-            <div class="speaker-card-media image-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-            </div>
-            <div class="speaker-card-body">
-              <h3>Speaker To Be Announced</h3>
-              <span>Bio pending</span>
-            </div>
-          </div>
-          <div class="speaker-card">
-            <div class="speaker-card-media image-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-            </div>
-            <div class="speaker-card-body">
-              <h3>Speaker To Be Announced</h3>
-              <span>Bio pending</span>
-            </div>
-          </div>
-          <div class="speaker-card">
-            <div class="speaker-card-media image-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-            </div>
-            <div class="speaker-card-body">
-              <h3>Speaker To Be Announced</h3>
-              <span>Bio pending</span>
-            </div>
-          </div>
-          <div class="speaker-card">
-            <div class="speaker-card-media image-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-            </div>
-            <div class="speaker-card-body">
-              <h3>Speaker To Be Announced</h3>
-              <span>Bio pending</span>
-            </div>
-          </div>
-          <div class="speaker-card">
-            <div class="speaker-card-media image-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-            </div>
-            <div class="speaker-card-body">
-              <h3>Speaker To Be Announced</h3>
-              <span>Bio pending</span>
-            </div>
-          </div>
-          <div class="speaker-card">
-            <div class="speaker-card-media image-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-            </div>
-            <div class="speaker-card-body">
-              <h3>Speaker To Be Announced</h3>
-              <span>Bio pending</span>
-            </div>
-          </div>
-          <div class="speaker-card">
-            <div class="speaker-card-media image-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-            </div>
-            <div class="speaker-card-body">
-              <h3>Speaker To Be Announced</h3>
-              <span>Bio pending</span>
-            </div>
-          </div>
-          <div class="speaker-card">
-            <div class="speaker-card-media image-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-            </div>
-            <div class="speaker-card-body">
-              <h3>Speaker To Be Announced</h3>
-              <span>Bio pending</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Let's Connect (shared on every page) -->
     <section class="connect-band" aria-labelledby="connect-title">
@@ -289,6 +334,7 @@
       <nav class="footer-col" aria-labelledby="footer-resources">
         <h2 id="footer-resources">Resources</h2>
         <ul>
+          <li><a href="team.html">Meet the Team</a></li>
           <li><a href="gallery.html">Gallery</a></li>
           <li><a href="faq.html">FAQ</a></li>
           <li><a href="partners.html">Our Partners</a></li>
