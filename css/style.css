@@ -4270,14 +4270,17 @@ h2 em.accent,
 
 /* ---- Homepage ------------------------------------------------------------- */
 
-/* Hero slideshow: crossfade + slow Ken Burns, solid navy overlay. */
+/* Hero slideshow: crossfade + slow Ken Burns, solid navy overlay.
+   Kept well under full viewport height so the stats band and the start of
+   the next section are visible without scrolling (client feedback: the
+   original max(88vh, 620px) made the homepage feel "too zoomed in"). */
 .hero-slider {
   position: relative;
   isolation: isolate;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: max(88vh, 620px);
+  min-height: max(72vh, 560px);
   padding: var(--space-6) 0 calc(var(--space-6) + 4rem);
   overflow: hidden;
   color: var(--white);
@@ -5339,7 +5342,7 @@ h2 em.accent,
 
 @media (max-width: 720px) {
   .hero-slider {
-    min-height: 640px;
+    min-height: 560px;
     padding-bottom: calc(var(--space-6) + 5rem);
   }
 
