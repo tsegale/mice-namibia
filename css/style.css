@@ -78,8 +78,8 @@
   --step-1: clamp(1.125rem, 1.06rem + 0.3vw, 1.3rem);
   --step-2: clamp(1.35rem, 1.2rem + 0.65vw, 1.75rem);
   --step-3: clamp(1.7rem, 1.4rem + 1.3vw, 2.5rem);
-  --step-4: clamp(1.9rem, 1.5rem + 1.8vw, 2.9rem);
-  --step-5: clamp(2.2rem, 1.65rem + 2.6vw, 3.6rem);
+  --step-4: clamp(2.1rem, 1.6rem + 2.2vw, 3.4rem);
+  --step-5: clamp(2.3rem, 1.7rem + 2.9vw, 4.0rem);
   --measure: 68ch;
 
   /* Space */
@@ -88,7 +88,7 @@
   --space-3: 1.5rem;
   --space-4: 2rem;
   --space-5: 3rem;
-  --space-6: clamp(2.75rem, 2rem + 3vw, 4.75rem);
+  --space-6: clamp(3.5rem, 2.5rem + 4vw, 6rem);
 
   /* Shape and depth (two shadow levels only) */
   --radius: 12px;
@@ -4331,18 +4331,15 @@ h2 em.accent,
 
 /* ---- Homepage ------------------------------------------------------------- */
 
-/* Hero slideshow: crossfade + slow Ken Burns, solid navy overlay.
-   Kept well under full viewport height so the stats band and the start of
-   the next section are visible without scrolling (client feedback: the
-   original max(88vh, 620px) made the homepage feel "too zoomed in"). */
+/* Hero slideshow: crossfade + slow Ken Burns, solid navy overlay. */
 .hero-slider {
   position: relative;
   isolation: isolate;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: max(48vh, 380px);
-  padding: calc(var(--space-6) * 0.55) 0 calc(var(--space-6) * 0.55 + 1.5rem);
+  min-height: max(88vh, 620px);
+  padding: var(--space-6) 0 calc(var(--space-6) + 4rem);
   overflow: hidden;
   color: var(--white);
   background: var(--navy-900);
@@ -4438,7 +4435,7 @@ h2 em.accent,
 .hero-caption {
   position: absolute;
   left: max(var(--space-3), calc((100vw - var(--max-width)) / 2 + var(--space-3)));
-  bottom: 0.75rem;
+  bottom: calc(4rem + var(--space-4));
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -4460,7 +4457,7 @@ h2 em.accent,
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0.75rem;
+  bottom: calc(4rem + var(--space-4));
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -4522,14 +4519,14 @@ h2 em.accent,
 .hero-stats-wrap {
   position: relative;
   z-index: 2;
-  margin-top: -0.5rem;
+  margin-top: -4rem;
 }
 
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   margin: 0;
-  padding: 1.1rem var(--space-2);
+  padding: var(--space-3) var(--space-2);
   border-radius: var(--radius-card);
   background: var(--white) var(--dune-dark);
   box-shadow: var(--shadow-2);
@@ -5403,8 +5400,8 @@ h2 em.accent,
 
 @media (max-width: 720px) {
   .hero-slider {
-    min-height: 460px;
-    padding-bottom: calc(var(--space-6) + 3rem);
+    min-height: 640px;
+    padding-bottom: calc(var(--space-6) + 5rem);
   }
 
   /* On phones the hero copy fills the frame; the caption would collide with
