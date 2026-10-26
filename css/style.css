@@ -78,8 +78,8 @@
   --step-1: clamp(1.125rem, 1.06rem + 0.3vw, 1.3rem);
   --step-2: clamp(1.35rem, 1.2rem + 0.65vw, 1.75rem);
   --step-3: clamp(1.7rem, 1.4rem + 1.3vw, 2.5rem);
-  --step-4: clamp(2.1rem, 1.6rem + 2.2vw, 3.4rem);
-  --step-5: clamp(2.5rem, 1.8rem + 3.2vw, 4.4rem);
+  --step-4: clamp(1.9rem, 1.5rem + 1.8vw, 2.9rem);
+  --step-5: clamp(2.2rem, 1.65rem + 2.6vw, 3.6rem);
   --measure: 68ch;
 
   /* Space */
@@ -88,7 +88,7 @@
   --space-3: 1.5rem;
   --space-4: 2rem;
   --space-5: 3rem;
-  --space-6: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  --space-6: clamp(2.75rem, 2rem + 3vw, 4.75rem);
 
   /* Shape and depth (two shadow levels only) */
   --radius: 12px;
@@ -4341,8 +4341,8 @@ h2 em.accent,
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: max(72vh, 560px);
-  padding: var(--space-6) 0 calc(var(--space-6) + 4rem);
+  min-height: max(58vh, 440px);
+  padding: calc(var(--space-6) * 0.85) 0 calc(var(--space-6) * 0.85 + 2rem);
   overflow: hidden;
   color: var(--white);
   background: var(--navy-900);
@@ -4438,7 +4438,7 @@ h2 em.accent,
 .hero-caption {
   position: absolute;
   left: max(var(--space-3), calc((100vw - var(--max-width)) / 2 + var(--space-3)));
-  bottom: calc(4rem + var(--space-4));
+  bottom: calc(1.5rem + var(--space-4));
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -4460,7 +4460,7 @@ h2 em.accent,
   position: absolute;
   left: 0;
   right: 0;
-  bottom: calc(4rem + var(--space-4));
+  bottom: calc(1.5rem + var(--space-4));
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -5403,8 +5403,8 @@ h2 em.accent,
 
 @media (max-width: 720px) {
   .hero-slider {
-    min-height: 560px;
-    padding-bottom: calc(var(--space-6) + 5rem);
+    min-height: 460px;
+    padding-bottom: calc(var(--space-6) + 3rem);
   }
 
   /* On phones the hero copy fills the frame; the caption would collide with
