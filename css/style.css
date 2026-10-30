@@ -1202,7 +1202,8 @@ h2 em.accent,
 /* Footer */
 .site-footer {
   position: relative;
-  padding-top: var(--space-6);
+  padding-top: var(--space-5);
+  font-size: 0.925rem;
   background: var(--navy-900) var(--dune-light);
   color: var(--footer-text);
 }
@@ -1210,20 +1211,20 @@ h2 em.accent,
 .footer-main {
   display: grid;
   grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
-  gap: var(--space-4);
-  padding-bottom: var(--space-5);
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
 }
 
 .footer-brand > p {
   max-width: 36ch;
-  margin: var(--space-3) 0 0;
+  margin: var(--space-2) 0 0;
 }
 
 .footer-contact {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-top: var(--space-3);
+  gap: 0.4rem;
+  margin-top: var(--space-2);
 }
 
 .footer-contact a {
@@ -1251,8 +1252,8 @@ h2 em.accent,
 .footer-social {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: var(--space-3);
+  gap: 0.6rem;
+  margin-top: var(--space-2);
 }
 
 /* Official brand glyphs (Simple Icons, CC0) on solid brand-colour circles.
@@ -1261,8 +1262,8 @@ h2 em.accent,
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: var(--brand);
   color: var(--white);
@@ -1271,8 +1272,8 @@ h2 em.accent,
 }
 
 .social-link svg {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   fill: currentColor;
 }
 
@@ -1290,7 +1291,7 @@ h2 em.accent,
 .social-link--tripadvisor { --brand: #34E0A1; color: #000000; }
 
 .footer-col h2 {
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
   font-family: var(--font-sans);
   font-size: 0.8rem;
   font-weight: 700;
@@ -1300,7 +1301,7 @@ h2 em.accent,
 }
 
 .footer-col li + li {
-  margin-top: 0.7rem;
+  margin-top: 0.5rem;
 }
 
 .footer-col a {
@@ -1318,8 +1319,8 @@ h2 em.accent,
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2) var(--space-3);
-  padding-top: var(--space-3);
-  padding-bottom: var(--space-3);
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
   border-top: 1px solid var(--footer-line);
 }
 
@@ -1354,7 +1355,7 @@ h2 em.accent,
 }
 
 .footer-bottom {
-  padding: var(--space-3) 0;
+  padding: var(--space-2) 0;
   border-top: 1px solid var(--footer-line);
   font-size: 0.85rem;
 }
@@ -5620,6 +5621,7 @@ h2 em.accent,
 
   .footer-contact a {
     overflow-wrap: anywhere;
+    font-size: 0.875rem;
   }
 
   .footer-social {
@@ -5627,8 +5629,8 @@ h2 em.accent,
   }
 
   .social-link {
-    width: 46px;
-    height: 46px;
+    width: 40px;
+    height: 40px;
   }
 
   .social-link svg {
