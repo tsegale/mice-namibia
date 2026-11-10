@@ -1,0 +1,16 @@
+<%# name, label, items: [{media_id, alt, thumb}], max, hint %>
+<div class="form-group" data-field="<%= name %>">
+  <span class="label"><%= label %> <span class="gallery-count"></span></span>
+  <div data-gallery data-max="<%= max %>">
+    <input type="hidden" name="<%= name %>" data-json value="<%= JSON.stringify(items) %>">
+    <label class="img-drop">
+      <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple class="visually-hidden">
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-image"/></svg>
+      <span><strong>Add photos</strong> or drag several here at once</span>
+      <span class="text-sm">Drag the handles to change the order. The first photo shows first.</span>
+    </label>
+    <div class="gallery-list"></div>
+    <p class="gallery-empty">No photos yet.</p>
+  </div>
+  <% if (locals.hint) { %><p class="form-hint"><%= hint %></p><% } %>
+</div>

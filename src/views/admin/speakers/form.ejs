@@ -1,0 +1,31 @@
+<% const editing = Boolean(s.id); %>
+<%- include('../partials/panel-form-start', { action: editing ? `/admin/speakers/${s.id}` : '/admin/speakers', method: editing ? 'PUT' : 'POST', title: editing ? `Edit ${s.is_sample ? 'sample card' : s.name}` : 'Add a speaker' }) %>
+    <% if (s.is_sample) { %>
+    <div class="alert alert-warn"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span>This is a stock "Sample" card that only holds the layout. It is hidden automatically once a real speaker is published. To add a real person, use "Add speaker" instead.</span></div>
+    <% } %>
+    <div class="panel-section">
+      <div class="panel-section-label">Speaker</div>
+      <%- include('../fields/input', { name: 'name', label: 'Name', value: s.name, required: true, maxlength: 160, attrs: ' autofocus' }) %>
+      <div class="form-row cols-2">
+        <%- include('../fields/input', { name: 'role', label: 'Role', value: s.role, maxlength: 120, placeholder: 'Keynote Speaker' }) %>
+        <%- include('../fields/input', { name: 'organisation', label: 'Organisation', value: s.organisation, maxlength: 160 }) %>
+      </div>
+      <%- include('../fields/textarea', { name: 'bio', label: 'Short biography', value: s.bio, maxlength: 5000, rows: 5 }) %>
+      <%- include('../fields/image', { name: 'photo_media_id', label: 'Photo', media: photo, hint: 'A square portrait works best.' }) %>
+      <div class="form-row cols-2">
+        <%- include('../fields/input', { name: 'linkedin_url', type: 'url', label: 'LinkedIn', value: s.linkedin_url, maxlength: 255, placeholder: 'https://www.linkedin.com/in/…' }) %>
+        <%- include('../fields/input', { name: 'website_url', type: 'url', label: 'Website', value: s.website_url, maxlength: 255, placeholder: 'https://' }) %>
+      </div>
+    </div>
+    <div class="panel-section">
+      <div class="panel-section-label">Publishing</div>
+      <% if (!s.is_sample) { %>
+      <div class="form-group">
+        <%- include('../fields/checkbox', { name: 'consent_confirmed', label: 'This speaker has agreed to appear on the website', checked: s.consent_confirmed, hint: 'Required before publishing. Keep their written consent (email is fine) on file.' }) %>
+      </div>
+      <% } %>
+      <%- include('../fields/checkbox', { name: 'show_on_home', label: 'Feature on the homepage', checked: s.show_on_home, hint: 'The homepage shows four featured speakers.' }) %>
+      <%- include('../fields/input', { name: 'sort_order', type: 'number', label: 'Display order', value: s.sort_order, attrs: ' min="0" max="999"', hint: 'Lower numbers show first.' }) %>
+      <%- include('../fields/status', { value: s.status }) %>
+    </div>
+<%- include('../partials/panel-form-end', { deleteUrl: editing ? `/admin/speakers/${s.id}` : null, deleteLabel: `"${s.name}"` }) %>

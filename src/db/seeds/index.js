@@ -22,15 +22,15 @@ const readJson = (name) => JSON.parse(fs.readFileSync(path.join(DATA, name), "ut
 
 // The nine destinations, in the order of the venues brief's country filter.
 const DESTINATIONS = [
-  ["na", "Namibia"],
-  ["bw", "Botswana"],
-  ["za", "South Africa"],
-  ["zm", "Zambia"],
-  ["zw", "Zimbabwe"],
-  ["tz", "Tanzania"],
-  ["ke", "Kenya"],
-  ["rw", "Rwanda"],
-  ["ug", "Uganda"],
+  ["na", "Namibia", "Africa/Windhoek"],
+  ["bw", "Botswana", "Africa/Gaborone"],
+  ["za", "South Africa", "Africa/Johannesburg"],
+  ["zm", "Zambia", "Africa/Lusaka"],
+  ["zw", "Zimbabwe", "Africa/Harare"],
+  ["tz", "Tanzania", "Africa/Dar_es_Salaam"],
+  ["ke", "Kenya", "Africa/Nairobi"],
+  ["rw", "Rwanda", "Africa/Kigali"],
+  ["ug", "Uganda", "Africa/Kampala"],
 ];
 
 // From content/specs/06-venues-spec.pdf, in the client's order.
@@ -116,8 +116,8 @@ async function run(knex, { log = () => {} } = {}) {
     const m = createMediaRegistry(trx, sharp);
 
     /* Countries, categories, tags ------------------------------------------ */
-    for (const [i, [iso2, name]] of DESTINATIONS.entries()) {
-      const r = await upsert(trx, "countries", { iso2 }, { name, is_destination: true, sort_order: i });
+    for (const [i, [iso2, name, timezone]] of DESTINATIONS.entries()) {
+      const r = await upsert(trx, "countries", { iso2 }, { name, timezone, is_destination: true, sort_order: i });
       tally("countries", r.created);
     }
 

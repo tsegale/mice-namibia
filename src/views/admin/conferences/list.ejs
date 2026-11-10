@@ -1,0 +1,54 @@
+<% const actions = `<button type="button" class="btn btn-accent" data-open-panel="/admin/conferences/new" data-wide data-deep-link="?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg><span class="btn-label">Add event</span></button>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'conferences', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">Conferences shown on the Events page, the homepage and in the contact form. Times are entered in the event's local time; past events drop off the website automatically.</p>
+  <section class="card">
+    <div class="card-header">
+      <nav class="filter-bar" aria-label="Filter events">
+        <% [['all', 'All', counts.all_count], ['upcoming', 'Upcoming', counts.upcoming_count], ['past', 'Past', counts.past_count], ['draft', 'Drafts', counts.draft_count]].forEach(([key, label, n]) => { %>
+        <a class="filter-btn" href="/admin/conferences<%= key === 'all' ? '' : '?show=' + key %>"<% if (filter === key) { %> aria-current="true"<% } %>><%= label %> (<%= Number(n || 0) %>)</a>
+        <% }) %>
+      </nav>
+      <div class="search-input"><svg class="icon-sm icon" aria-hidden="true"><use href="/admin/icons.svg#i-search"/></svg><input type="search" placeholder="Search events" aria-label="Search events" data-table-search="#conf-table"></div>
+    </div>
+    <% if (!rows.length) { %>
+    <div class="empty-state">
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-calendar"/></svg>
+      <p>No events here yet.</p>
+      <button type="button" class="btn btn-accent" data-open-panel="/admin/conferences/new" data-wide>Add the first event</button>
+    </div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table id="conf-table">
+        <thead><tr><th class="hide-sm"></th><th>Event</th><th>Date</th><th class="hide-sm">Location</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody>
+          <% rows.forEach((c) => { const past = new Date(c.ends_at) < new Date(); %>
+          <tr data-search="<%= [c.title, c.short_title, c.city, c.country].join(' ').toLowerCase() %>">
+            <td class="td-thumb hide-sm"><% if (c.cover) { %><img src="<%= imageUrl(c.cover, 640) %>" alt="" loading="lazy"><% } else { %><span class="thumb-empty"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-image"/></svg></span><% } %></td>
+            <td><button type="button" class="td-title btn-link" data-open-panel="/admin/conferences/<%= c.id %>/edit" data-wide data-deep-link="?edit=<%= c.id %>"><%= c.short_title %></button><span class="td-sub"><%= c.title %></span></td>
+            <td class="td-nowrap"><%= C.conferences.helpers.dateLong(c) %><span class="td-sub"><%= C.conferences.helpers.timeRange(c) %> local</span></td>
+            <td class="hide-sm"><span class="inline"><img class="flag" src="/assets/images/flags/<%= c.country_iso2 %>.svg" alt="" width="20" height="15"><%= c.city %>, <%= c.country %></span></td>
+            <td>
+              <% if (c.status === 'draft') { %><span class="badge badge-draft">Draft</span>
+              <% } else if (past) { %><span class="badge badge-past">Past</span>
+              <% } else { %><span class="badge badge-published">Published</span><% } %>
+              <% if (c.images_are_stand_ins) { %><span class="badge badge-sample" title="Photos are placeholders">Stand-in photos</span><% } %>
+            </td>
+            <td class="td-actions">
+              <% if (c.status === 'published' && !past) { %><a class="btn btn-ghost btn-sm btn-icon" href="/events/<%= c.slug %>" target="_blank" rel="noopener" aria-label="View <%= c.short_title %> on the website"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-eye"/></svg></a><% } %>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/conferences/<%= c.id %>/edit" data-wide data-deep-link="?edit=<%= c.id %>" aria-label="Edit <%= c.short_title %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon btn-icon-danger" data-delete="/admin/conferences/<%= c.id %>" data-label="&quot;<%= c.short_title %>&quot;" aria-label="Delete <%= c.short_title %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <div class="empty-state" id="conf-table-empty" hidden><p>No events match your search.</p></div>
+    </div>
+    <% } %>
+  </section>
+  <% if (open) { %><span data-autopanel="<%= open %>" data-wide hidden></span><% } %>
+</main>
+<%- include('../partials/foot') %>

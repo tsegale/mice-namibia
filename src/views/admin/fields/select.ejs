@@ -1,0 +1,10 @@
+<%# name, label, value, options: [{value, label}], required, hint, empty %>
+<% const fid = 'f-' + name; %>
+<div class="form-group">
+  <label for="<%= fid %>"><%= label %><% if (locals.required) { %> <span class="required" aria-hidden="true">*</span><% } %></label>
+  <select id="<%= fid %>" name="<%= name %>"<% if (locals.required) { %> required<% } %><% if (locals.hint) { %> aria-describedby="<%= fid %>-hint"<% } %>>
+    <% if (locals.empty !== undefined) { %><option value=""><%= empty %></option><% } %>
+    <% options.forEach((o) => { %><option value="<%= o.value %>"<% if (String(o.value) === String(locals.value ?? '')) { %> selected<% } %>><%= o.label %></option><% }) %>
+  </select>
+  <% if (locals.hint) { %><p class="form-hint" id="<%= fid %>-hint"><%= hint %></p><% } %>
+</div>

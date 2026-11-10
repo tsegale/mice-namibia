@@ -1,0 +1,33 @@
+<%# name, label, media (row or null), required, hint %>
+<div class="form-group" data-field="<%= name %>">
+  <span class="label" id="<%= name %>-label"><%= label %><% if (locals.required) { %> <span class="required" aria-hidden="true">*</span><% } %></span>
+  <div class="img-input" data-image-picker>
+    <input type="hidden" name="<%= name %>" value="<%= media ? media.id : '' %>">
+    <div class="img-tabs" role="tablist" aria-labelledby="<%= name %>-label" data-tabs>
+      <button type="button" class="img-tab" role="tab" aria-selected="true" data-tab="upload-<%= name %>">Upload from computer</button>
+      <button type="button" class="img-tab" role="tab" aria-selected="false" data-tab="url-<%= name %>">Paste a link</button>
+    </div>
+    <div class="img-tab-panel" data-tab-panel="upload-<%= name %>">
+      <label class="img-drop">
+        <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" class="visually-hidden">
+        <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-upload"/></svg>
+        <span><strong>Choose a photo</strong> or drag it here</span>
+        <span class="text-sm">JPG, PNG or WebP. Large photos are resized for the web automatically.</span>
+      </label>
+      <div class="progress" hidden><span></span></div>
+    </div>
+    <div class="img-tab-panel" data-tab-panel="url-<%= name %>" hidden>
+      <div class="img-url-row">
+        <input type="url" placeholder="https://example.com/photo.jpg" aria-label="Image link">
+        <button type="button" class="btn btn-ghost" data-import>Import</button>
+      </div>
+      <p class="form-hint">The image is copied to this website, so it keeps working even if the original link changes.</p>
+    </div>
+    <div class="img-preview"<% if (!media) { %> hidden<% } %>>
+      <img src="<%= media ? imageUrl(media, 640) : '' %>" alt="">
+      <span class="img-preview-meta"><%= media ? (media.original_name || media.base_url) : '' %></span>
+      <button type="button" class="btn btn-ghost btn-sm btn-icon-danger" data-clear>Remove</button>
+    </div>
+  </div>
+  <% if (locals.hint) { %><p class="form-hint"><%= hint %></p><% } %>
+</div>

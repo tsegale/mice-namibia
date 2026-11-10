@@ -1,0 +1,7 @@
+<%# name, label, value, required, hint, maxlength, rows, count %>
+<% const fid = 'f-' + name; %>
+<div class="form-group">
+  <label for="<%= fid %>"><%= label %><% if (locals.required) { %> <span class="required" aria-hidden="true">*</span><% } %><% if (locals.count) { %><span class="char-count" aria-hidden="true"></span><% } %></label>
+  <textarea id="<%= fid %>" name="<%= name %>" rows="<%= locals.rows || 3 %>"<% if (locals.required) { %> required<% } %><% if (locals.maxlength) { %> maxlength="<%= maxlength %>"<% } %><% if (locals.count) { %> data-count="<%= maxlength %>"<% } %><% if (locals.hint) { %> aria-describedby="<%= fid %>-hint"<% } %>><%= locals.value || '' %></textarea>
+  <% if (locals.hint) { %><p class="form-hint" id="<%= fid %>-hint"><%= hint %></p><% } %>
+</div>

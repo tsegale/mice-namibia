@@ -1,0 +1,8 @@
+<%# action, method, title, wide %>
+<form data-admin-form action="<%= action %>" data-method="<%= method %>" novalidate>
+  <div class="panel-header">
+    <h2 id="panel-title"><%= title %></h2>
+    <button type="button" class="close-btn" data-close-panel aria-label="Close"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-x"/></svg></button>
+  </div>
+  <div class="panel-body">
+    <div class="alert alert-error" data-form-error role="alert" hidden><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span></span></div>

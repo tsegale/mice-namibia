@@ -1,0 +1,56 @@
+<% const editing = Boolean(c.id); %>
+<%- include('../partials/panel-form-start', { action: editing ? `/admin/conferences/${c.id}` : '/admin/conferences', method: editing ? 'PUT' : 'POST', title: editing ? `Edit ${c.short_title}` : 'Add an event' }) %>
+
+    <div class="panel-section">
+      <div class="panel-section-label">The event</div>
+      <%- include('../fields/input', { name: 'title', label: 'Full title', value: c.title, required: true, maxlength: 255, attrs: ' autofocus', placeholder: 'International Conference on Education and New Learning Technologies (EDULEARN)' }) %>
+      <div class="form-row cols-2">
+        <%- include('../fields/input', { name: 'short_title', label: 'Short title', value: c.short_title, required: true, maxlength: 120, placeholder: 'EDULEARN 2027', hint: 'Used on cards, buttons and the browser tab.' }) %>
+        <div class="form-group">
+          <label for="f-slug">Web address</label>
+          <div class="slug-prefix"><span>/events/</span><input type="text" id="f-slug" name="slug" value="<%= c.slug || '' %>" maxlength="120" data-slug-from="short_title" aria-describedby="f-slug-hint"></div>
+          <p class="form-hint" id="f-slug-hint"><%= editing ? 'Changing it keeps the old link working.' : 'Filled in from the short title. Lowercase letters, numbers and hyphens.' %></p>
+        </div>
+      </div>
+      <%- include('../fields/textarea', { name: 'excerpt', label: 'Summary', value: c.excerpt, required: true, maxlength: 400, count: true, rows: 3, hint: 'One or two sentences for the event cards and search results (about 160 characters works best).' }) %>
+      <%- include('../fields/rte', { name: 'body', label: 'Description', value: c.body, required: true }) %>
+      <%- include('../fields/textarea', { name: 'pull_quote', label: 'Highlight quote', value: c.pull_quote, maxlength: 1000, rows: 3, hint: 'Optional. Shown large in the middle of the event page.' }) %>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-label">When and where</div>
+      <div class="form-row cols-2">
+        <%- include('../fields/select', { name: 'country_iso2', label: 'Country', value: c.country_iso2, required: true, options: countries.map((n) => ({ value: n.iso2, label: n.name })), hint: 'Times use this country’s timezone.' }) %>
+        <%- include('../fields/input', { name: 'city', label: 'City', value: c.city, required: true, maxlength: 120, placeholder: 'Swakopmund' }) %>
+      </div>
+      <div class="form-row cols-2">
+        <%- include('../fields/input', { name: 'starts_local', type: 'datetime-local', label: 'Starts', value: starts, required: true, hint: 'Local time at the venue.' }) %>
+        <%- include('../fields/input', { name: 'ends_local', type: 'datetime-local', label: 'Ends', value: ends, required: true }) %>
+      </div>
+      <div class="form-row cols-2">
+        <%- include('../fields/input', { name: 'organiser', label: 'Organiser', value: c.organiser, maxlength: 200, placeholder: 'World Research Society' }) %>
+        <%- include('../fields/input', { name: 'registration_url', type: 'url', label: 'Registration link', value: c.registration_url, maxlength: 255, placeholder: 'https://', hint: 'Optional. Without one, visitors are sent to the proposal form.' }) %>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-label">Photos</div>
+      <%- include('../fields/image', { name: 'cover_media_id', label: 'Cover photo', media: cover, required: true, hint: 'Landscape photos work best (at least 1920 pixels wide).' }) %>
+      <%- include('../fields/input', { name: 'cover_alt', label: 'Cover photo description', value: c.cover_alt, maxlength: 255, hint: 'What the photo shows, for visitors using screen readers.' }) %>
+      <%- include('../fields/gallery', { name: 'gallery', label: 'Gallery', items: gallery, max: 12, hint: 'Three photos fill the event page layout.' }) %>
+      <%- include('../fields/checkbox', { name: 'images_are_stand_ins', label: 'These are stand-in photos', checked: c.images_are_stand_ins, hint: 'A reminder for us to swap in the real event photos later. Not shown on the website.' }) %>
+    </div>
+
+    <% if (speakers.length) { %>
+    <div class="panel-section">
+      <div class="panel-section-label">Speakers</div>
+      <%- include('../fields/tags', { name: 'speaker_ids', label: 'Speakers at this event', options: speakers.map((s) => ({ value: s.id, label: s.name + (s.role ? ' (' + s.role + ')' : '') })), selected: speakerIds, searchable: speakers.length > 8, hint: 'Only speakers who are published with consent appear on the website.' }) %>
+    </div>
+    <% } %>
+
+    <div class="panel-section">
+      <div class="panel-section-label">Publishing</div>
+      <%- include('../fields/status', { value: c.status }) %>
+    </div>
+
+<%- include('../partials/panel-form-end', { deleteUrl: editing ? `/admin/conferences/${c.id}` : null, deleteLabel: `"${c.short_title}"`, viewUrl: editing && c.status === 'published' ? `/events/${c.slug}` : null }) %>

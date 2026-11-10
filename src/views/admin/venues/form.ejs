@@ -1,0 +1,45 @@
+<% const editing = Boolean(v.id); %>
+<%- include('../partials/panel-form-start', { action: editing ? `/admin/venues/${v.id}` : '/admin/venues', method: editing ? 'PUT' : 'POST', title: editing ? `Edit ${v.name}` : 'Add a venue' }) %>
+
+    <div class="panel-section">
+      <div class="panel-section-label">The venue</div>
+      <div class="form-row cols-2">
+        <%- include('../fields/input', { name: 'name', label: 'Name', value: v.name, required: true, maxlength: 200, attrs: ' autofocus', placeholder: 'WICC', hint: 'As shown on cards and in the page heading.' }) %>
+        <%- include('../fields/input', { name: 'full_name', label: 'Full name', value: v.full_name, maxlength: 255, placeholder: 'Windhoek International Convention Centre', hint: 'Optional, if longer than the name.' }) %>
+      </div>
+      <div class="form-group">
+        <label for="f-slug">Web address</label>
+        <div class="slug-prefix"><span>/venues/</span><input type="text" id="f-slug" name="slug" value="<%= v.slug || '' %>" maxlength="120" data-slug-from="name"></div>
+        <p class="form-hint"><%= editing ? 'Changing it keeps the old link working.' : 'Filled in from the name.' %></p>
+      </div>
+      <div class="form-row cols-2">
+        <%- include('../fields/select', { name: 'category_id', label: 'Venue category', value: v.category_id, required: true, empty: 'Choose…', options: categories.map((c) => ({ value: c.id, label: c.name })) }) %>
+        <%- include('../fields/input', { name: 'sort_order', type: 'number', label: 'Display order', value: v.sort_order, attrs: ' min="0" max="999"', hint: 'Lower numbers show first.' }) %>
+      </div>
+      <%- include('../fields/tags', { name: 'tag_ids', label: 'Product categories', options: tags.map((t) => ({ value: t.id, label: t.name })), selected: tagIds, hint: 'Choose every one that applies. These are the tags visitors filter by.' }) %>
+      <%- include('../fields/rte', { name: 'description', label: 'Description', value: v.description, required: true }) %>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-label">Location</div>
+      <div class="form-row cols-2">
+        <%- include('../fields/select', { name: 'country_iso2', label: 'Country', value: v.country_iso2, required: true, options: countries.map((n) => ({ value: n.iso2, label: n.name })) }) %>
+        <%- include('../fields/input', { name: 'city', label: 'City', value: v.city, required: true, maxlength: 120, placeholder: 'Windhoek' }) %>
+      </div>
+      <%- include('../fields/input', { name: 'map_query', label: 'Map search', value: v.map_query, maxlength: 255, placeholder: 'Windhoek International Convention Centre, Windhoek, Namibia', hint: 'What to look up on Google Maps. Leave empty to use the name, city and country.' }) %>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-label">Photos</div>
+      <%- include('../fields/image', { name: 'card_media_id', label: 'Main photo', media: card, required: true, hint: 'Shown on the Venues page cards.' }) %>
+      <%- include('../fields/image', { name: 'home_media_id', label: 'Homepage carousel photo', media: home, hint: 'Optional wide shot for the homepage carousel. Without one, the main photo is used.' }) %>
+      <%- include('../fields/gallery', { name: 'gallery', label: 'Gallery', items: gallery, max: 20, hint: 'Aim for 10 photos: the venue page gallery is built for 10, with the first one also used as the page banner.' }) %>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-label">Publishing</div>
+      <%- include('../fields/checkbox', { name: 'featured_on_home', label: 'Show in the homepage carousel', checked: v.featured_on_home }) %>
+      <%- include('../fields/status', { value: v.status }) %>
+    </div>
+
+<%- include('../partials/panel-form-end', { deleteUrl: editing ? `/admin/venues/${v.id}` : null, deleteLabel: `"${v.name}"`, viewUrl: editing && v.status === 'published' ? `/venues/${v.slug}` : null }) %>

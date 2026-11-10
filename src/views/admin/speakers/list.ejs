@@ -1,0 +1,34 @@
+<% const actions = `<button type="button" class="btn btn-accent" data-open-panel="/admin/speakers/new" data-deep-link="?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg><span class="btn-label">Add speaker</span></button>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'speakers', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">Speakers appear on the homepage and the Meet the Team page once they are <strong>published and have given consent</strong>. Until the first real speaker is live, the four stock "Sample" cards hold the layout; they disappear on their own after that.</p>
+  <% if (!realCount) { %>
+  <div class="alert alert-info"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span>No real speakers are live yet, so the website is showing the sample cards.</span></div>
+  <% } %>
+  <section class="card">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="hide-sm"></th><th>Speaker</th><th class="hide-sm">Events</th><th>Consent</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody>
+          <% rows.forEach((s) => { %>
+          <tr>
+            <td class="td-thumb hide-sm"><% if (s.photo) { %><img src="<%= imageUrl(s.photo, 640) %>" alt="" loading="lazy"><% } else { %><span class="thumb-empty"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-users"/></svg></span><% } %></td>
+            <td><button type="button" class="td-title btn-link" data-open-panel="/admin/speakers/<%= s.id %>/edit" data-deep-link="?edit=<%= s.id %>"><%= s.name %></button><span class="td-sub"><%= [s.role, s.organisation].filter(Boolean).join(', ') %></span></td>
+            <td class="hide-sm"><%= (eventsBySpeaker[s.id] || []).join(', ') || '' %></td>
+            <td><% if (s.is_sample) { %><span class="badge badge-sample">Sample card</span><% } else if (s.consent_confirmed) { %><span class="badge badge-published">Confirmed</span><% } else { %><span class="badge badge-new">Waiting</span><% } %></td>
+            <td><span class="badge badge-<%= s.status %>"><%= s.status === 'published' ? 'Published' : 'Draft' %></span><% if (s.show_on_home) { %> <span class="badge badge-read">Homepage</span><% } %></td>
+            <td class="td-actions">
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/speakers/<%= s.id %>/edit" data-deep-link="?edit=<%= s.id %>" aria-label="Edit <%= s.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon btn-icon-danger" data-delete="/admin/speakers/<%= s.id %>" data-label="&quot;<%= s.name %>&quot;" aria-label="Delete <%= s.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <% if (open) { %><span data-autopanel="<%= open %>" hidden></span><% } %>
+</main>
+<%- include('../partials/foot') %>

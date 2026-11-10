@@ -1,0 +1,50 @@
+<% const actions = `<button type="button" class="btn btn-accent" data-open-panel="/admin/venues/new" data-wide data-deep-link="?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg><span class="btn-label">Add venue</span></button>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'venues', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">Venues on the Venues page, in the homepage carousel and in the proposal form. The brief asks for a gallery of 10 photos per venue.</p>
+  <section class="card">
+    <div class="card-header">
+      <nav class="filter-bar" aria-label="Filter venues">
+        <% [['all', 'All', counts.all_count], ['published', 'Published', counts.published_count], ['draft', 'Drafts', counts.draft_count]].forEach(([key, label, n]) => { %>
+        <a class="filter-btn" href="/admin/venues<%= key === 'all' ? '' : '?show=' + key %>"<% if (filter === key) { %> aria-current="true"<% } %>><%= label %> (<%= Number(n || 0) %>)</a>
+        <% }) %>
+      </nav>
+      <div class="search-input"><svg class="icon-sm icon" aria-hidden="true"><use href="/admin/icons.svg#i-search"/></svg><input type="search" placeholder="Search venues" aria-label="Search venues" data-table-search="#venue-table"></div>
+    </div>
+    <% if (!rows.length) { %>
+    <div class="empty-state">
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-building"/></svg>
+      <p>No venues here yet.</p>
+      <button type="button" class="btn btn-accent" data-open-panel="/admin/venues/new" data-wide>Add the first venue</button>
+    </div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table id="venue-table">
+        <thead><tr><th class="hide-sm"></th><th>Venue</th><th class="hide-sm">Category</th><th class="hide-sm">Location</th><th class="td-num hide-sm">Photos</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody>
+          <% rows.forEach((v) => { const n = imageCounts[v.id] || 0; %>
+          <tr data-search="<%= [v.name, v.full_name, v.city, v.country, v.category].join(' ').toLowerCase() %>">
+            <td class="td-thumb hide-sm"><% if (v.card) { %><img src="<%= imageUrl(v.card, 640) %>" alt="" loading="lazy"><% } %></td>
+            <td><button type="button" class="td-title btn-link" data-open-panel="/admin/venues/<%= v.id %>/edit" data-wide data-deep-link="?edit=<%= v.id %>"><%= v.name %></button><% if (v.full_name && v.full_name !== v.name) { %><span class="td-sub"><%= v.full_name %></span><% } %></td>
+            <td class="hide-sm"><%= v.category || 'None' %></td>
+            <td class="hide-sm"><span class="inline"><img class="flag" src="/assets/images/flags/<%= v.country_iso2 %>.svg" alt="" width="20" height="15"><%= v.city %>, <%= v.country %></span></td>
+            <td class="td-num hide-sm"><%= n %><% if (n < 10) { %> <span class="badge badge-new" title="The brief asks for 10 photos">needs <%= 10 - n %></span><% } %></td>
+            <td><span class="badge badge-<%= v.status %>"><%= v.status === 'published' ? 'Published' : 'Draft' %></span><% if (v.featured_on_home) { %> <span class="badge badge-read">Homepage</span><% } %></td>
+            <td class="td-actions">
+              <% if (v.status === 'published') { %><a class="btn btn-ghost btn-sm btn-icon" href="/venues/<%= v.slug %>" target="_blank" rel="noopener" aria-label="View <%= v.name %> on the website"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-eye"/></svg></a><% } %>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/venues/<%= v.id %>/edit" data-wide data-deep-link="?edit=<%= v.id %>" aria-label="Edit <%= v.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon btn-icon-danger" data-delete="/admin/venues/<%= v.id %>" data-label="&quot;<%= v.name %>&quot;" aria-label="Delete <%= v.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <div class="empty-state" id="venue-table-empty" hidden><p>No venues match your search.</p></div>
+    </div>
+    <% } %>
+  </section>
+  <% if (open) { %><span data-autopanel="<%= open %>" data-wide hidden></span><% } %>
+</main>
+<%- include('../partials/foot') %>

@@ -1,0 +1,42 @@
+<% const editing = Boolean(p.id); %>
+<%- include('../partials/panel-form-start', { action: editing ? `/admin/posts/${p.id}` : '/admin/posts', method: editing ? 'PUT' : 'POST', title: editing ? 'Edit article' : 'New article' }) %>
+
+    <div class="panel-section">
+      <div class="panel-section-label">Article</div>
+      <%- include('../fields/input', { name: 'title', label: 'Title', value: p.title, required: true, maxlength: 200, count: true, attrs: ' autofocus' }) %>
+      <div class="form-group">
+        <label for="f-slug">Web address</label>
+        <div class="slug-prefix"><span>/blog/</span><input type="text" id="f-slug" name="slug" value="<%= p.slug || '' %>" maxlength="120" data-slug-from="title"></div>
+        <p class="form-hint"><%= editing ? 'Changing it keeps the old link working.' : 'Filled in from the title.' %></p>
+      </div>
+      <div class="form-row cols-2">
+        <%- include('../fields/select', { name: 'category_id', label: 'Category', value: p.category_id, empty: 'Choose…', options: categories.map((c) => ({ value: c.id, label: c.name })) }) %>
+        <%- include('../fields/input', { name: 'new_category', label: 'Or add a new category', value: '', maxlength: 80, placeholder: 'e.g. Industry News' }) %>
+      </div>
+      <%- include('../fields/textarea', { name: 'excerpt', label: 'Introduction', value: p.excerpt, required: true, maxlength: 400, count: true, rows: 3, hint: 'The opening line under the title, also used on the article cards.' }) %>
+      <%- include('../fields/rte', { name: 'body', label: 'Article', value: p.body, required: true, hint: 'Use H2 for the main sections: they become the article’s contents list. Reading time is worked out automatically.' }) %>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-label">Cover</div>
+      <%- include('../fields/image', { name: 'cover_media_id', label: 'Cover photo', media: cover, required: true, hint: 'Landscape, at least 1280 pixels wide.' }) %>
+      <%- include('../fields/input', { name: 'cover_alt', label: 'Cover photo description', value: p.cover_alt, maxlength: 255, hint: 'What the photo shows, for visitors using screen readers.' }) %>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-label">Publishing</div>
+      <%- include('../fields/status', { value: p.status }) %>
+      <div class="form-row cols-2">
+        <%- include('../fields/input', { name: 'published_local', type: 'datetime-local', label: 'Publish date and time', value: publishedLocal, hint: 'Namibian time. Pick a future time to schedule the article.' }) %>
+        <%- include('../fields/input', { name: 'author_name', label: 'Author', value: p.author_name, required: true, maxlength: 120 }) %>
+      </div>
+      <%- include('../fields/select', { name: 'services_position', label: 'Also show on the Services page', value: p.services_position || '', empty: 'No', options: [1, 2, 3].map((n) => ({ value: n, label: 'Yes, in position ' + n })), hint: 'The Services page shows three articles. Choosing a position replaces the article that had it.' }) %>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-label">Search engines (optional)</div>
+      <%- include('../fields/input', { name: 'seo_title', label: 'Search title', value: p.seo_title, maxlength: 200, count: true, hint: 'Shown in Google results. Defaults to the article title.' }) %>
+      <%- include('../fields/textarea', { name: 'seo_description', label: 'Search description', value: p.seo_description, maxlength: 300, count: true, rows: 2, hint: 'Defaults to the introduction.' }) %>
+    </div>
+
+<%- include('../partials/panel-form-end', { deleteUrl: editing ? `/admin/posts/${p.id}` : null, deleteLabel: 'this article', viewUrl: editing && p.status === 'published' && p.published_at && new Date(p.published_at) <= new Date() ? `/blog/${p.slug}` : null }) %>

@@ -1,0 +1,14 @@
+<%# name, label, options: [{value, label}], selected: [values], hint, searchable %>
+<% const sel = new Set((selected || []).map(String)); %>
+<div class="form-group" data-field="<%= name %>">
+  <span class="label" id="<%= name %>-label"><%= label %> <span class="text-muted">(<span data-selected-count>0</span> selected)</span></span>
+  <div class="tag-picker" data-tag-picker role="group" aria-labelledby="<%= name %>-label">
+    <% if (locals.searchable !== false) { %><input type="search" placeholder="Type to filter…" aria-label="Filter <%= label.toLowerCase() %>"><% } %>
+    <div class="tag-options">
+      <% options.forEach((o) => { %>
+      <label class="tag-option"><input type="checkbox" name="<%= name %>[]" value="<%= o.value %>"<% if (sel.has(String(o.value))) { %> checked<% } %>><span><%= o.label %></span></label>
+      <% }) %>
+    </div>
+  </div>
+  <% if (locals.hint) { %><p class="form-hint"><%= hint %></p><% } %>
+</div>

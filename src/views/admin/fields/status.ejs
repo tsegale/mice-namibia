@@ -1,0 +1,9 @@
+<%# value, hint %>
+<div class="form-group" data-field="status">
+  <span class="label" id="status-label">Visibility</span>
+  <div class="filter-bar" role="radiogroup" aria-labelledby="status-label">
+    <label class="check"><input type="radio" name="status" value="draft"<% if (locals.value !== 'published') { %> checked<% } %>><span>Draft<small>Only visible here in the admin</small></span></label>
+    <label class="check"><input type="radio" name="status" value="published"<% if (locals.value === 'published') { %> checked<% } %>><span>Published<small>Live on the website</small></span></label>
+  </div>
+  <% if (locals.hint) { %><p class="form-hint"><%= hint %></p><% } %>
+</div>

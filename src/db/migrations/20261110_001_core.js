@@ -42,6 +42,8 @@ exports.up = async function up(knex) {
   await knex.schema.createTable("countries", (t) => {
     t.string("iso2", 2).primary();
     t.string("name", 80).notNullable();
+    // Each destination has one timezone; events take it from their country.
+    t.string("timezone", 64).notNullable().defaultTo("Africa/Windhoek");
     t.boolean("is_destination").notNullable().defaultTo(true);
     t.integer("sort_order").notNullable().defaultTo(0);
   });

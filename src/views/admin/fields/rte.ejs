@@ -1,0 +1,28 @@
+<%# name, label, value, required, hint %>
+<div class="form-group" data-field="<%= name %>">
+  <span class="label" id="<%= name %>-label"><%= label %><% if (locals.required) { %> <span class="required" aria-hidden="true">*</span><% } %></span>
+  <div class="rte" data-rte>
+    <div class="rte-toolbar" role="toolbar" aria-label="Text formatting">
+      <button type="button" data-cmd="p" title="Paragraph">P</button>
+      <button type="button" data-cmd="h2" title="Heading">H2</button>
+      <button type="button" data-cmd="h3" title="Subheading">H3</button>
+      <button type="button" data-cmd="h4" title="Small heading">H4</button>
+      <span class="rte-sep" aria-hidden="true"></span>
+      <button type="button" data-cmd="bold" title="Bold"><strong>B</strong></button>
+      <button type="button" data-cmd="italic" title="Italic"><em>I</em></button>
+      <span class="rte-sep" aria-hidden="true"></span>
+      <button type="button" data-cmd="ul" title="Bulleted list">&bull; List</button>
+      <button type="button" data-cmd="ol" title="Numbered list">1. List</button>
+      <button type="button" data-cmd="quote" title="Quote">&ldquo; Quote</button>
+      <span class="rte-sep" aria-hidden="true"></span>
+      <button type="button" data-cmd="link" title="Add link">Link</button>
+      <button type="button" data-cmd="unlink" title="Remove link">Unlink</button>
+      <span class="rte-sep" aria-hidden="true"></span>
+      <button type="button" data-cmd="undo" title="Undo">Undo</button>
+      <button type="button" data-cmd="redo" title="Redo">Redo</button>
+    </div>
+    <div class="rte-content" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="<%= name %>-label"></div>
+    <textarea name="<%= name %>" hidden><%= locals.value || '' %></textarea>
+  </div>
+  <% if (locals.hint) { %><p class="form-hint"><%= hint %></p><% } %>
+</div>

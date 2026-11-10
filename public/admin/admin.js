@@ -178,7 +178,12 @@
 
   overlay?.addEventListener("click", () => closePanel());
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && panel?.classList.contains("open") && !dialog?.open) closePanel();
+    if (e.key === "Escape" && panel?.classList.contains("open") && !dialog?.open) {
+      // Defer: opening the "discard changes?" dialog during this same Escape
+      // keypress would let the browser close it again immediately.
+      e.preventDefault();
+      setTimeout(() => closePanel(), 0);
+    }
   });
   document.addEventListener("click", (e) => {
     const opener = e.target.closest("[data-open-panel]");

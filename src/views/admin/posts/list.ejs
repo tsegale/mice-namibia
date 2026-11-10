@@ -1,0 +1,49 @@
+<% const actions = `<button type="button" class="btn btn-accent" data-open-panel="/admin/posts/new" data-wide data-deep-link="?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg><span class="btn-label">New article</span></button>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'posts', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">Articles on the Blog page, the homepage (latest three) and the Services page. Set a future publish time to schedule an article; it appears on its own at that moment.</p>
+  <section class="card">
+    <div class="card-header">
+      <nav class="filter-bar" aria-label="Filter articles">
+        <% [['all', 'All', counts.all_count], ['published', 'Published', counts.published_count], ['scheduled', 'Scheduled', counts.scheduled_count], ['draft', 'Drafts', counts.draft_count]].forEach(([key, label, n]) => { %>
+        <a class="filter-btn" href="/admin/posts<%= key === 'all' ? '' : '?show=' + key %>"<% if (filter === key) { %> aria-current="true"<% } %>><%= label %> (<%= Number(n || 0) %>)</a>
+        <% }) %>
+      </nav>
+      <div class="search-input"><svg class="icon-sm icon" aria-hidden="true"><use href="/admin/icons.svg#i-search"/></svg><input type="search" placeholder="Search articles" aria-label="Search articles" data-table-search="#post-table"></div>
+    </div>
+    <% if (!rows.length) { %>
+    <div class="empty-state">
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-pen"/></svg>
+      <p>No articles here yet.</p>
+      <button type="button" class="btn btn-accent" data-open-panel="/admin/posts/new" data-wide>Write the first article</button>
+    </div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table id="post-table">
+        <thead><tr><th class="hide-sm"></th><th>Article</th><th class="hide-sm">Category</th><th>Publish date</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody>
+          <% rows.forEach((p) => { const scheduled = p.status === 'published' && p.published_at && new Date(p.published_at) > now; %>
+          <tr data-search="<%= [p.title, p.category, p.excerpt].join(' ').toLowerCase() %>">
+            <td class="td-thumb hide-sm"><% if (p.cover) { %><img src="<%= imageUrl(p.cover, 640) %>" alt="" loading="lazy"><% } %></td>
+            <td><button type="button" class="td-title btn-link" data-open-panel="/admin/posts/<%= p.id %>/edit" data-wide data-deep-link="?edit=<%= p.id %>"><%= p.title %></button><span class="td-sub"><%= p.reading_minutes %> min read<% if (p.services_position) { %> &middot; Services page #<%= p.services_position %><% } %></span></td>
+            <td class="hide-sm"><%= p.category || '' %></td>
+            <td class="td-nowrap"><%= p.published_at ? formatDateTime(p.published_at) : 'Not set' %></td>
+            <td><% if (p.status === 'draft') { %><span class="badge badge-draft">Draft</span><% } else if (scheduled) { %><span class="badge badge-scheduled">Scheduled</span><% } else { %><span class="badge badge-published">Published</span><% } %></td>
+            <td class="td-actions">
+              <% if (p.status === 'published' && !scheduled) { %><a class="btn btn-ghost btn-sm btn-icon" href="/blog/<%= p.slug %>" target="_blank" rel="noopener" aria-label="View on the website"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-eye"/></svg></a><% } %>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/posts/<%= p.id %>/edit" data-wide data-deep-link="?edit=<%= p.id %>" aria-label="Edit"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon btn-icon-danger" data-delete="/admin/posts/<%= p.id %>" data-label="this article" aria-label="Delete"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <div class="empty-state" id="post-table-empty" hidden><p>No articles match your search.</p></div>
+    </div>
+    <% } %>
+  </section>
+  <% if (open) { %><span data-autopanel="<%= open %>" data-wide hidden></span><% } %>
+</main>
+<%- include('../partials/foot') %>

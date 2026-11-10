@@ -16,6 +16,14 @@ router.use((req, res, next) => {
   res.set("Cache-Control", "no-store");
   next();
 });
+// A logged-out request to anything but the login form gets "please log in"
+// (401 or a redirect) rather than a CSRF error, so expired sessions in an
+// open tab are handled gracefully.
+router.use((req, res, next) => {
+  if (req.session?.user || req.path === "/login" || req.path === "/logout") return next();
+  if (["GET", "HEAD"].includes(req.method)) return next();
+  return requireAdmin(req, res, next);
+});
 router.use(csrfProtection);
 
 /* Login / logout ------------------------------------------------------------ */
@@ -102,6 +110,12 @@ router.use(async (req, res, next) => {
     next(err);
   }
 });
+
+router.use("/media", require("./media"));
+router.use("/conferences", require("./conferences"));
+router.use("/venues", require("./venues"));
+router.use("/posts", require("./posts"));
+router.use("/speakers", require("./speakers"));
 
 router.get("/", async (req, res, next) => {
   try {

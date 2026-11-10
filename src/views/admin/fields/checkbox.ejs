@@ -1,0 +1,5 @@
+<%# name, label, checked, hint %>
+<label class="check" data-field="<%= name %>">
+  <input type="checkbox" name="<%= name %>"<% if (locals.checked) { %> checked<% } %>>
+  <span><%= label %><% if (locals.hint) { %><small><%= hint %></small><% } %></span>
+</label>
