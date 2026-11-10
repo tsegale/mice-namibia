@@ -5,6 +5,10 @@
 process.env.NODE_ENV = "test";
 process.env.DB_NAME = process.env.DB_NAME_TEST || "mice_test";
 process.env.UPLOADS_DIR = process.env.UPLOADS_DIR_TEST || "storage/test-uploads";
+// Never send real email from tests; tests plug in a fake transport instead.
+process.env.SMTP_HOST = "";
+process.env.SMTP_USER = "";
+process.env.MAIL_TO = "team@example.test";
 
 const request = require("supertest");
 const { db, destroy } = require("../src/db/knex");

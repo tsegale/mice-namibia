@@ -1,0 +1,48 @@
+<%
+  const exportHref = `/admin/subscribers/export.csv${filter === 'subscribed' ? '' : '?show=' + filter}`;
+  const actions = `<a class="btn btn-ghost" href="${exportHref}"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-download"/></svg><span class="btn-label">Export CSV</span></a>`;
+%>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'subscribers', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">People who signed up for event alerts on the website. Export the list as CSV to import it into your mailing tool. Always honour unsubscribes: if someone asks to be removed, unsubscribe them here as well.</p>
+  <section class="card">
+    <div class="card-header">
+      <nav class="filter-bar" aria-label="Filter subscribers">
+        <% [['subscribed', 'Subscribed', counts.subscribed], ['unsubscribed', 'Unsubscribed', counts.unsubscribed], ['all', 'All', counts.all_count]].forEach(([key, label, n]) => { %>
+        <a class="filter-btn" href="/admin/subscribers<%= key === 'subscribed' ? '' : '?show=' + key %>"<% if (filter === key) { %> aria-current="true"<% } %>><%= label %> (<%= Number(n || 0) %>)</a>
+        <% }) %>
+      </nav>
+      <div class="search-input"><svg class="icon-sm icon" aria-hidden="true"><use href="/admin/icons.svg#i-search"/></svg><input type="search" placeholder="Search by email" aria-label="Search subscribers" data-table-search="#subs-table"></div>
+    </div>
+    <% if (!rows.length) { %>
+    <div class="empty-state">
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-mail"/></svg>
+      <p><%= filter === 'unsubscribed' ? 'Nobody has unsubscribed.' : 'No subscribers yet. Sign-ups from the newsletter form on every page appear here.' %></p>
+    </div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table id="subs-table">
+        <thead><tr><th>Email</th><th class="hide-sm">Signed up on</th><th>Date</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody>
+          <% rows.forEach((s) => { %>
+          <tr>
+            <td><a class="td-title" href="mailto:<%= s.email %>"><%= s.email %></a></td>
+            <td class="hide-sm text-muted"><%= s.source || '' %></td>
+            <td class="text-muted"><%= formatDate(s.created_at) %></td>
+            <td><span class="badge badge-<%= s.status %>"><%= s.status === 'subscribed' ? 'Subscribed' : 'Unsubscribed' %></span><% if (s.unsubscribed_at) { %><span class="td-sub"><%= formatDate(s.unsubscribed_at) %></span><% } %></td>
+            <td class="td-actions">
+              <% if (s.status === 'subscribed') { %><button type="button" class="btn btn-ghost btn-sm" data-action="/admin/subscribers/<%= s.id %>/unsubscribe">Unsubscribe</button><% } %>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon btn-icon-danger" data-delete="/admin/subscribers/<%= s.id %>" data-label="<%= s.email %>" data-warning="Use this when someone asks for their details to be deleted. To stop emails only, unsubscribe them instead." aria-label="Delete <%= s.email %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <p class="table-empty" id="subs-table-empty" hidden>No subscribers match your search.</p>
+    </div>
+    <% } %>
+  </section>
+</main>
+<%- include('../partials/foot') %>

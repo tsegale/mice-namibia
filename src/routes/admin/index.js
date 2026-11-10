@@ -116,6 +116,8 @@ router.use("/conferences", require("./conferences"));
 router.use("/venues", require("./venues"));
 router.use("/posts", require("./posts"));
 router.use("/speakers", require("./speakers"));
+router.use("/submissions", require("./submissions"));
+router.use("/subscribers", require("./subscribers"));
 
 router.get("/", async (req, res, next) => {
   try {

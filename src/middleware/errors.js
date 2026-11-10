@@ -24,10 +24,11 @@ function errorHandler(err, req, res, next) {
   if (res.headersSent) return;
   res.status(status);
 
-  if (req.originalUrl.startsWith("/admin") && wantsJson(req)) {
+  const isAdmin = req.originalUrl.startsWith("/admin");
+  // Admin requests and the public forms' background posts get JSON.
+  if (wantsJson(req) && (isAdmin || req.method !== "GET")) {
     return res.json({ error: message, ...(err.fieldErrors ? { fieldErrors: err.fieldErrors } : {}) });
   }
-  const isAdmin = req.originalUrl.startsWith("/admin");
   const view = isAdmin ? "admin/error" : status === 404 ? "pages/not-found" : "public/error";
   const locals = isAdmin || status !== 404 ? { status, message } : { status, message, page: META_404 };
   return res.render(view, locals, (renderErr, html) => {

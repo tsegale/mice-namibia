@@ -97,6 +97,7 @@ function createApp({ sessionStore } = {}) {
   });
 
   app.use("/admin", require("./routes/admin"));
+  app.use(require("./routes/forms"));
   app.use(require("./routes/public"));
   app.use(require("./middleware/redirects").redirects);
 

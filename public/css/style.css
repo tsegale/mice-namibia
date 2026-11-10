@@ -8400,6 +8400,33 @@ h2 em.accent,
   display: none;
 }
 
+/* Messages from the server, under the field they belong to. */
+.field-error {
+  margin: 0.15rem 0 0;
+  color: #B42318;
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+/* Spam trap: off-screen, skipped by keyboard and screen readers. */
+.form-hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.newsletter-error {
+  margin-top: var(--space-2);
+}
+
+.contact-form button[aria-busy="true"],
+.newsletter-form button[aria-busy="true"] {
+  cursor: progress;
+  opacity: 0.75;
+}
+
 .form-actions {
   display: flex;
   flex-wrap: wrap;

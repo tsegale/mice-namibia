@@ -31,6 +31,9 @@ function securityHeaders() {
       },
     },
     crossOriginEmbedderPolicy: false,
+    // The browser default. Helmet's "no-referrer" makes browsers send
+    // "Origin: null" on normal form posts, which hides where a post came from.
+    referrerPolicy: { policy: "strict-origin-when-cross-origin" },
     hsts: config.isProd ? undefined : false,
   });
 }

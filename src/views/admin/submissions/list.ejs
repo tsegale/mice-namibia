@@ -1,0 +1,54 @@
+<%
+  const exportHref = `/admin/submissions/export.csv${filter === 'inbox' ? '' : '?show=' + filter}`;
+  const actions = `<a class="btn btn-ghost" href="${exportHref}"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-download"/></svg><span class="btn-label">Export CSV</span></a>`;
+%>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'submissions', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">Everything sent through the contact form on the website. Each enquiry is saved here first and then emailed to the team; reply from your own mailbox and mark it as replied so everyone can see it has been handled.</p>
+  <% if (Number(counts.failed)) { %>
+  <div class="alert alert-warn"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span><%= counts.failed %> enquir<%= Number(counts.failed) === 1 ? 'y was' : 'ies were' %> saved but the email to the team could not be sent. Open it to try again.</span></div>
+  <% } %>
+  <section class="card">
+    <div class="card-header">
+      <nav class="filter-bar" aria-label="Filter enquiries">
+        <% [['inbox', 'Inbox', counts.inbox], ['new', 'Unread', counts.new_count], ['proposal', 'Proposals', counts.proposal], ['general', 'General', counts.general], ['archived', 'Archived', counts.archived]].forEach(([key, label, n]) => { %>
+        <a class="filter-btn" href="/admin/submissions<%= key === 'inbox' ? '' : '?show=' + key %>"<% if (filter === key) { %> aria-current="true"<% } %>><%= label %> (<%= Number(n || 0) %>)</a>
+        <% }) %>
+      </nav>
+      <div class="search-input"><svg class="icon-sm icon" aria-hidden="true"><use href="/admin/icons.svg#i-search"/></svg><input type="search" placeholder="Search enquiries" aria-label="Search enquiries" data-table-search="#sub-table"></div>
+    </div>
+    <% if (!rows.length) { %>
+    <div class="empty-state">
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-inbox"/></svg>
+      <p><%= filter === 'archived' ? 'Nothing archived yet.' : 'No enquiries here yet. Messages from the contact form will appear here.' %></p>
+    </div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table id="sub-table">
+        <thead><tr><th>From</th><th class="hide-sm">Subject</th><th>Received</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody>
+          <% rows.forEach((s) => { const deep = `?${filter === 'inbox' ? '' : 'show=' + filter + '&'}open=${s.id}`; %>
+          <tr class="<%= s.status === 'new' ? 'row-unread' : '' %>" data-row="<%= s.id %>" data-search="<%= [s.name, s.email, s.company, s.subject, s.message].join(' ').toLowerCase().slice(0, 600) %>">
+            <td><button type="button" class="td-title btn-link" data-open-panel="/admin/submissions/<%= s.id %>" data-deep-link="<%= deep %>"><%= s.name %></button><span class="td-sub"><%= s.email %><%= s.company ? ', ' + s.company : '' %></span></td>
+            <td class="hide-sm"><%= s.subject %><span class="td-sub td-clip"><%= (s.message || '').slice(0, 90) %></span></td>
+            <td class="text-muted" title="<%= formatDateTime(s.created_at) %>"><%= timeAgo(s.created_at) %></td>
+            <td>
+              <span class="badge badge-<%= s.status %>" data-status-badge><%= { new: 'New', read: 'Read', replied: 'Replied', archived: 'Archived' }[s.status] %></span>
+              <% if (s.email_status === 'failed') { %><span class="badge badge-failed" title="<%= s.email_error %>">Email failed</span><% } %>
+            </td>
+            <td class="td-actions">
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/submissions/<%= s.id %>" data-deep-link="<%= deep %>" aria-label="Open the enquiry from <%= s.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-eye"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <p class="table-empty" id="sub-table-empty" hidden>No enquiries match your search.</p>
+    </div>
+    <% } %>
+  </section>
+  <% if (open) { %><span data-autopanel="<%= open %>" hidden></span><% } %>
+</main>
+<%- include('../partials/foot') %>

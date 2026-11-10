@@ -45,110 +45,112 @@
       <p class="contact-subheading">Make Today Count</p>
       <p>Don't wait for the right moment. Reach out, reconnect, and take action today, because tomorrow is never guaranteed.</p>
 
-      <form class="contact-form" data-contact-form novalidate>
+<%
+  // Values and messages come back from the server when a no-JavaScript
+  // submission has a problem; with JavaScript the same messages are shown
+  // by main.js without a reload.
+  const f = locals.form || { values: {}, errors: {}, sent: false };
+  const v = (k) => (f.values[k] == null ? '' : String(f.values[k]));
+  const val = (k) => (v(k) ? ` value="${escapeHtml(v(k))}"` : '');
+  const bad = (k) => (f.errors[k] ? ` aria-invalid="true" aria-describedby="err-${k}"` : '');
+  const err = (k) => (f.errors[k] ? `<p class="field-error" id="err-${k}">${escapeHtml(f.errors[k])}</p>` : '');
+  const proposal = v('enquiry_type') === 'proposal';
+  const chosen = [].concat(f.values.services || []);
+  const hasErrors = Object.keys(f.errors).length > 0;
+%>
+      <form class="contact-form" data-contact-form action="/contact" method="post" novalidate<% if (f.sent) { %> hidden<% } %>>
         <fieldset class="enquiry-switch">
           <legend class="visually-hidden">What can we help with?</legend>
-          <label><input type="radio" name="enquiry-type" value="general" checked data-enquiry-mode><span>General Enquiry</span></label>
-          <label><input type="radio" name="enquiry-type" value="proposal" data-enquiry-mode><span>Request a Proposal</span></label>
+          <label><input type="radio" name="enquiry_type" value="general"<% if (!proposal) { %> checked<% } %> data-enquiry-mode><span>General Enquiry</span></label>
+          <label><input type="radio" name="enquiry_type" value="proposal"<% if (proposal) { %> checked<% } %> data-enquiry-mode><span>Request a Proposal</span></label>
         </fieldset>
 
         <div class="form-row">
           <div class="form-field">
             <label for="first-name">First Name*</label>
-            <input type="text" id="first-name" name="first-name" autocomplete="given-name" required>
+            <input type="text" id="first-name" name="first_name" autocomplete="given-name" required maxlength="80"<%- val('first_name') %><%- bad('first_name') %>>
+            <%- err('first_name') %>
           </div>
           <div class="form-field">
             <label for="last-name">Last Name*</label>
-            <input type="text" id="last-name" name="last-name" autocomplete="family-name" required>
+            <input type="text" id="last-name" name="last_name" autocomplete="family-name" required maxlength="80"<%- val('last_name') %><%- bad('last_name') %>>
+            <%- err('last_name') %>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-field">
             <label for="email">Email*</label>
-            <input type="email" id="email" name="email" autocomplete="email" required>
+            <input type="email" id="email" name="email" autocomplete="email" required maxlength="190"<%- val('email') %><%- bad('email') %>>
+            <%- err('email') %>
           </div>
           <div class="form-field">
             <label for="phone">Phone*</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" required>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" required maxlength="40"<%- val('phone') %><%- bad('phone') %>>
+            <%- err('phone') %>
           </div>
         </div>
 
-        <fieldset class="proposal-fields" data-proposal-only hidden disabled>
+        <fieldset class="proposal-fields" data-proposal-only<% if (!proposal) { %> hidden disabled<% } %>>
           <legend class="proposal-legend">About your event</legend>
           <div class="form-row">
             <div class="form-field">
               <label for="organisation">Company or organisation</label>
-              <input type="text" id="organisation" name="organisation" autocomplete="organization">
+              <input type="text" id="organisation" name="organisation" autocomplete="organization" maxlength="160"<%- val('organisation') %><%- bad('organisation') %>>
+              <%- err('organisation') %>
             </div>
             <div class="form-field">
               <label for="event-type">Type of event*</label>
-              <select id="event-type" name="event-type" required>
+              <select id="event-type" name="event_type" required<%- bad('event_type') %>>
                 <option value="">Select</option>
-                <option>Meeting</option>
-                <option>Incentive trip</option>
-                <option>Conference</option>
-                <option>Exhibition or trade show</option>
-                <option>Other</option>
-              </select>
+                <% options.EVENT_TYPES.forEach((o) => { %><option<% if (v('event_type') === o) { %> selected<% } %>><%= o %></option>
+                <% }) %></select>
+              <%- err('event_type') %>
             </div>
           </div>
           <div class="form-row form-row--3">
             <div class="form-field">
               <label for="destination">Destination</label>
-              <select id="destination" name="destination">
+              <select id="destination" name="destination"<%- bad('destination') %>>
                 <option value="">Not sure yet</option>
-                <option value="Namibia">Namibia</option>
-                <option value="Botswana">Botswana</option>
-                <option value="South Africa">South Africa</option>
-                <option value="Zambia">Zambia</option>
-                <option value="Zimbabwe">Zimbabwe</option>
-                <option value="Kenya">Kenya</option>
-                <option value="Tanzania">Tanzania</option>
-                <option value="Uganda">Uganda</option>
-                <option value="Rwanda">Rwanda</option>
-              </select>
+                <% options.DESTINATIONS.forEach((o) => { %><option value="<%= o %>"<% if (v('destination') === o) { %> selected<% } %>><%= o %></option>
+                <% }) %></select>
             </div>
             <div class="form-field">
               <label for="dates">Preferred dates</label>
-              <input type="text" id="dates" name="dates" placeholder="e.g. March 2027">
+              <input type="text" id="dates" name="dates" placeholder="e.g. March 2027" maxlength="120"<%- val('dates') %><%- bad('dates') %>>
+              <%- err('dates') %>
             </div>
             <div class="form-field">
               <label for="delegates">Delegates</label>
-              <input type="number" id="delegates" name="delegates" min="1" inputmode="numeric" placeholder="e.g. 120">
+              <input type="number" id="delegates" name="delegates" min="1" max="100000" inputmode="numeric" placeholder="e.g. 120"<%- val('delegates') %><%- bad('delegates') %>>
+              <%- err('delegates') %>
             </div>
           </div>
           <div class="form-field">
             <span class="form-label" id="services-label">Services you need</span>
             <div class="check-chips" role="group" aria-labelledby="services-label">
-              <label class="check-chip"><input type="checkbox" name="services" value="Meeting Planning"><span>Meeting Planning</span></label>
-              <label class="check-chip"><input type="checkbox" name="services" value="Incentive Travel"><span>Incentive Travel</span></label>
-              <label class="check-chip"><input type="checkbox" name="services" value="Conference Management"><span>Conference Management</span></label>
-              <label class="check-chip"><input type="checkbox" name="services" value="Exhibitions and Trade Shows"><span>Exhibitions and Trade Shows</span></label>
-              <label class="check-chip"><input type="checkbox" name="services" value="Corporate Travel Management"><span>Corporate Travel Management</span></label>
-              <label class="check-chip"><input type="checkbox" name="services" value="Event Logistics and Coordination"><span>Event Logistics and Coordination</span></label>
-              <label class="check-chip"><input type="checkbox" name="services" value="Destination Management Services"><span>Destination Management Services</span></label>
-              <label class="check-chip"><input type="checkbox" name="services" value="Accommodation and Venue Booking"><span>Accommodation and Venue Booking</span></label>
-              <label class="check-chip"><input type="checkbox" name="services" value="Transportation Services"><span>Transportation Services</span></label>
-              <label class="check-chip"><input type="checkbox" name="services" value="Post-Event Evaluation"><span>Post-Event Evaluation</span></label>
-            </div>
+              <% options.SERVICES.forEach((o) => { %><label class="check-chip"><input type="checkbox" name="services" value="<%= o %>"<% if (chosen.includes(o)) { %> checked<% } %>><span><%= o %></span></label>
+              <% }) %></div>
           </div>
         </fieldset>
 
         <div class="form-field">
           <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5"></textarea>
+          <textarea id="message" name="message" rows="5" maxlength="5000"<%- bad('message') %>><%= v('message') %></textarea>
+          <%- err('message') %>
         </div>
 
-        <p class="form-error" role="alert" hidden data-form-error>Please fill in the highlighted fields.</p>
+        <div class="form-hp" aria-hidden="true"><label>Leave this field empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
 
-        <!-- TODO: wire this form to the Node/Express backend (Phase 2). -->
+        <p class="form-error" role="alert"<% if (!hasErrors && !f.error) { %> hidden<% } %> data-form-error><%= f.error || 'Please fill in the highlighted fields.' %></p>
+
         <div class="form-actions">
-          <button type="submit" class="btn btn-primary btn-large" data-submit-label>Send Enquiry</button>
+          <button type="submit" class="btn btn-primary btn-large" data-submit-label><%= proposal ? 'Request Proposal' : 'Send Enquiry' %></button>
           <p class="form-note">Your details are handled under our <a href="/privacy-policy">Privacy Policy</a>.</p>
         </div>
       </form>
-      <div class="form-confirmation" data-form-confirmation hidden tabindex="-1">
+      <div class="form-confirmation" data-form-confirmation<% if (!f.sent) { %> hidden<% } %> tabindex="-1">
         <p class="form-confirmation-title">Thank you, your message is on its way.</p>
         <p>Our team will be in touch shortly.</p>
       </div>

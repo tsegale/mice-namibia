@@ -1,0 +1,70 @@
+<%
+  const STATUS_LABEL = { new: 'New', read: 'Read', replied: 'Replied', archived: 'Archived' };
+  const EMAIL_LABEL = { sent: 'Emailed to the team', pending: 'Email not sent yet', failed: 'Email failed', skipped: 'Email not set up' };
+  const mailto = `mailto:${encodeURIComponent(s.email)}?subject=${encodeURIComponent('Re: ' + (s.subject || 'Your enquiry') + ' | MICE Namibia')}`;
+  const act = (status) => `data-action="/admin/submissions/${s.id}/status" data-body='${JSON.stringify({ status })}'`;
+%>
+<div class="panel-header"<% if (markedRead) { %> data-marked-read="<%= s.id %>"<% } %>>
+  <h2 id="panel-title"><%= s.name %></h2>
+  <button type="button" class="close-btn" data-close-panel aria-label="Close"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-x"/></svg></button>
+</div>
+<div class="panel-body">
+  <p class="inline detail-badges">
+    <span class="badge badge-<%= s.type === 'proposal' ? 'scheduled' : 'draft' %>"><%= s.type === 'proposal' ? 'Proposal request' : 'General enquiry' %></span>
+    <span class="badge badge-<%= s.status %>"><%= STATUS_LABEL[s.status] %></span>
+    <span class="text-muted">Received <%= formatDateTime(s.created_at) %> (<%= timeAgo(s.created_at) %>)</span>
+  </p>
+
+  <% if (s.email_status === 'failed' || s.email_status === 'skipped' || s.email_status === 'pending') { %>
+  <div class="alert alert-<%= s.email_status === 'failed' ? 'error' : 'warn' %>">
+    <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg>
+    <span>
+      <% if (s.email_status === 'skipped') { %>This enquiry was saved, but no email went out because email sending is not set up on the server yet.<% } else { %>This enquiry was saved, but the email to the team did not go out<% if (s.email_error) { %> (<%= s.email_error %>)<% } %>.<% } %>
+      <button type="button" class="btn btn-ghost btn-sm" data-action="/admin/submissions/<%= s.id %>/resend"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-refresh"/></svg>Send the email again</button>
+    </span>
+  </div>
+  <% } %>
+
+  <div class="panel-section">
+    <div class="panel-section-label">Contact</div>
+    <dl class="detail-list">
+      <dt>Email</dt><dd><a href="<%= mailto %>"><%= s.email %></a></dd>
+      <% if (s.phone) { %><dt>Phone</dt><dd><a href="tel:<%= s.phone.replace(/[^\d+]/g, '') %>"><%= s.phone %></a></dd><% } %>
+      <% if (s.company) { %><dt>Organisation</dt><dd><%= s.company %></dd><% } %>
+    </dl>
+  </div>
+
+  <% const extra = details.filter(([label]) => label !== 'Organisation'); if (extra.length) { %>
+  <div class="panel-section">
+    <div class="panel-section-label">About the event</div>
+    <dl class="detail-list">
+      <% extra.forEach(([label, value]) => { %><dt><%= label %></dt><dd><%= value %></dd><% }) %>
+    </dl>
+  </div>
+  <% } %>
+
+  <div class="panel-section">
+    <div class="panel-section-label">Message</div>
+    <% if (s.message) { %><div class="message-box"><%= s.message %></div><% } else { %><p class="text-muted">No message was written.</p><% } %>
+  </div>
+
+  <p class="text-muted detail-meta"><%= EMAIL_LABEL[s.email_status] %><% if (s.ip) { %> | Sent from <%= s.ip %><% } %></p>
+</div>
+<div class="panel-footer">
+  <div class="inline">
+    <button type="button" class="btn btn-ghost btn-icon-danger" data-delete="/admin/submissions/<%= s.id %>" data-label="the enquiry from <%= s.name %>" data-warning="The enquiry is removed permanently. Archive it instead if you may need it later."><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg>Delete</button>
+    <% if (s.status === 'archived') { %>
+    <button type="button" class="btn btn-ghost" <%- act('read') %>><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-inbox"/></svg>Move to inbox</button>
+    <% } else { %>
+    <button type="button" class="btn btn-ghost" <%- act('archived') %>><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-archive"/></svg>Archive</button>
+    <% } %>
+  </div>
+  <div class="panel-footer-right">
+    <% if (s.status !== 'replied') { %>
+    <button type="button" class="btn btn-ghost" <%- act('replied') %>><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-check"/></svg>Mark as replied</button>
+    <% } else { %>
+    <button type="button" class="btn btn-ghost" <%- act('read') %>>Not replied yet</button>
+    <% } %>
+    <a class="btn btn-primary" href="<%= mailto %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-reply"/></svg>Reply by email</a>
+  </div>
+</div>

@@ -147,12 +147,33 @@
     }
     panelDirty = false;
     initComponents(panel);
+    markRowRead(panel.querySelector("[data-marked-read]"));
     const form = panel.querySelector("form");
     if (form) {
       form.addEventListener("input", () => (panelDirty = true));
       form.addEventListener("change", () => (panelDirty = true));
     }
     (panel.querySelector("[autofocus]") || panel.querySelector("input:not([type=hidden]), select, textarea, [contenteditable]"))?.focus();
+  }
+
+  // Opening a new enquiry marks it as read on the server; reflect that here.
+  function markRowRead(flag) {
+    if (!flag) return;
+    const row = document.querySelector(`tr[data-row="${CSS.escape(flag.dataset.markedRead)}"]`);
+    row?.classList.remove("row-unread");
+    const badge = row?.querySelector("[data-status-badge]");
+    if (badge) {
+      badge.className = "badge badge-read";
+      badge.textContent = "Read";
+    }
+    const count = document.querySelector('.sidebar a[href="/admin/submissions"] .nav-count');
+    if (count) {
+      const n = Number(count.textContent) - 1;
+      if (n > 0) {
+        count.textContent = String(n);
+        count.setAttribute("aria-label", `${n} new`);
+      } else count.remove();
+    }
   }
 
   async function closePanel({ force = false } = {}) {

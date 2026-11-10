@@ -1,0 +1,35 @@
+<%- include('../partials/top') %>
+
+<section class="notfound" aria-labelledby="unsubscribe-title">
+  <picture class="notfound-media">
+    <source type="image/webp" srcset="/assets/images/gallery/conferences-in-swakopmund-640.webp 640w, /assets/images/gallery/conferences-in-swakopmund-1280.webp 1280w, /assets/images/gallery/conferences-in-swakopmund-1920.webp 1920w" sizes="100vw">
+    <img src="/assets/images/gallery/conferences-in-swakopmund-1280.jpg" srcset="/assets/images/gallery/conferences-in-swakopmund-640.jpg 640w, /assets/images/gallery/conferences-in-swakopmund-1280.jpg 1280w, /assets/images/gallery/conferences-in-swakopmund-1920.jpg 1920w" sizes="100vw" alt="" width="1280" height="854" fetchpriority="high">
+  </picture>
+  <div class="container notfound-inner">
+    <p class="eyebrow eyebrow--light"><span class="stripe" aria-hidden="true"></span>Event alerts</p>
+    <% if (state === 'confirm') { %>
+    <h1 id="unsubscribe-title">Stop receiving event alerts?</h1>
+    <p>We will remove your address from the MICE Namibia mailing list. You can subscribe again at any time.</p>
+    <form class="notfound-actions" method="post" action="/newsletter/unsubscribe/<%= token %>">
+      <button type="submit" class="btn btn-primary">Unsubscribe</button>
+      <a href="/" class="btn btn-ghost btn-ghost--light">Keep my subscription</a>
+    </form>
+    <% } else if (state === 'done') { %>
+    <h1 id="unsubscribe-title">You have been unsubscribed</h1>
+    <p>You will not receive any more event alerts from us. If this was a mistake, you can sign up again from any page.</p>
+    <div class="notfound-actions">
+      <a href="/" class="btn btn-primary">Back to Home</a>
+      <a href="/events" class="btn btn-ghost btn-ghost--light">Upcoming Events</a>
+    </div>
+    <% } else { %>
+    <h1 id="unsubscribe-title">This link is not valid</h1>
+    <p>The unsubscribe link may be incomplete. Copy the whole link from the email, or contact us and we will remove your address.</p>
+    <div class="notfound-actions">
+      <a href="/contact#contact-form" class="btn btn-primary">Contact Us</a>
+      <a href="/" class="btn btn-ghost btn-ghost--light">Back to Home</a>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/bottom') %>

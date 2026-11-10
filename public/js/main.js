@@ -144,25 +144,88 @@ function initNavDropdowns() {
   });
 }
 
-/* Newsletter: inline success message ------------------------------------ */
+/* Sending the public forms ---------------------------------------------- */
 
-// TODO: wire the newsletter forms to a real email service once the backend
-// exists (Phase 2). Until then the address is not stored anywhere.
+// Both forms also work without JavaScript (normal POST and a full page);
+// with it they are sent in the background and answer inline.
+function postForm(form) {
+  var body = new URLSearchParams();
+  Array.prototype.forEach.call(form.elements, function (el) {
+    if (!el.name || el.disabled) return;
+    if ((el.type === "checkbox" || el.type === "radio") && !el.checked) return;
+    body.append(el.name, el.value);
+  });
+  return fetch(form.getAttribute("action"), {
+    method: "POST",
+    headers: { Accept: "application/json", "X-Requested-With": "fetch" },
+    body: body,
+    credentials: "same-origin",
+  }).then(function (res) {
+    return res
+      .json()
+      .catch(function () {
+        return {};
+      })
+      .then(function (data) {
+        if (res.ok) return data;
+        var err = new Error(data.error || "Something went wrong on our side. Please try again.");
+        err.fieldErrors = data.fieldErrors || {};
+        throw err;
+      });
+  });
+}
+
+var OFFLINE_MESSAGE = "We could not reach our server. Check your connection and try again, or call us on +264 81 245 5852.";
+
+function setBusy(button, busy, label) {
+  if (!button) return;
+  if (busy) {
+    button.dataset.label = button.textContent;
+    button.textContent = label;
+    button.setAttribute("aria-busy", "true");
+    button.disabled = true;
+  } else {
+    if (button.dataset.label) button.textContent = button.dataset.label;
+    button.removeAttribute("aria-busy");
+    button.disabled = false;
+  }
+}
+
+/* Newsletter ------------------------------------------------------------- */
+
 function initNewsletterForms() {
   document.querySelectorAll("[data-newsletter-form]").forEach(function (form) {
+    var panel = form.parentElement;
+    var error = panel.querySelector("[data-newsletter-error]");
+    var success = panel.querySelector("[data-newsletter-success]");
+    var button = form.querySelector("button[type=submit]");
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
-      var success = form.parentElement.querySelector("[data-newsletter-success]");
-      form.hidden = true;
-      if (success) {
-        success.hidden = false;
-        success.setAttribute("tabindex", "-1");
-        success.focus();
-      }
+      if (error) error.hidden = true;
+      setBusy(button, true, "Subscribing");
+      postForm(form)
+        .then(function () {
+          form.hidden = true;
+          if (success) {
+            success.hidden = false;
+            success.setAttribute("tabindex", "-1");
+            success.focus();
+          }
+        })
+        .catch(function (err) {
+          if (error) {
+            var fieldMsg = err.fieldErrors && err.fieldErrors.email;
+            error.textContent = fieldMsg || (err instanceof TypeError ? OFFLINE_MESSAGE : err.message);
+            error.hidden = false;
+          }
+        })
+        .then(function () {
+          setBusy(button, false);
+        });
     });
   });
 }
@@ -323,16 +386,53 @@ function initTocScrollSpy() {
 
 /* Contact form ----------------------------------------------------------- */
 
-// TODO: wire this form to a backend/email service (Zusammen Travels may
-// already have a Node.js/Nodemailer setup on their main site worth reusing)
+function clearFieldErrors(form) {
+  form.querySelectorAll(".field-error").forEach(function (p) {
+    p.parentNode.removeChild(p);
+  });
+  form.querySelectorAll("[aria-describedby^='err-']").forEach(function (el) {
+    el.removeAttribute("aria-describedby");
+  });
+}
+
+function showFieldErrors(form, fieldErrors) {
+  var first = null;
+  Object.keys(fieldErrors).forEach(function (name) {
+    var el = form.elements[name];
+    if (!el || !el.closest) return;
+    var field = el.closest(".form-field");
+    el.setAttribute("aria-invalid", "true");
+    if (field) {
+      var p = document.createElement("p");
+      p.className = "field-error";
+      p.id = "err-" + name;
+      p.textContent = fieldErrors[name];
+      field.appendChild(p);
+      el.setAttribute("aria-describedby", p.id);
+    }
+    first = first || el;
+  });
+  return first;
+}
+
 function initContactForm() {
   var contactForm = document.querySelector("[data-contact-form]");
   var contactConfirmation = document.querySelector("[data-form-confirmation]");
   if (!contactForm || !contactConfirmation) return;
   var error = contactForm.querySelector("[data-form-error]");
+  var button = contactForm.querySelector("[data-submit-label]");
+  var defaultError = error ? error.textContent : "";
+
+  function showError(text) {
+    if (!error) return;
+    error.textContent = text;
+    error.hidden = false;
+  }
 
   contactForm.addEventListener("submit", function (event) {
     event.preventDefault();
+    if (button && button.disabled) return;
+    clearFieldErrors(contactForm);
     // novalidate turns off the browser bubbles; mark invalid fields ourselves.
     var invalid = Array.prototype.filter.call(contactForm.elements, function (el) {
       if (!el.willValidate) return false;
@@ -341,24 +441,37 @@ function initContactForm() {
       return bad;
     });
     if (invalid.length) {
-      if (error) error.hidden = false;
+      showError(defaultError);
       invalid[0].focus();
       return;
     }
     if (error) error.hidden = true;
-    // TODO (Phase 2): POST to the Express backend instead of resetting.
-    contactForm.reset();
-    contactForm.hidden = true;
-    var note = document.querySelector(".enquiry-context");
-    if (note) note.hidden = true;
-    contactConfirmation.hidden = false;
-    contactConfirmation.focus();
+    setBusy(button, true, "Sending");
+    postForm(contactForm)
+      .then(function () {
+        contactForm.reset();
+        contactForm.hidden = true;
+        var note = document.querySelector(".enquiry-context");
+        if (note) note.hidden = true;
+        contactConfirmation.hidden = false;
+        contactConfirmation.focus();
+      })
+      .catch(function (err) {
+        var first = err.fieldErrors ? showFieldErrors(contactForm, err.fieldErrors) : null;
+        showError(err instanceof TypeError ? OFFLINE_MESSAGE : err.message);
+        if (first) first.focus();
+      })
+      .then(function () {
+        setBusy(button, false);
+      });
   });
 
   contactForm.addEventListener("input", function (event) {
     var el = event.target;
     if (el.getAttribute && el.getAttribute("aria-invalid") === "true" && el.checkValidity()) {
       el.setAttribute("aria-invalid", "false");
+      var msg = document.getElementById("err-" + el.name);
+      if (msg) msg.parentNode.removeChild(msg);
     }
   });
 }

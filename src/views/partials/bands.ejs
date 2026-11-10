@@ -17,6 +17,7 @@
 </section>
 
 <!-- Newsletter (shared on every page) -->
+<% if (!(typeof page !== 'undefined' && page.newsletter === 'none')) { const nl = locals.newsletterState || ''; %>
 <section class="newsletter-section" id="newsletter" aria-labelledby="newsletter-title">
   <div class="container">
     <div class="newsletter-panel" data-reveal>
@@ -30,15 +31,17 @@
         <p class="eyebrow"><span class="stripe" aria-hidden="true"></span>Event alerts</p>
         <h2 id="newsletter-title"><%= homeCopy ? 'Stay Connected to Every Session' : 'Stay in the loop' %></h2>
         <p><%= homeCopy ? 'Be the first to know about upcoming sessions, important updates, special events, and exclusive content.' : 'Get event alerts and industry updates straight to your inbox.' %></p>
-        <!-- TODO: wire this form up to a real email service; no backend yet -->
-        <form class="newsletter-form" data-newsletter-form>
+        <form class="newsletter-form" data-newsletter-form action="/newsletter" method="post"<% if (nl === 'subscribed') { %> hidden<% } %>>
           <label class="visually-hidden" for="newsletter-email">Email address</label>
-          <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" autocomplete="email" required>
+          <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" autocomplete="email" required maxlength="190">
+          <div class="form-hp" aria-hidden="true"><label>Leave this field empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
           <button type="submit" class="btn btn-secondary"><%= homeCopy ? 'Save Your Spot With Event Alerts' : 'Subscribe' %></button>
         </form>
-        <p class="newsletter-success" data-newsletter-success role="status" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><polyline points="7.5 12.5 10.5 15.5 16.5 9"/></svg> Thank you for subscribing. Event alerts are on their way to your inbox.</p>
+        <p class="form-error newsletter-error" data-newsletter-error role="alert"<% if (nl !== 'invalid') { %> hidden<% } %>>Enter a valid email address, like name@company.com.</p>
+        <p class="newsletter-success" data-newsletter-success role="status"<% if (nl !== 'subscribed') { %> hidden<% } %>><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><polyline points="7.5 12.5 10.5 15.5 16.5 9"/></svg> Thank you for subscribing. Event alerts are on their way to your inbox.</p>
       </div>
     </div>
   </div>
 </section>
+<% } %>
 

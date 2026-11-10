@@ -53,7 +53,7 @@ for (const name of ["gallery", "faq", "partners", "privacy-policy", "terms-and-c
 }
 
 router.get("/pricing", wrap(async (req, res) => render(res, "pricing", META.pricing, { upcoming: await conferences.upcoming() })));
-router.get("/contact", wrap(async (req, res) => render(res, "contact", META.contact, { upcoming: await conferences.upcoming() })));
+// /contact is in routes/forms.js with the form handlers.
 router.get("/team", wrap(async (req, res) => render(res, "team", META.team, { teamSpeakers: await speakers.forTeamPage(8) })));
 
 /* Events -------------------------------------------------------------------- */
