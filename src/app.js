@@ -24,7 +24,7 @@ function createApp({ sessionStore } = {}) {
 
   app.set("view engine", "ejs");
   app.set("views", path.join(__dirname, "views"));
-  Object.assign(app.locals, viewHelpers, { siteEnv: config.siteEnv, baseUrl: config.baseUrl });
+  Object.assign(app.locals, viewHelpers, { C: require("./views/components"), siteEnv: config.siteEnv, baseUrl: config.baseUrl });
 
   app.use(pinoHttp({ logger, autoLogging: { ignore: (req) => /^\/(assets|css|js|uploads|admin\/(admin\.|icons))/.test(req.url) } }));
   app.use(cspNonce);
@@ -98,6 +98,7 @@ function createApp({ sessionStore } = {}) {
 
   app.use("/admin", require("./routes/admin"));
   app.use(require("./routes/public"));
+  app.use(require("./middleware/redirects").redirects);
 
   app.use(notFound);
   app.use(errorHandler);

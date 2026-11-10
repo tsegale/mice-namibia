@@ -1,0 +1,104 @@
+<%- include('../partials/top') %>
+
+<section class="page-header">
+  <picture class="page-header-media">
+    <source type="image/webp" srcset="/assets/images/venues/wicc/event-4-640.webp 640w, /assets/images/venues/wicc/event-4-1280.webp 1280w, /assets/images/venues/wicc/event-4-1920.webp 1920w" sizes="100vw">
+    <img src="/assets/images/venues/wicc/event-4-1280.jpg" srcset="/assets/images/venues/wicc/event-4-640.jpg 640w, /assets/images/venues/wicc/event-4-1280.jpg 1280w, /assets/images/venues/wicc/event-4-1920.jpg 1920w" sizes="100vw" alt="" width="1920" height="1280" fetchpriority="high">
+  </picture>
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Meet Our Team</li></ol></nav>
+    <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Our Team</p>
+    <h1>Meet Our Team</h1>
+  </div>
+</section>
+
+<!-- CEO: name and photo pending from the client. No stock photo stands in for a real person. -->
+<section class="section">
+  <div class="container about">
+    <div class="about-visual">
+      <div class="image-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+        <span class="placeholder-label">Photo coming soon</span>
+      </div>
+    </div>
+    <div class="about-content">
+      <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">02</span>&nbsp;/ Leadership</p>
+      <h2>Meet Our CEO</h2>
+      <p>Meet our CEO: the passionate leader behind our mission, bringing experience, vision, and a commitment to helping our company grow and succeed.</p>
+      <p class="placeholder-note">Name, photo and full bio to follow once confirmed by the client.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Our Team: hiring is still underway, so this is a sliding carousel of empty-state slots rather than real photos. -->
+<section class="section section-alt" aria-labelledby="team-title">
+  <div class="container">
+    <div class="team-head">
+      <div>
+        <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">03</span>&nbsp;/ Our Team</p>
+        <h2 id="team-title">Our Team</h2>
+        <p>The faces behind every event are still joining us. Team profiles will appear here as hiring is completed.</p>
+      </div>
+      <div class="carousel-controls">
+        <button type="button" class="carousel-btn" data-carousel-prev aria-controls="team-carousel" aria-label="Previous team member"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <button type="button" class="carousel-btn" data-carousel-next aria-controls="team-carousel" aria-label="Next team member"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+  <ul class="venue-carousel" id="team-carousel" data-carousel tabindex="0" role="region" aria-label="Our team, scroll horizontally">
+      <li class="venue-slide">
+        <article class="team-slide-card">
+          <div class="image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+          </div>
+          <p class="team-slide-caption">Team member coming soon</p>
+        </article>
+      </li>
+      <li class="venue-slide">
+        <article class="team-slide-card">
+          <div class="image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+          </div>
+          <p class="team-slide-caption">Team member coming soon</p>
+        </article>
+      </li>
+      <li class="venue-slide">
+        <article class="team-slide-card">
+          <div class="image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+          </div>
+          <p class="team-slide-caption">Team member coming soon</p>
+        </article>
+      </li>
+      <li class="venue-slide">
+        <article class="team-slide-card">
+          <div class="image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+          </div>
+          <p class="team-slide-caption">Team member coming soon</p>
+        </article>
+      </li>
+  </ul>
+</section>
+
+<!-- Speakers: from the database (published, with consent). Sample cards hold the layout until real speakers exist; open slots fill the 8-slot grid from the spec. -->
+<section class="section" aria-labelledby="speakers-title">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">04</span>&nbsp;/ Speakers</p>
+      <h2 id="speakers-title">Speakers</h2>
+      <p>Speaker profiles will appear here once each speaker is confirmed and has given consent.</p>
+      <% if (teamSpeakers.samples || !teamSpeakers.speakers.length) { %>
+      <div class="speakers-soon">
+        <p class="speakers-soon-title">Speaker line-up announcing soon</p>
+        <p>The first four cards are a sample of the layout, not confirmed speakers. The remaining slots are still open.</p>
+      </div>
+      <% } %>
+    </div>
+    <div class="speakers-grid" data-reveal-stagger>
+<%- C.speakers.grid(teamSpeakers.speakers, { slots: 8 }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/bottom') %>

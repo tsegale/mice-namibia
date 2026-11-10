@@ -1,0 +1,56 @@
+<%
+  const navKey = (typeof page !== 'undefined' && page.nav) || '';
+  const PAGES_MENU = ['/about', '/team', '/partners', '/gallery', '/faq', '/pricing', '/privacy-policy', '/terms-and-conditions'];
+  const pagesActive = PAGES_MENU.includes(navKey);
+  const navAttr = (href) => href === navKey ? ' class="active" aria-current="page"' : '';
+%>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" data-header>
+  <nav class="nav" aria-label="Main">
+    <a href="/" class="brand-lockup">
+      <img src="/assets/images/zusammen-logo.png" alt="Zusammen Tours and Travel Agency, home" width="41" height="44">
+      <span class="brand-lockup-tagline" aria-hidden="true"><span>Meetings, Incentives</span><span>Conferences, Exhibitions</span></span>
+    </a>
+
+    <div class="nav-panel" id="site-menu">
+      <ul class="nav-links">
+        <li><a href="/"<%- navAttr("/") %>>Home</a></li>
+        <li class="nav-item nav-item--dropdown">
+          <button type="button" class="nav-dropdown-toggle<%= pagesActive ? ' active' : '' %>" aria-haspopup="true" aria-expanded="false" aria-controls="pages-menu">
+            Pages
+            <svg class="nav-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav-dropdown-menu" id="pages-menu">
+            <li><a href="/about"<%- navAttr("/about") %>>About Us</a></li>
+            <li><a href="/team"<%- navAttr("/team") %>>Meet the Team</a></li>
+            <li><a href="/partners"<%- navAttr("/partners") %>>Our Partners</a></li>
+            <li><a href="/gallery"<%- navAttr("/gallery") %>>Gallery</a></li>
+            <li><a href="/faq"<%- navAttr("/faq") %>>FAQ</a></li>
+            <li><a href="/pricing"<%- navAttr("/pricing") %>>Pricing</a></li>
+            <li><a href="/privacy-policy"<%- navAttr("/privacy-policy") %>>Privacy Policy</a></li>
+            <li><a href="/terms-and-conditions"<%- navAttr("/terms-and-conditions") %>>Terms and Conditions</a></li>
+          </ul>
+        </li>
+        <li><a href="/events"<%- navAttr("/events") %>>Events</a></li>
+        <li><a href="/services"<%- navAttr("/services") %>>Services</a></li>
+        <li><a href="/blog"<%- navAttr("/blog") %>>Blog</a></li>
+        <li><a href="/venues"<%- navAttr("/venues") %>>Venues</a></li>
+        <li><a href="/contact"<%- navAttr("/contact") %>>Contact Us</a></li>
+      </ul>
+      <div class="nav-panel-extra">
+        <a href="/contact?type=proposal#contact-form" class="btn btn-primary">Request a Proposal</a>
+        <a href="tel:+264812455852">+264 81 245 5852</a>
+        <a href="mailto:corporate.events@zusammentravels.com">corporate.events@zusammentravels.com</a>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <a href="/contact?type=proposal#contact-form" class="btn btn-primary">Request a Proposal</a>
+      <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open menu">
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>

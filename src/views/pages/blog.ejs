@@ -1,0 +1,36 @@
+<%- include('../partials/top') %>
+
+<section class="page-header">
+  <picture class="page-header-media">
+    <source type="image/webp" srcset="/assets/images/venues/movenpick/coffee-bar-640.webp 640w, /assets/images/venues/movenpick/coffee-bar-1280.webp 1280w" sizes="100vw">
+    <img src="/assets/images/venues/movenpick/coffee-bar-1280.jpg" srcset="/assets/images/venues/movenpick/coffee-bar-640.jpg 640w, /assets/images/venues/movenpick/coffee-bar-1280.jpg 1280w" sizes="100vw" alt="" width="1280" height="1920" fetchpriority="high">
+  </picture>
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Blog</li></ol></nav>
+    <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Blog</p>
+    <h1>Insights &amp; Resources</h1>
+    <p class="page-subtitle">Explore expert insights, industry trends, practical guides, and innovative ideas to help your business grow and stay ahead.</p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="blog-list-title">
+  <div class="container">
+    <h2 id="blog-list-title" class="visually-hidden">All articles</h2>
+    <div class="blog-toolbar">
+      <ul class="chip-filters" data-blog-categories aria-label="Filter by category">
+<%- C.posts.categoryFilters(posts) %>
+      </ul>
+      <label class="blog-search">
+        <span class="visually-hidden">Search articles</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.5" y2="16.5"/></svg>
+        <input type="search" placeholder="Search articles" data-blog-search>
+      </label>
+    </div>
+    <div class="blog-list" data-blog-list>
+<%- C.posts.listing(posts) %>
+    </div>
+    <p class="blog-empty" data-blog-empty hidden>No articles match your search. <button type="button" class="text-link" data-blog-reset>Show all articles</button></p>
+  </div>
+</section>
+
+<%- include('../partials/bottom') %>

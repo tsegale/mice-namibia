@@ -1,0 +1,113 @@
+<%
+  const H = C.conferences.helpers;
+  const I = C.icons.CONF;
+  const c = conference;
+  const register = `/contact?type=proposal&event=${encodeURIComponent(c.slug)}#contact-form`;
+  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(c.city)},+${encodeURIComponent(c.country)}&output=embed`;
+%>
+<%- include('../partials/top') %>
+<section class="page-header event-hero">
+  <%- picture(c.cover, { className: 'page-header-media', sizes: '100vw', alt: '', priority: true }) %>
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/events">Events</a></li><li aria-current="page"><%= c.short_title %></li></ol></nav>
+    <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Conference</p>
+    <p class="event-hero-when"><%- I.calendar %><time datetime="<%= c.starts_iso %>"><%= H.weekdayLong(c) %>, <%= H.dateLong(c) %></time><span aria-hidden="true">&middot;</span><%= H.timeRange(c) %></p>
+    <h1><%= c.title %></h1>
+    <p class="event-hero-where"><%- H.flag(c, 28, 21) %><%- H.place(c) %></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container event-layout">
+    <div class="event-main">
+
+      <div class="countdown" data-countdown data-start="<%= c.starts_iso %>" data-end="<%= c.ends_iso %>" hidden>
+        <p class="countdown-label" data-countdown-label>Starts in</p>
+        <div class="countdown-units" data-countdown-units>
+          <div class="countdown-unit"><span data-countdown-days>0</span><small>Days</small></div>
+          <div class="countdown-unit"><span data-countdown-hours>0</span><small>Hours</small></div>
+          <div class="countdown-unit"><span data-countdown-minutes>0</span><small>Minutes</small></div>
+          <div class="countdown-unit"><span data-countdown-seconds>0</span><small>Seconds</small></div>
+        </div>
+        <p class="countdown-status" data-countdown-status hidden></p>
+      </div>
+
+      <div class="event-block" data-reveal>
+        <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">02</span>&nbsp;/ About</p>
+        <h2>About the <em class="accent">conference</em></h2>
+        <%- c.body %>
+      </div>
+
+<% if (c.pull_quote) { %>
+      <figure class="pull-quote" data-reveal>
+        <span class="stripe" aria-hidden="true"></span>
+        <blockquote><p><%= c.pull_quote %></p></blockquote>
+        <figcaption><%= c.short_title %></figcaption>
+      </figure>
+<% } %>
+
+<% if (c.gallery && c.gallery.length) { %>
+      <div class="event-block" data-reveal>
+        <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">03</span>&nbsp;/ Gallery</p>
+        <h2>Gallery</h2>
+        <div class="event-gallery" data-lightbox>
+<% c.gallery.forEach((g, i) => { %>
+          <a href="<%= largestUrl(g.media) %>" class="event-gallery-item" data-lightbox-item data-caption="<%= g.alt %>">
+            <%- picture(g.media, { alt: g.alt, sizes: i === 0 ? '(max-width: 720px) 100vw, 520px' : '(max-width: 720px) 100vw, 260px' }) %>
+            <span class="event-gallery-zoom" aria-hidden="true"><%- I.zoom %></span>
+          </a>
+<% }) %>
+        </div>
+      </div>
+<% } %>
+
+      <div class="event-block" data-reveal>
+        <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num"><%= c.gallery && c.gallery.length ? '04' : '03' %></span>&nbsp;/ Location</p>
+        <h2>Location</h2>
+        <p class="event-location-line"><%- I.pin %><%- H.flag(c) %><%- H.place(c) %></p>
+        <div class="event-map">
+          <iframe src="<%= mapSrc %>" title="Map of <%= c.city %>, <%= c.country %>" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+
+    </div>
+
+    <aside class="event-aside" aria-labelledby="event-details-title">
+      <div class="event-card">
+        <h2 id="event-details-title">Event details</h2>
+        <dl class="event-facts">
+          <div><dt><%- I.calendar %>Date</dt><dd><time datetime="<%= c.starts_iso %>"><%= H.weekdayLong(c) %>, <%= H.dateLong(c) %></time></dd></div>
+          <div><dt><%- I.clock %>Time</dt><dd><%= H.timeRange(c) %><small><%= H.tzNote(c) %></small></dd></div>
+          <div><dt><%- I.pin %>Location</dt><dd class="event-facts-place"><%- H.flag(c) %><%- H.place(c) %></dd></div>
+<% if (c.organiser) { %>          <div><dt><%- I.user %>Organiser</dt><dd><%= c.organiser %></dd></div>
+<% } %>        </dl>
+        <div class="event-card-actions">
+<% if (c.registration_url) { %>          <a href="<%= c.registration_url %>" class="btn btn-primary" target="_blank" rel="noopener">Register</a>
+<% } else { %>          <a href="<%= register %>" class="btn btn-primary">Register Interest</a>
+<% } %>          <a href="<%= c.url %>.ics" class="btn btn-outline" download><%- I.download %>Add to Calendar</a>
+        </div>
+        <p class="event-share-label" id="share-title">Share this event</p>
+        <ul class="event-share" aria-labelledby="share-title">
+<%- C.conferences.shareLinks(c, baseUrl) %>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<% if (others.length) { %>
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">05</span>&nbsp;/ Upcoming</p>
+      <h2>More upcoming conferences</h2>
+    </div>
+    <div class="conference-mini-grid" data-reveal-stagger>
+<%- others.map(C.conferences.moreCard).join('\n') %>
+    </div>
+    <div class="services-cta"><a href="/events" class="btn btn-outline">View all events</a></div>
+  </div>
+</section>
+<% } %>
+
+<%- include('../partials/bottom') %>

@@ -1,0 +1,69 @@
+<%
+  const v = venue;
+  const I = C.venues.ICON;
+  const flag = C.icons.flag;
+%>
+<%- include('../partials/top') %>
+<section class="page-header">
+  <%- picture(v.gallery[0] ? v.gallery[0].media : v.card, { className: 'page-header-media', sizes: '100vw', alt: '', priority: true }) %>
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/venues">Venues</a></li><li aria-current="page"><%= v.name %></li></ol></nav>
+    <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Venues</p>
+    <h1><%= v.name %></h1>
+    <p class="page-subtitle venue-hero-place"><%- flag(v.country_iso2) %><%= v.city %>, <%= v.country %></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container venue-detail-grid">
+<% if (v.gallery.length) { %>
+    <%- C.venues.gallery(v) %>
+<% } %>
+
+    <div class="venue-summary">
+      <p class="venue-country"><%- flag(v.country_iso2, 32, 24) %><span><%= v.country %></span></p>
+      <h2 class="venue-summary-title"><%= v.full_name || v.name %></h2>
+      <p class="venue-summary-place"><%- I.pin %><%= v.city %>, <%= v.country %></p>
+      <div class="venue-description">
+        <%- v.description %>
+      </div>
+      <a href="<%- C.venues.proposalUrl(v) %>" class="btn btn-primary btn-xl">Request a Proposal <%- I.arrow %></a>
+      <p class="venue-summary-note">Tell us your dates and delegate numbers and we will come back with availability and a tailor-made proposal for <%= v.name %>.</p>
+    </div>
+  </div>
+</section>
+
+<% if (v.map_query) { %>
+<section class="section section--sand venue-location" aria-labelledby="venue-map-title">
+  <div class="container venue-location-grid">
+    <div>
+      <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">02</span>&nbsp;/ Location</p>
+      <h2 id="venue-map-title">Where you will <em class="accent">meet</em></h2>
+      <p class="venue-location-place"><%- flag(v.country_iso2) %><%= v.full_name || v.name %>, <%= v.city %>, <%= v.country %></p>
+      <a href="https://www.google.com/maps/search/?api=1&amp;query=<%= encodeURIComponent(v.map_query) %>" class="text-link" target="_blank" rel="noopener">Open in Google Maps <%- I.arrow %></a>
+    </div>
+    <div class="venue-map">
+      <iframe src="https://www.google.com/maps?q=<%= encodeURIComponent(v.map_query) %>&amp;output=embed" title="Map showing <%= v.full_name || v.name %>" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<% if (others.length) { %>
+<section class="section" aria-labelledby="other-venues-title">
+  <div class="container">
+    <div class="home-venues-head">
+      <div>
+        <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num"><%= v.map_query ? '03' : '02' %></span>&nbsp;/ More venues</p>
+        <h2 id="other-venues-title">Other <em class="accent">venues</em></h2>
+      </div>
+      <a href="/venues" class="text-link">All venues <%- I.arrow %></a>
+    </div>
+    <div class="venue-mini-grid venue-mini-grid--3">
+<%- others.slice(0, 3).map(C.venues.miniCard).join('\n') %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<%- include('../partials/bottom') %>

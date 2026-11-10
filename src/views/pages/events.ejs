@@ -1,0 +1,51 @@
+<%- include('../partials/top') %>
+
+<section class="page-header">
+  <picture class="page-header-media">
+    <source type="image/webp" srcset="/assets/images/venues/windhoek-country-club-resort-casino/reception-640.webp 640w, /assets/images/venues/windhoek-country-club-resort-casino/reception-1280.webp 1280w, /assets/images/venues/windhoek-country-club-resort-casino/reception-1920.webp 1920w" sizes="100vw">
+    <img src="/assets/images/venues/windhoek-country-club-resort-casino/reception-1280.jpg" srcset="/assets/images/venues/windhoek-country-club-resort-casino/reception-640.jpg 640w, /assets/images/venues/windhoek-country-club-resort-casino/reception-1280.jpg 1280w, /assets/images/venues/windhoek-country-club-resort-casino/reception-1920.jpg 1920w" sizes="100vw" alt="" width="1920" height="1281" fetchpriority="high">
+  </picture>
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Events</li></ol></nav>
+    <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Events</p>
+    <h1>Archives: Events</h1>
+  </div>
+</section>
+
+<section class="section events-archive">
+  <div class="container">
+
+    <form class="events-toolbar" role="search" data-events-search-form hidden>
+      <div class="events-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <label class="visually-hidden" for="event-search">Search for events by name, city or country</label>
+        <input type="search" id="event-search" placeholder="Search for events" autocomplete="off" data-event-search>
+        <button type="submit" class="btn btn-primary btn-small">Find Events</button>
+      </div>
+      <div class="events-view-toggle" role="tablist" aria-label="Events view">
+        <button type="button" role="tab" id="events-tab-list" class="events-view-btn active" aria-controls="events-panel" aria-selected="true" tabindex="0" data-view="list">List</button>
+        <button type="button" role="tab" id="events-tab-month" class="events-view-btn" aria-controls="events-panel" aria-selected="false" tabindex="-1" data-view="month">Month</button>
+        <button type="button" role="tab" id="events-tab-day" class="events-view-btn" aria-controls="events-panel" aria-selected="false" tabindex="-1" data-view="day">Day</button>
+      </div>
+    </form>
+
+    <div class="events-nav" data-events-nav hidden>
+      <button type="button" class="events-nav-btn" data-events-prev aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button type="button" class="events-nav-btn" data-events-next aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <button type="button" class="btn btn-outline btn-small" data-events-today>Today</button>
+      <h2 class="events-range" data-events-range aria-live="polite">Upcoming events</h2>
+    </div>
+
+    <div id="events-panel" class="events-panel" role="tabpanel" aria-labelledby="events-tab-list" data-events-panel>
+<%- C.conferences.list(upcoming) %>
+    </div>
+
+  </div>
+<script type="application/json" id="conference-data"><%- C.conferences.embeddedJson(upcoming) %></script>
+</section>
+
+<%- include('../partials/bottom') %>

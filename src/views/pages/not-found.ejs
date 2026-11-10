@@ -1,0 +1,21 @@
+<%- include('../partials/top') %>
+
+<section class="notfound" aria-labelledby="notfound-title">
+  <picture class="notfound-media">
+    <source type="image/webp" srcset="/assets/images/gallery/conferences-in-swakopmund-640.webp 640w, /assets/images/gallery/conferences-in-swakopmund-1280.webp 1280w, /assets/images/gallery/conferences-in-swakopmund-1920.webp 1920w" sizes="100vw">
+    <img src="/assets/images/gallery/conferences-in-swakopmund-1280.jpg" srcset="/assets/images/gallery/conferences-in-swakopmund-640.jpg 640w, /assets/images/gallery/conferences-in-swakopmund-1280.jpg 1280w, /assets/images/gallery/conferences-in-swakopmund-1920.jpg 1920w" sizes="100vw" alt="" width="1280" height="854" fetchpriority="high">
+  </picture>
+  <div class="container notfound-inner">
+    <p class="notfound-code" aria-hidden="true">404</p>
+    <p class="eyebrow eyebrow--light"><span class="stripe" aria-hidden="true"></span>Page not found</p>
+    <h1 id="notfound-title">This page has wandered off into the <em class="accent">dunes</em></h1>
+    <p>The page you are looking for has moved or no longer exists. These will get you back on track.</p>
+    <div class="notfound-actions">
+      <a href="/" class="btn btn-primary">Back to Home</a>
+      <a href="/venues" class="btn btn-ghost btn-ghost--light">Browse Venues</a>
+      <a href="/events" class="btn btn-ghost btn-ghost--light">Upcoming Events</a>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/bottom') %>

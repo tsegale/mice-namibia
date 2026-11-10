@@ -1,0 +1,34 @@
+<%
+  // page: { title, description, path, image, ogTitle, ogType, noindex, jsonld: [json strings], nav, newsletter }
+  const canonical = baseUrl + (page.path || '/');
+  const ogImage = page.image ? (page.image.startsWith('http') ? page.image : baseUrl + page.image) : baseUrl + '/assets/images/venues/wicc/gallery-05-1280.jpg';
+  const ogTitle = page.ogTitle || page.title.replace(/ \| MICE Namibia.*$/, '');
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= page.title %></title>
+<% if (page.description) { %>  <meta name="description" content="<%= page.description %>">
+<% } %><% if (page.noindex) { %>  <meta name="robots" content="noindex">
+<% } else { %>  <link rel="canonical" href="<%= canonical %>">
+  <meta property="og:site_name" content="MICE Namibia">
+  <meta property="og:type" content="<%= page.ogType || 'website' %>">
+  <meta property="og:title" content="<%= ogTitle %>">
+<% if (page.description) { %>  <meta property="og:description" content="<%= page.description %>">
+<% } %>  <meta property="og:url" content="<%= canonical %>">
+  <meta property="og:image" content="<%= ogImage %>">
+  <meta name="twitter:card" content="summary_large_image">
+<% } %>  <link rel="preload" href="/assets/fonts/fraunces-latin-soft-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/images/zusammen-logo.png">
+  <script nonce="<%= cspNonce %>">document.documentElement.classList.add("js");</script>
+<% (page.jsonld || []).forEach((ld) => { %>  <script type="application/ld+json"><%- ld %></script>
+<% }) %></head>
+<body>
+
+<%- include('header') %>
+  <main id="main" tabindex="-1">
+

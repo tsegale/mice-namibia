@@ -1,21 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex">
-  <title><%= status === 404 ? 'Page not found' : 'Something went wrong' %> | MICE Namibia</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" type="image/png" href="/assets/images/zusammen-logo.png">
-</head>
-<body>
-  <main id="main" class="section">
-    <div class="container">
-      <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><%= status %></p>
-      <h1><%= status === 404 ? 'We could not find that page' : 'Something went wrong' %></h1>
-      <p><%= message %></p>
-      <p><a class="btn btn-primary" href="/">Back to the homepage</a></p>
-    </div>
-  </main>
-</body>
-</html>
+<% const page = { title: 'Something went wrong | MICE Namibia', noindex: true }; %>
+<%- include('../partials/top', { page }) %>
+<section class="section">
+  <div class="container">
+    <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><%= status %></p>
+    <h1><%= status >= 500 ? 'Something went wrong on our side' : message %></h1>
+    <p><%= status >= 500 ? 'Please try again in a moment. If it keeps happening, call us on +264 81 245 5852.' : '' %></p>
+    <p><a class="btn btn-primary" href="/">Back to the homepage</a></p>
+  </div>
+</section>
+<%- include('../partials/bottom', { page }) %>

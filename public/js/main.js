@@ -469,7 +469,7 @@ var CONF_ICON = {
   arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>',
 };
 
-// Same markup as the server-rendered rows in tools/build-conferences.mjs.
+// Same markup as the server-rendered rows in src/views/components/conferences.js.
 function eventRowHtml(c) {
   var tz = c.timezone;
   var when = confFormat(c.starts_at, tz, { month: "long", day: "numeric", year: "numeric" }) + " @ " + confTime(c.starts_at, tz) + " to " + confTime(c.ends_at, tz);
@@ -479,7 +479,7 @@ function eventRowHtml(c) {
     '<div class="event-row-body">' +
     '<p class="event-row-when">' + CONF_ICON.clock + '<time datetime="' + escapeHtml(c.starts_at) + '">' + escapeHtml(when) + "</time></p>" +
     '<h3 class="event-row-title"><a href="' + escapeHtml(c.url) + '">' + escapeHtml(c.title) + "</a></h3>" +
-    '<p class="event-row-where">' + CONF_ICON.pin + '<img src="assets/images/flags/' + escapeHtml(c.country_iso2) + '.svg" alt="" width="24" height="18">' + escapeHtml(c.city + ", " + c.country) + "</p>" +
+    '<p class="event-row-where">' + CONF_ICON.pin + '<img src="/assets/images/flags/' + escapeHtml(c.country_iso2) + '.svg" alt="" width="24" height="18">' + escapeHtml(c.city + ", " + c.country) + "</p>" +
     '<p class="event-row-excerpt">' + escapeHtml(c.excerpt) + "</p>" +
     '<a href="' + escapeHtml(c.url) + '" class="text-link">Read More<span class="visually-hidden">: ' + escapeHtml(c.short_title) + "</span> " + CONF_ICON.arrow + "</a>" +
     "</div>" +

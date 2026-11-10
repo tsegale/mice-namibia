@@ -35,7 +35,8 @@ exports.up = async function up(knex) {
     // A published post with a future published_at is scheduled: it stays
     // hidden until that moment, then appears on its own.
     t.datetime("published_at").nullable();
-    t.boolean("show_on_services").notNullable().defaultTo(false);
+    // 1-3: shown on the Services page in that order; null: not shown there.
+    t.tinyint("services_position").unsigned().nullable();
     t.string("seo_title", 200).nullable();
     t.string("seo_description", 300).nullable();
     t.integer("created_by").unsigned().nullable().references("id").inTable("admin_users").onDelete("SET NULL");
@@ -136,6 +137,8 @@ exports.up = async function up(knex) {
     t.text("description", "mediumtext").notNullable();
     t.string("map_query", 255).notNullable().defaultTo("");
     t.integer("card_media_id").unsigned().nullable().references("id").inTable("media").onDelete("SET NULL");
+    // Optional wide photo for the homepage carousel; falls back to the card image.
+    t.integer("home_media_id").unsigned().nullable().references("id").inTable("media").onDelete("SET NULL");
     t.boolean("featured_on_home").notNullable().defaultTo(true);
     t.enu("status", STATUS).notNullable().defaultTo("draft");
     t.integer("sort_order").notNullable().defaultTo(0);

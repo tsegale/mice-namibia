@@ -1,0 +1,54 @@
+<%- include('../partials/top') %>
+
+<section class="page-header">
+  <picture class="page-header-media">
+    <source type="image/webp" srcset="/assets/images/venues/wicc/event-4-640.webp 640w, /assets/images/venues/wicc/event-4-1280.webp 1280w, /assets/images/venues/wicc/event-4-1920.webp 1920w" sizes="100vw">
+    <img src="/assets/images/venues/wicc/event-4-1280.jpg" srcset="/assets/images/venues/wicc/event-4-640.jpg 640w, /assets/images/venues/wicc/event-4-1280.jpg 1280w, /assets/images/venues/wicc/event-4-1920.jpg 1920w" sizes="100vw" alt="" width="1920" height="1280" fetchpriority="high">
+  </picture>
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Venues</li></ol></nav>
+    <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Venues</p>
+    <h1>Venues</h1>
+    <p class="page-subtitle">Discover Spaces That Bring Events to Life</p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="venues-intro-title">
+  <div class="container">
+    <div class="venues-intro">
+      <div>
+        <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">02</span>&nbsp;/ Our venues</p>
+        <h2 id="venues-intro-title">Discover Spaces That Bring Events to <em class="accent">Life</em></h2>
+      </div>
+      <p>Every successful event starts with the right venue. As part of Zusammen Tours and Travel Agency's MICE segment, we offer a carefully selected collection of conference centres, meeting rooms, exhibition venues, hotels and distinctive event spaces to suit a wide range of business events and occasions. Whether you're organising a corporate meeting, incentive trip, conference, exhibition or gala dinner, our venue listings make it easy to find the ideal setting. Discover spaces that inspire collaboration, create lasting impressions and provide the perfect backdrop for successful events across Namibia.</p>
+    </div>
+    <div class="venues-layout" data-venue-filters>
+      <%- C.venues.filters(venues, categories, countries) %>
+      <div class="venues-results">
+        <div class="venues-toolbar">
+          <p class="venues-count" aria-live="polite" data-venue-count>Showing all <%= venues.length %> results</p>
+          <label class="venues-sort">
+            <span class="visually-hidden">Sort venues</span>
+            <select data-venue-sort>
+              <option value="default">Default sorting</option>
+              <option value="name">Sort by name</option>
+              <option value="country">Sort by country</option>
+            </select>
+          </label>
+        </div>
+        <div class="venue-grid-lg" data-venue-list>
+<%- venues.map((v, i) => C.venues.card(v, i)).join('\n') %>
+        </div>
+        <div class="venues-empty" data-venue-empty hidden>
+          <p><strong>No venues match these filters yet.</strong> We add venues across all nine destinations regularly, and we can source one for you.</p>
+          <div class="venues-empty-actions">
+            <button type="button" class="btn btn-ghost" data-venue-reset>Clear filters</button>
+            <a href="/contact?type=proposal#contact-form" class="btn btn-primary">Ask us to source a venue</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/bottom') %>

@@ -1,0 +1,95 @@
+<%- include('../partials/top') %>
+
+<section class="page-header">
+  <picture class="page-header-media">
+    <source type="image/webp" srcset="/assets/images/venues/wicc/gallery-07-640.webp 640w, /assets/images/venues/wicc/gallery-07-1280.webp 1280w, /assets/images/venues/wicc/gallery-07-1920.webp 1920w" sizes="100vw">
+    <img src="/assets/images/venues/wicc/gallery-07-1280.jpg" srcset="/assets/images/venues/wicc/gallery-07-640.jpg 640w, /assets/images/venues/wicc/gallery-07-1280.jpg 1280w, /assets/images/venues/wicc/gallery-07-1920.jpg 1920w" sizes="100vw" alt="" width="1920" height="1280" fetchpriority="high">
+  </picture>
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Pricing</li></ol></nav>
+    <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Pricing</p>
+    <h1>Pricing</h1>
+    <p class="page-subtitle">Ticket plans for our upcoming conferences in Africa.</p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="pricing-title">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">02</span>&nbsp;/ Ticket plans</p>
+      <h2 id="pricing-title">Flexible Ticket Plans for Every <em class="accent">Attendee</em></h2>
+      <p>Choose the perfect ticket and get full access to talks, sessions, and networking opportunities.</p>
+    </div>
+    <div class="pricing-picker-wrap">
+<%- C.conferences.pricingPicker(upcoming) %>
+    </div>
+    <!-- TODO: real ticket prices pending from the client; tiers show "Price on request". -->
+    <div class="pricing-grid" data-reveal-stagger>
+      <article class="pricing-card">
+        <h3 class="pricing-card-name">Early Bird</h3>
+        <p class="pricing-card-for">Tickets for <strong data-ticket-for><%= upcoming[0] ? upcoming[0].short_title : '' %></strong></p>
+        <p class="pricing-card-price">Price on request</p>
+        <p class="pricing-card-desc">Perfect for early planners who want full conference access at the best price.</p>
+        <ul class="pricing-card-features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Full conference access</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>All keynote sessions</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Networking events</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Event materials</span></li>
+        </ul>
+        <a data-ticket-link href="/contact?type=proposal&amp;event=<%= upcoming[0] ? upcoming[0].slug : '' %>&amp;tier=Early%20Bird#contact-form" class="btn btn-secondary">Request Pricing<span class="visually-hidden">: Early Bird</span></a>
+      </article>
+      <article class="pricing-card pricing-card--featured">
+        <span class="pricing-badge">Most popular</span>
+        <h3 class="pricing-card-name">Standard</h3>
+        <p class="pricing-card-for">Tickets for <strong data-ticket-for><%= upcoming[0] ? upcoming[0].short_title : '' %></strong></p>
+        <p class="pricing-card-price">Price on request</p>
+        <p class="pricing-card-desc">Best value ticket with complete access to sessions and workshops.</p>
+        <ul class="pricing-card-features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>All Early Bird features</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Hands-on workshops</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Speaker meet &amp; greet</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Session recordings</span></li>
+        </ul>
+        <a data-ticket-link href="/contact?type=proposal&amp;event=<%= upcoming[0] ? upcoming[0].slug : '' %>&amp;tier=Standard#contact-form" class="btn btn-primary">Request Pricing<span class="visually-hidden">: Standard</span></a>
+      </article>
+      <article class="pricing-card">
+        <h3 class="pricing-card-name">VIP</h3>
+        <p class="pricing-card-for">Tickets for <strong data-ticket-for><%= upcoming[0] ? upcoming[0].short_title : '' %></strong></p>
+        <p class="pricing-card-price">Price on request</p>
+        <p class="pricing-card-desc">Premium experience with exclusive access and VIP privileges.</p>
+        <ul class="pricing-card-features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>All Standard features</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>VIP seating</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Exclusive networking dinner</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Priority registration</span></li>
+        </ul>
+        <a data-ticket-link href="/contact?type=proposal&amp;event=<%= upcoming[0] ? upcoming[0].slug : '' %>&amp;tier=VIP#contact-form" class="btn btn-secondary">Request Pricing<span class="visually-hidden">: VIP</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sand" aria-labelledby="delegations-title">
+  <div class="container delegations">
+    <div class="delegations-media">
+      <picture>
+        <source type="image/webp" srcset="/assets/images/venues/wicc/gallery-05-640.webp 640w, /assets/images/venues/wicc/gallery-05-1280.webp 1280w, /assets/images/venues/wicc/gallery-05-1920.webp 1920w" sizes="(max-width: 1080px) 100vw, 560px">
+        <img src="/assets/images/venues/wicc/gallery-05-1280.jpg" srcset="/assets/images/venues/wicc/gallery-05-640.jpg 640w, /assets/images/venues/wicc/gallery-05-1280.jpg 1280w, /assets/images/venues/wicc/gallery-05-1920.jpg 1920w" sizes="(max-width: 1080px) 100vw, 560px" alt="Delegates at a plenary session with stage screens" width="1280" height="853" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="delegations-text">
+      <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">03</span>&nbsp;/ Delegations</p>
+      <h2 id="delegations-title">Bringing a team? We handle the <em class="accent">whole trip</em></h2>
+      <p>Combine conference tickets with flights, accommodation, airport transfers and leisure activities in one proposal for your group.</p>
+      <ul class="delegations-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Accommodation and venue booking</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Corporate travel management</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Transportation services</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Event logistics and coordination</span></li>
+      </ul>
+      <a href="/contact?type=proposal&amp;service=Corporate%20Travel%20Management#contact-form" class="btn btn-primary">Plan a Delegation</a>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/bottom') %>

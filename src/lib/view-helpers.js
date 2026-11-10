@@ -1,6 +1,6 @@
 "use strict";
 
-const { picture, imageUrl } = require("./picture");
+const { picture, imageUrl, largestUrl } = require("./picture");
 const { escapeHtml } = require("./text");
 
 const DATE_FMT = new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "Africa/Windhoek" });
@@ -38,4 +38,4 @@ function timeAgo(value) {
   return d < 30 ? `${d} d ago` : formatDate(value);
 }
 
-module.exports = { picture, imageUrl, escapeHtml, formatDate, formatDateTime, timeAgo };
+module.exports = { picture, imageUrl, largestUrl, escapeHtml, formatDate, formatDateTime, timeAgo };

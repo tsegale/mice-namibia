@@ -49,4 +49,12 @@ function imageUrl(media, prefer = 1280) {
   return variantUrl(media, w, "jpg");
 }
 
-module.exports = { picture, imageUrl, widthsOf, variantUrl };
+// Largest JPG (lightbox links, Open Graph).
+function largestUrl(media) {
+  if (!media || !media.base_url) return "";
+  const widths = widthsOf(media);
+  const fmt = String(media.formats || "jpg").split(",").find((f) => f !== "webp") || "jpg";
+  return variantUrl(media, widths[widths.length - 1], fmt);
+}
+
+module.exports = { picture, imageUrl, largestUrl, widthsOf, variantUrl };

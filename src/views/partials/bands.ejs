@@ -1,0 +1,44 @@
+<% const homeCopy = typeof page !== 'undefined' && page.newsletter === 'home'; %>
+<!-- Let's Connect (shared on every page) -->
+<section class="connect-band" aria-labelledby="connect-title">
+  <picture class="connect-band-media">
+    <source type="image/webp" srcset="/assets/images/venues/wicc/event-2-640.webp 640w, /assets/images/venues/wicc/event-2-1280.webp 1280w, /assets/images/venues/wicc/event-2-1920.webp 1920w" sizes="100vw">
+    <img src="/assets/images/venues/wicc/event-2-1280.jpg" srcset="/assets/images/venues/wicc/event-2-640.jpg 640w, /assets/images/venues/wicc/event-2-1280.jpg 1280w, /assets/images/venues/wicc/event-2-1920.jpg 1920w" sizes="100vw" alt="" width="1920" height="1279" loading="lazy" decoding="async">
+  </picture>
+  <div class="container connect-band-inner" data-reveal>
+    <p class="eyebrow eyebrow--light"><span class="stripe" aria-hidden="true"></span>Let's Connect</p>
+    <h2 id="connect-title">Want to Know More?<br> <em>Let's</em> Connect</h2>
+    <p>Tell us what you are planning and our team will help you shape it, from the first enquiry to the closing session.</p>
+    <div class="connect-band-actions">
+      <a href="/contact#contact-form" class="btn btn-primary">Let's Connect</a>
+      <a href="tel:+264812455852" class="text-link text-link--light">Or call +264 81 245 5852 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter (shared on every page) -->
+<section class="newsletter-section" id="newsletter" aria-labelledby="newsletter-title">
+  <div class="container">
+    <div class="newsletter-panel" data-reveal>
+      <div class="newsletter-panel-media">
+        <picture>
+          <source type="image/webp" srcset="/assets/images/venues/wicc/event-4-640.webp 640w, /assets/images/venues/wicc/event-4-1280.webp 1280w, /assets/images/venues/wicc/event-4-1920.webp 1920w" sizes="(max-width: 720px) 100vw, 400px">
+          <img src="/assets/images/venues/wicc/event-4-1280.jpg" srcset="/assets/images/venues/wicc/event-4-640.jpg 640w, /assets/images/venues/wicc/event-4-1280.jpg 1280w, /assets/images/venues/wicc/event-4-1920.jpg 1920w" sizes="(max-width: 720px) 100vw, 400px" alt="" width="1920" height="1280" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="newsletter-panel-body">
+        <p class="eyebrow"><span class="stripe" aria-hidden="true"></span>Event alerts</p>
+        <h2 id="newsletter-title"><%= homeCopy ? 'Stay Connected to Every Session' : 'Stay in the loop' %></h2>
+        <p><%= homeCopy ? 'Be the first to know about upcoming sessions, important updates, special events, and exclusive content.' : 'Get event alerts and industry updates straight to your inbox.' %></p>
+        <!-- TODO: wire this form up to a real email service; no backend yet -->
+        <form class="newsletter-form" data-newsletter-form>
+          <label class="visually-hidden" for="newsletter-email">Email address</label>
+          <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" autocomplete="email" required>
+          <button type="submit" class="btn btn-secondary"><%= homeCopy ? 'Save Your Spot With Event Alerts' : 'Subscribe' %></button>
+        </form>
+        <p class="newsletter-success" data-newsletter-success role="status" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><polyline points="7.5 12.5 10.5 15.5 16.5 9"/></svg> Thank you for subscribing. Event alerts are on their way to your inbox.</p>
+      </div>
+    </div>
+  </div>
+</section>
+

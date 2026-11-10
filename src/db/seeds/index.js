@@ -20,16 +20,17 @@ const PUBLIC = path.join(ROOT, "public");
 const DATA = path.join(ROOT, "content/data");
 const readJson = (name) => JSON.parse(fs.readFileSync(path.join(DATA, name), "utf8"));
 
+// The nine destinations, in the order of the venues brief's country filter.
 const DESTINATIONS = [
   ["na", "Namibia"],
   ["bw", "Botswana"],
   ["za", "South Africa"],
   ["zm", "Zambia"],
   ["zw", "Zimbabwe"],
-  ["ke", "Kenya"],
   ["tz", "Tanzania"],
-  ["ug", "Uganda"],
+  ["ke", "Kenya"],
   ["rw", "Rwanda"],
+  ["ug", "Uganda"],
 ];
 
 // From content/specs/06-venues-spec.pdf, in the client's order.
@@ -42,6 +43,15 @@ const VENUE_TAGS = [
   "Heritage buildings", "Aquariums", "Botanical gardens", "Gardens", "Parks", "Beaches", "Vineyards", "Rooftop venues",
   "Open-air amphitheatres",
 ];
+
+// Homepage carousel photos chosen on the reviewed homepage (wider shots than
+// the listing cards).
+const HOME_CAROUSEL = {
+  wicc: "assets/images/venues/wicc/event-3",
+  "windhoek-country-club": "assets/images/venues/windhoek-country-club-resort-casino/exterior",
+  movenpick: "assets/images/venues/movenpick/exterior-facade",
+  "westin-cape-town": "assets/images/venues/the-westin-cape-town/exterior",
+};
 
 const SAMPLE_SPEAKERS = [
   ["Keynote Speaker", "sample-speaker-01"],
@@ -183,6 +193,7 @@ async function run(knex, { log = () => {} } = {}) {
         description: paragraphs(v.description),
         map_query: v.map_query || "",
         card_media_id: card,
+        home_media_id: HOME_CAROUSEL[v.slug] ? await m(HOME_CAROUSEL[v.slug], "") : null,
         featured_on_home: true,
         status: "published",
         sort_order: i,
@@ -209,7 +220,7 @@ async function run(knex, { log = () => {} } = {}) {
       postCategoryIds[name] = r.id;
       tally("post_categories", r.created);
     }
-    const servicesPicks = new Set(postData.placements?.services || []);
+    const servicesPicks = postData.placements?.services || [];
     const now = Date.now();
     for (const p of postData.posts) {
       const body = richText(fs.readFileSync(path.join(DATA, "post-bodies", `${p.slug}.html`), "utf8"));
@@ -226,7 +237,7 @@ async function run(knex, { log = () => {} } = {}) {
         status: "published",
         // No publish dates exist yet; keep the reviewed order (highest n newest).
         published_at: new Date(now - (postData.posts.length - p.n + 1) * 60000),
-        show_on_services: servicesPicks.has(p.slug),
+        services_position: servicesPicks.includes(p.slug) ? servicesPicks.indexOf(p.slug) + 1 : null,
       });
       tally("posts", r.created);
       // Old static URL keeps working.

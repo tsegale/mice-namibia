@@ -1,0 +1,34 @@
+<%- include('../partials/top') %>
+<section class="page-header">
+  <%- picture(post.cover, { className: 'page-header-media', sizes: '100vw', alt: '', priority: true }) %>
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog">Blog</a></li><li aria-current="page"><%= post.title %></li></ol></nav>
+    <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Blog</p>
+    <h1><%= post.title %></h1>
+    <%- C.posts.meta(post) %>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container post-layout">
+    <article class="article-content post-article">
+      <p class="article-lede"><%= post.excerpt %></p>
+      <%- article.body %>
+      <div class="article-cta">
+        <p>Ready to plan your next event in Namibia?</p>
+        <a href="/contact" class="btn btn-primary btn-large">Request a Proposal</a>
+      </div>
+    </article>
+    <aside class="post-aside" aria-label="About this article">
+      <%- C.posts.aside(post, { all: posts, toc: article.toc, baseUrl }) %>
+    </aside>
+  </div>
+</section>
+
+<section class="section section--mist post-after" aria-labelledby="related-title">
+  <div class="container">
+    <%- C.posts.after(post, posts) %>
+  </div>
+</section>
+
+<%- include('../partials/bottom') %>

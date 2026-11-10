@@ -2,6 +2,7 @@
 
 const logger = require("../lib/logger");
 const { wantsJson } = require("./auth");
+const META_404 = require("../routes/page-meta")["not-found"];
 
 function notFound(req, res, next) {
   const err = new Error("Page not found");
@@ -26,8 +27,10 @@ function errorHandler(err, req, res, next) {
   if (req.originalUrl.startsWith("/admin") && wantsJson(req)) {
     return res.json({ error: message, ...(err.fieldErrors ? { fieldErrors: err.fieldErrors } : {}) });
   }
-  const view = req.originalUrl.startsWith("/admin") ? "admin/error" : "public/error";
-  return res.render(view, { status, message }, (renderErr, html) => {
+  const isAdmin = req.originalUrl.startsWith("/admin");
+  const view = isAdmin ? "admin/error" : status === 404 ? "pages/not-found" : "public/error";
+  const locals = isAdmin || status !== 404 ? { status, message } : { status, message, page: META_404 };
+  return res.render(view, locals, (renderErr, html) => {
     if (renderErr) {
       logger.error({ err: renderErr }, "error view failed");
       return res.type("text").send(`${status} ${message}`);
