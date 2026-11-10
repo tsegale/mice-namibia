@@ -7,8 +7,9 @@ Botswana, South Africa, Zambia, Zimbabwe, Kenya, Tanzania, Uganda and Rwanda.
 - Public site: every page is rendered on the server from the database, so
   content is in the HTML for search engines and works without JavaScript.
 - Admin panel at `/admin`: events, venues, blog articles, speakers, contact
-  enquiries and newsletter subscribers. Later phases add the remaining pages
-  (FAQs, gallery, partners, team, settings, users).
+  enquiries, newsletter subscribers and admin accounts (admins manage users;
+  editors manage content and the inbox). Later phases add the remaining
+  pages (FAQs, gallery, partners, team, settings).
 
 Design rules, client decisions and open content questions live in
 `CLAUDE.md` and `REVIEW-NOTES.md`.

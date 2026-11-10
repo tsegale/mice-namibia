@@ -52,7 +52,8 @@ async function main() {
   const passwordHash = await hashPassword(password);
   if (existing) {
     await users.updatePassword(existing.id, passwordHash);
-    console.log(`Password updated for ${email}.`);
+    const signedOut = await users.deleteSessions(existing.id);
+    console.log(`Password updated for ${email}.${signedOut ? ` Signed out ${signedOut} session${signedOut === 1 ? "" : "s"}.` : ""}`);
   } else {
     await users.create({ name, email, passwordHash, role });
     console.log(`Created ${role} account for ${name} <${email}>.`);

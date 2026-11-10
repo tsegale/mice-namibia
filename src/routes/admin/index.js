@@ -4,7 +4,7 @@ const express = require("express");
 const { rateLimit, ipKeyGenerator } = require("express-rate-limit");
 const config = require("../../config");
 const { csrfProtection } = require("../../middleware/csrf");
-const { requireAdmin } = require("../../middleware/auth");
+const { requireAdmin, requireRole, loadCurrentUser, requirePasswordSet } = require("../../middleware/auth");
 const { authenticate } = require("../../services/auth");
 const { audit, recent: recentActivity } = require("../../repositories/audit");
 const stats = require("../../repositories/stats");
@@ -102,6 +102,8 @@ router.post("/logout", (req, res, next) => {
 /* Everything below requires a logged-in admin -------------------------------- */
 
 router.use(requireAdmin);
+router.use(loadCurrentUser);
+router.use(requirePasswordSet);
 router.use(async (req, res, next) => {
   try {
     res.locals.navCounts = { submissions: await stats.newSubmissionCount() };
@@ -118,6 +120,8 @@ router.use("/posts", require("./posts"));
 router.use("/speakers", require("./speakers"));
 router.use("/submissions", require("./submissions"));
 router.use("/subscribers", require("./subscribers"));
+router.use("/account", require("./account"));
+router.use("/users", requireRole("admin"), require("./users"));
 
 router.get("/", async (req, res, next) => {
   try {

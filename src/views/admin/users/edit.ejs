@@ -1,0 +1,61 @@
+<% const body = (o) => JSON.stringify(o); %>
+<% if (isSelf) { %>
+<div class="panel-header">
+  <h2 id="panel-title"><%= u.name %> (you)</h2>
+  <button type="button" class="close-btn" data-close-panel aria-label="Close"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-x"/></svg></button>
+</div>
+<div class="panel-body">
+  <div class="alert alert-info"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span>This is your own account. You cannot change your own role, deactivate or delete yourself; another admin has to do that. Change your name, email and password on <a href="/admin/account"><strong>My account</strong></a>.</span></div>
+  <dl class="detail-list">
+    <dt>Email</dt><dd><%= u.email %></dd>
+    <dt>Role</dt><dd><%= u.role === 'admin' ? 'Admin' : 'Editor' %></dd>
+    <dt>Last login</dt><dd><%= u.last_login_at ? formatDateTime(u.last_login_at) : 'Never' %></dd>
+  </dl>
+</div>
+<div class="panel-footer">
+  <div class="panel-footer-right">
+    <button type="button" class="btn btn-ghost" data-close-panel>Close</button>
+    <a class="btn btn-primary" href="/admin/account"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-user"/></svg>My account</a>
+  </div>
+</div>
+<% } else { %>
+<%- include('../partials/panel-form-start', { action: `/admin/users/${u.id}`, method: 'PUT', title: u.name }) %>
+    <div class="panel-section">
+      <div class="panel-section-label">Account</div>
+      <dl class="detail-list">
+        <dt>Email</dt><dd><a href="mailto:<%= u.email %>"><%= u.email %></a></dd>
+        <dt>Status</dt><dd><%= u.is_active ? 'Active' : 'Deactivated' %><% if (u.must_change_password) { %>, still on a temporary password<% } %></dd>
+        <dt>Last login</dt><dd><%= u.last_login_at ? formatDateTime(u.last_login_at) : 'Never' %></dd>
+        <% if (locked) { %><dt>Locked until</dt><dd><%= formatDateTime(u.locked_until) %> (too many wrong passwords)</dd><% } %>
+      </dl>
+    </div>
+    <div class="panel-section">
+      <div class="panel-section-label">Role</div>
+      <%- include('../fields/select', { name: 'role', label: 'Role', value: u.role, required: true, options: [{ value: 'editor', label: 'Editor: content and inbox' }, { value: 'admin', label: 'Admin: everything, including users' }] }) %>
+    </div>
+    <div class="panel-section">
+      <div class="panel-section-label">Access</div>
+      <div class="action-list">
+        <% if (locked) { %>
+        <div class="action-row">
+          <p><strong>Unlock</strong><span class="text-muted">Lets them try their password again now instead of waiting.</span></p>
+          <button type="button" class="btn btn-ghost btn-sm" data-action="/admin/users/<%= u.id %>/unlock"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-unlock"/></svg>Unlock</button>
+        </div>
+        <% } %>
+        <div class="action-row">
+          <p><strong>Reset password</strong><span class="text-muted">Gives them a new temporary password and signs them out.</span></p>
+          <button type="button" class="btn btn-ghost btn-sm" data-open-panel="/admin/users/<%= u.id %>/password"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-key"/></svg>Reset password</button>
+        </div>
+        <div class="action-row">
+          <% if (u.is_active) { %>
+          <p><strong>Deactivate</strong><span class="text-muted">Stops them logging in and signs them out at once. Their changes stay in the activity history.</span></p>
+          <button type="button" class="btn btn-ghost btn-sm btn-icon-danger" data-action="/admin/users/<%= u.id %>/active" data-body="<%= body({ is_active: false }) %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-ban"/></svg>Deactivate</button>
+          <% } else { %>
+          <p><strong>Reactivate</strong><span class="text-muted">Lets them log in again with their existing password.</span></p>
+          <button type="button" class="btn btn-ghost btn-sm" data-action="/admin/users/<%= u.id %>/active" data-body="<%= body({ is_active: true }) %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-refresh"/></svg>Reactivate</button>
+          <% } %>
+        </div>
+      </div>
+    </div>
+<%- include('../partials/panel-form-end', { deleteUrl: `/admin/users/${u.id}`, deleteLabel: `the account for ${u.name}`, deleteWarning: 'This cannot be undone, and their name is removed from the activity history. To stop them logging in but keep the record, deactivate the account instead.' }) %>
+<% } %>

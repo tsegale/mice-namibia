@@ -339,6 +339,28 @@
     }
   });
 
+  /* Copy to clipboard (temporary passwords) ----------------------------------- */
+
+  document.addEventListener("click", async (e) => {
+    const btn = e.target.closest("[data-copy]");
+    if (!btn) return;
+    const field = document.querySelector(btn.dataset.copy);
+    if (!field) return;
+    const label = btn.querySelector("[data-copy-label]");
+    try {
+      await navigator.clipboard.writeText(field.value);
+    } catch {
+      // Clipboard API blocked (plain http on some browsers): fall back to selecting it.
+      field.select();
+      if (!document.execCommand("copy")) return toast("Select the password and copy it by hand.", "error");
+    }
+    if (label) {
+      label.textContent = "Copied";
+      setTimeout(() => (label.textContent = "Copy"), 2000);
+    }
+    toast("Copied to the clipboard", "success");
+  });
+
   /* Table filter (client side, instant) -------------------------------------- */
 
   document.querySelectorAll("[data-table-search]").forEach((input) => {

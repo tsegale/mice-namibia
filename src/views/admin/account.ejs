@@ -1,0 +1,46 @@
+<%- include('partials/head', { title }) %>
+<body>
+<%- include('partials/shell', { title, active: 'account' }) %>
+<main class="main" id="main" tabindex="-1">
+  <% if (me.must_change_password) { %>
+  <div class="alert alert-warn" role="alert"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-key"/></svg><span><strong>Choose your own password to continue.</strong> You signed in with a temporary password. Enter it as your current password below, then pick a new one that only you know. The rest of the admin panel opens once it is saved.</span></div>
+  <% } else { %>
+  <p class="page-intro">Your own login details. Changing your password signs you out on every other device.</p>
+  <% } %>
+
+  <div class="account-grid">
+    <section class="card" aria-labelledby="details-title">
+      <form data-admin-form action="/admin/account" data-method="PUT" novalidate>
+        <div class="card-header"><h2 id="details-title">Your details</h2></div>
+        <div class="card-body">
+          <div class="alert alert-error" data-form-error role="alert" hidden><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span></span></div>
+          <%- include('fields/input', { name: 'name', label: 'Name', value: me.name, required: true, maxlength: 120, attrs: ' autocomplete="name"' }) %>
+          <%- include('fields/input', { name: 'email', type: 'email', label: 'Email', value: me.email, required: true, maxlength: 190, attrs: ' autocomplete="email"', hint: 'You log in with this address.' }) %>
+          <dl class="detail-list account-meta">
+            <dt>Role</dt><dd><span class="badge badge-<%= me.role === 'admin' ? 'scheduled' : 'draft' %>"><%= me.role === 'admin' ? 'Admin' : 'Editor' %></span></dd>
+            <dt>Last login</dt><dd><%= me.last_login_at ? formatDateTime(me.last_login_at) : 'Not recorded' %></dd>
+          </dl>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-check"/></svg>Save details</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card" aria-labelledby="password-title">
+      <form data-admin-form action="/admin/account/password" data-method="POST" novalidate>
+        <div class="card-header"><h2 id="password-title">Change password</h2></div>
+        <div class="card-body">
+          <div class="alert alert-error" data-form-error role="alert" hidden><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span></span></div>
+          <%- include('fields/input', { name: 'current_password', type: 'password', label: me.must_change_password ? 'Temporary password' : 'Current password', required: true, attrs: ' autocomplete="current-password"' + (me.must_change_password ? ' autofocus' : '') }) %>
+          <%- include('fields/input', { name: 'new_password', type: 'password', label: 'New password', required: true, maxlength: 72, attrs: ' autocomplete="new-password" minlength="12"', hint: 'At least 12 characters, with both letters and numbers. A short sentence is easy to remember and hard to guess.' }) %>
+          <%- include('fields/input', { name: 'confirm_password', type: 'password', label: 'Repeat the new password', required: true, maxlength: 72, attrs: ' autocomplete="new-password"' }) %>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-key"/></svg>Change password</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</main>
+<%- include('partials/foot') %>

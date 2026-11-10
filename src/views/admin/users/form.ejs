@@ -1,0 +1,12 @@
+<%- include('../partials/panel-form-start', { action: '/admin/users', method: 'POST', title: 'Add a user' }) %>
+    <div class="panel-section">
+      <div class="panel-section-label">Person</div>
+      <%- include('../fields/input', { name: 'name', label: 'Name', value: u.name, required: true, maxlength: 120, attrs: ' autofocus autocomplete="off"' }) %>
+      <%- include('../fields/input', { name: 'email', type: 'email', label: 'Email', value: u.email, required: true, maxlength: 190, attrs: ' autocomplete="off"', hint: 'They log in with this address.' }) %>
+      <%- include('../fields/select', { name: 'role', label: 'Role', value: u.role, required: true, options: [{ value: 'editor', label: 'Editor: content and inbox' }, { value: 'admin', label: 'Admin: everything, including users' }] }) %>
+    </div>
+    <div class="panel-section">
+      <div class="panel-section-label">First login</div>
+      <%- include('../fields/temp-password', { value: temporaryPassword, who: null }) %>
+    </div>
+<%- include('../partials/panel-form-end', { saveLabel: 'Create account' }) %>

@@ -12,6 +12,8 @@
       { key: 'subscribers', label: 'Subscribers', href: '/admin/subscribers', icon: 'mail' },
     ] },
   ];
+  // Only admins see (and can open) the Users page.
+  if (currentUser.role === 'admin') NAV.push({ section: 'Settings', items: [ { key: 'users', label: 'Users', href: '/admin/users', icon: 'users' } ] });
   const initials = (currentUser.name || '?').split(/\s+/).map((p) => p[0]).slice(0, 2).join('').toUpperCase();
 %>
 <a class="visually-hidden" href="#main">Skip to content</a>
@@ -32,6 +34,7 @@
   </nav>
   <% }) %>
   <div class="sidebar-nav sidebar-bottom">
+    <a href="/admin/account"<% if (active === 'account') { %> aria-current="page"<% } %>><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-user"/></svg>My account</a>
     <a href="/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-globe"/></svg>View website</a>
     <form method="post" action="/admin/logout">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -49,12 +52,12 @@
   </div>
   <div class="topbar-right">
     <% if (typeof actions !== 'undefined' && actions) { %><%- actions %><% } %>
-    <div class="topbar-user">
+    <a class="topbar-user" href="/admin/account" aria-label="My account: <%= currentUser.name %>, <%= currentUser.role %>"<% if (active === 'account') { %> aria-current="page"<% } %>>
       <span class="avatar" aria-hidden="true"><%= initials %></span>
-      <span class="topbar-user-text">
+      <span class="topbar-user-text" aria-hidden="true">
         <span class="topbar-user-name"><%= currentUser.name %></span>
         <span class="topbar-user-role"><%= currentUser.role %></span>
       </span>
-    </div>
+    </a>
   </div>
 </header>

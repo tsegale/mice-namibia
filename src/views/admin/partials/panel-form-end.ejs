@@ -1,8 +1,8 @@
-<%# deleteUrl, deleteLabel, viewUrl, saveLabel %>
+<%# deleteUrl, deleteLabel, deleteWarning, viewUrl, saveLabel %>
   </div>
   <div class="panel-footer">
     <div class="inline">
-      <% if (locals.deleteUrl) { %><button type="button" class="btn btn-ghost btn-icon-danger" data-delete="<%= deleteUrl %>" data-label="<%= deleteLabel %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg>Delete</button><% } %>
+      <% if (locals.deleteUrl) { %><button type="button" class="btn btn-ghost btn-icon-danger" data-delete="<%= deleteUrl %>" data-label="<%= deleteLabel %>"<% if (locals.deleteWarning) { %> data-warning="<%= deleteWarning %>"<% } %>><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg>Delete</button><% } %>
       <% if (locals.viewUrl) { %><a class="btn btn-ghost" href="<%= viewUrl %>" target="_blank" rel="noopener"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-external"/></svg>View on site</a><% } %>
     </div>
     <div class="panel-footer-right">

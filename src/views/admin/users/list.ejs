@@ -1,0 +1,41 @@
+<% const actions = `<button type="button" class="btn btn-accent" data-open-panel="/admin/users/new" data-deep-link="?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg><span class="btn-label">Add user</span></button>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'users', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro"><strong>Admins</strong> manage everything, including these accounts. <strong>Editors</strong> manage the website content and the inbox, but cannot see this page. New accounts get a temporary password and must choose their own the first time they log in.</p>
+  <section class="card">
+    <div class="table-wrap">
+      <table id="users-table">
+        <thead><tr><th>User</th><th class="hide-sm">Role</th><th>Status</th><th class="hide-sm">Last login</th><th class="hide-sm">Locked until</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody>
+          <% rows.forEach((u) => { const self = u.id === currentUser.id; const locked = isLocked(u); %>
+          <tr>
+            <td class="td-user">
+              <button type="button" class="td-title btn-link" data-open-panel="/admin/users/<%= u.id %>/edit" data-deep-link="?edit=<%= u.id %>"><%= u.name %></button><% if (self) { %> <span class="text-muted text-sm">(you)</span><% } %>
+              <span class="td-sub"><%= u.email %></span>
+            </td>
+            <td class="hide-sm"><span class="badge badge-<%= u.role === 'admin' ? 'scheduled' : 'draft' %>"><%= u.role === 'admin' ? 'Admin' : 'Editor' %></span></td>
+            <td>
+              <span class="badge-stack">
+                <span class="badge badge-<%= u.role === 'admin' ? 'scheduled' : 'draft' %> show-sm"><%= u.role === 'admin' ? 'Admin' : 'Editor' %></span>
+                <span class="badge badge-<%= u.is_active ? 'published' : 'draft' %>"><%= u.is_active ? 'Active' : 'Deactivated' %></span>
+                <% if (locked) { %><span class="badge badge-failed">Locked</span><% } %>
+                <% if (u.must_change_password) { %><span class="badge badge-new">Temporary password</span><% } %>
+              </span>
+            </td>
+            <td class="hide-sm text-muted td-nowrap"><%= u.last_login_at ? formatDateTime(u.last_login_at) : 'Never' %></td>
+            <td class="hide-sm text-muted td-nowrap"><%= locked ? formatDateTime(u.locked_until) : '' %></td>
+            <td class="td-actions">
+              <% if (locked) { %><button type="button" class="btn btn-ghost btn-sm" data-action="/admin/users/<%= u.id %>/unlock">Unlock</button><% } %>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/users/<%= u.id %>/edit" data-deep-link="?edit=<%= u.id %>" aria-label="Manage <%= u.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <% if (open) { %><span data-autopanel="<%= open %>" hidden></span><% } %>
+</main>
+<%- include('../partials/foot') %>
