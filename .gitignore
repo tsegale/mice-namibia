@@ -4,3 +4,11 @@ Thumbs.db
 node_modules/
 .vscode/
 tools/node_modules/
+
+# Backend (phase 2): secrets and runtime data never go into git.
+.env
+.env.*
+!.env.example
+storage/uploads/*
+!storage/uploads/.gitkeep
+coverage/

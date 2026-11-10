@@ -1,0 +1,22 @@
+<div class="panel-overlay" data-panel-overlay></div>
+<section class="panel" id="edit-panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" data-panel>
+  <div class="panel-loading" data-panel-loading>Loading…</div>
+</section>
+
+<dialog class="dialog" data-confirm-dialog>
+  <form method="dialog">
+    <div class="dialog-body">
+      <h2 data-confirm-title>Are you sure?</h2>
+      <p data-confirm-text></p>
+    </div>
+    <div class="dialog-actions">
+      <button class="btn btn-ghost" value="cancel">Cancel</button>
+      <button class="btn btn-danger" value="confirm" data-confirm-ok>Delete</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toasts" aria-live="polite" data-toasts></div>
+<script src="/admin/admin.js" nonce="<%= cspNonce %>"></script>
+</body>
+</html>

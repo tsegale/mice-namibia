@@ -1,0 +1,12 @@
+<%- include('partials/head', { title: 'Error' }) %>
+<body class="login-body">
+  <main class="login-card">
+    <div class="login-brand">
+      <img src="/assets/images/zusammen-logo.png" alt="" width="56" height="60">
+      <strong><%= status === 404 ? 'Page not found' : status === 403 ? 'Not allowed' : 'Something went wrong' %></strong>
+    </div>
+    <p class="text-muted"><%= message %></p>
+    <p class="login-foot"><a href="/admin">Back to the dashboard</a></p>
+  </main>
+</body>
+</html>

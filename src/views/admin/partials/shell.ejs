@@ -1,0 +1,60 @@
+<%
+  const NAV = [
+    { section: 'Overview', items: [ { key: 'dashboard', label: 'Dashboard', href: '/admin', icon: 'dashboard' } ] },
+    { section: 'Content', items: [
+      { key: 'conferences', label: 'Events', href: '/admin/conferences', icon: 'calendar' },
+      { key: 'venues', label: 'Venues', href: '/admin/venues', icon: 'building' },
+      { key: 'posts', label: 'Blog', href: '/admin/posts', icon: 'pen' },
+      { key: 'speakers', label: 'Speakers', href: '/admin/speakers', icon: 'mic' },
+    ] },
+    { section: 'Inbox', items: [
+      { key: 'submissions', label: 'Enquiries', href: '/admin/submissions', icon: 'inbox', count: navCounts && navCounts.submissions },
+      { key: 'subscribers', label: 'Subscribers', href: '/admin/subscribers', icon: 'mail' },
+    ] },
+  ];
+  const initials = (currentUser.name || '?').split(/\s+/).map((p) => p[0]).slice(0, 2).join('').toUpperCase();
+%>
+<a class="visually-hidden" href="#main">Skip to content</a>
+<aside class="sidebar" id="sidebar" aria-label="Admin navigation">
+  <a class="sidebar-brand" href="/admin">
+    <img src="/assets/images/zusammen-logo.png" alt="" width="40" height="43">
+    <span><span class="sidebar-brand-name">MICE Namibia</span><span class="sidebar-brand-sub">Admin panel</span></span>
+  </a>
+  <% NAV.forEach((group) => { %>
+  <nav class="sidebar-nav" aria-label="<%= group.section %>">
+    <span class="section-label"><%= group.section %></span>
+    <% group.items.forEach((item) => { %>
+    <a href="<%= item.href %>"<% if (item.key === active) { %> aria-current="page"<% } %>>
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-<%= item.icon %>"/></svg><%= item.label %>
+      <% if (item.count) { %><span class="nav-count" aria-label="<%= item.count %> new"><%= item.count %></span><% } %>
+    </a>
+    <% }) %>
+  </nav>
+  <% }) %>
+  <div class="sidebar-nav sidebar-bottom">
+    <a href="/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-globe"/></svg>View website</a>
+    <form method="post" action="/admin/logout">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button type="submit"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-logout"/></svg>Log out</button>
+    </form>
+  </div>
+</aside>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="hamburger" type="button" aria-controls="sidebar" aria-expanded="false" aria-label="Open menu" data-sidebar-toggle>
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-menu"/></svg>
+    </button>
+    <h1><%= title %></h1>
+  </div>
+  <div class="topbar-right">
+    <% if (typeof actions !== 'undefined' && actions) { %><%- actions %><% } %>
+    <div class="topbar-user">
+      <span class="avatar" aria-hidden="true"><%= initials %></span>
+      <span class="topbar-user-text">
+        <span class="topbar-user-name"><%= currentUser.name %></span>
+        <span class="topbar-user-role"><%= currentUser.role %></span>
+      </span>
+    </div>
+  </div>
+</header>

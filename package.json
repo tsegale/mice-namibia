@@ -1,0 +1,50 @@
+{
+  "name": "mice-namibia",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Zusammen Travels MICE website and content management backend.",
+  "main": "app.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch-path=src --watch-path=app.js app.js",
+    "migrate": "knex --knexfile knexfile.js migrate:latest",
+    "migrate:rollback": "knex --knexfile knexfile.js migrate:rollback",
+    "migrate:status": "knex --knexfile knexfile.js migrate:status",
+    "seed": "node scripts/seed.js",
+    "create-admin": "node scripts/create-admin.js",
+    "test-email": "node scripts/test-email.js",
+    "test": "node --test --test-concurrency=1 \"tests/**/*.test.js\"",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "compression": "^1.8.2",
+    "dotenv": "^18.0.10",
+    "ejs": "^7.0.2",
+    "express": "^5.3.0",
+    "express-mysql-session": "^3.0.3",
+    "express-rate-limit": "^8.7.4",
+    "express-session": "^1.19.0",
+    "helmet": "^8.3.0",
+    "knex": "^3.3.0",
+    "multer": "^2.5.0",
+    "mysql2": "^3.24.6",
+    "nodemailer": "^10.5.0",
+    "pino": "^10.4.0",
+    "pino-http": "^11.0.0",
+    "sanitize-html": "^2.18.1",
+    "sharp": "^0.35.5",
+    "slugify": "^1.6.9",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
+    "pino-pretty": "^13.2.0",
+    "supertest": "^7.3.2"
+  }
+}

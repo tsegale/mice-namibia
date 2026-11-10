@@ -1,0 +1,32 @@
+<%- include('partials/head', { title: 'Log in' }) %>
+<body class="login-body">
+  <main class="login-card">
+    <div class="login-brand">
+      <img src="/assets/images/zusammen-logo.png" alt="" width="56" height="60">
+      <strong>MICE Namibia</strong>
+      <span>Admin panel</span>
+    </div>
+    <h1>Log in</h1>
+    <% if (error) { %>
+    <div class="alert alert-error" role="alert"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span><%= error %></span></div>
+    <% } %>
+    <% if (notice) { %>
+    <div class="alert alert-info" role="status"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-check"/></svg><span><%= notice %></span></div>
+    <% } %>
+    <form method="post" action="/admin/login" novalidate>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="next" value="<%= next %>">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" value="<%= email %>" autocomplete="username" required autofocus>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Log in</button>
+    </form>
+    <p class="login-foot"><a href="/">Back to the website</a></p>
+  </main>
+</body>
+</html>

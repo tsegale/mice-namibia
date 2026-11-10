@@ -1,0 +1,109 @@
+<%- include('partials/head', { title }) %>
+<body>
+<%- include('partials/shell', { title, active: 'dashboard', actions: '' }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">Welcome back, <strong><%= currentUser.name.split(' ')[0] %></strong>. Everything you change here is live on the website as soon as it is published.</p>
+
+  <div class="stats-grid">
+    <a class="stat-card" href="/admin/conferences">
+      <span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-calendar"/></svg></span>
+      <span class="stat-info"><strong><%= stats.upcomingConferences %></strong><span>Upcoming events</span></span>
+    </a>
+    <a class="stat-card stat-card--navy" href="/admin/venues">
+      <span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-building"/></svg></span>
+      <span class="stat-info"><strong><%= stats.venues %></strong><span>Published venues</span></span>
+    </a>
+    <a class="stat-card stat-card--green" href="/admin/posts">
+      <span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-pen"/></svg></span>
+      <span class="stat-info"><strong><%= stats.posts %></strong><span>Published articles<% if (stats.scheduledPosts) { %>, <%= stats.scheduledPosts %> scheduled<% } %></span></span>
+    </a>
+    <a class="stat-card stat-card--red" href="/admin/submissions">
+      <span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-inbox"/></svg></span>
+      <span class="stat-info"><strong><%= stats.newSubmissions %></strong><span>New enquiries</span></span>
+    </a>
+  </div>
+
+  <div class="dash-grid">
+    <div>
+      <section class="card" aria-labelledby="recent-title">
+        <div class="card-header">
+          <h2 id="recent-title">Recent enquiries</h2>
+          <a href="/admin/submissions" class="btn btn-ghost btn-sm">View all</a>
+        </div>
+        <% if (!recentSubmissions.length) { %>
+        <div class="empty-state">
+          <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-inbox"/></svg>
+          <p>No enquiries yet. Messages from the contact form will appear here.</p>
+        </div>
+        <% } else { %>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Received</th><th>Name</th><th class="hide-sm">Type</th><th>Status</th></tr></thead>
+            <tbody>
+              <% recentSubmissions.forEach((s) => { %>
+              <tr>
+                <td class="text-muted"><%= timeAgo(s.created_at) %></td>
+                <td><a class="td-title" href="/admin/submissions?open=<%= s.id %>"><%= s.name %></a><span class="td-sub"><%= s.email %></span></td>
+                <td class="hide-sm"><%= s.type === 'proposal' ? 'Proposal request' : 'General enquiry' %></td>
+                <td><span class="badge badge-<%= s.status %>"><%= s.status %></span></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+        <% } %>
+      </section>
+
+      <section class="card" aria-labelledby="next-title">
+        <div class="card-header">
+          <h2 id="next-title">Next events</h2>
+          <a href="/admin/conferences" class="btn btn-ghost btn-sm">All events</a>
+        </div>
+        <% if (!nextConferences.length) { %>
+        <div class="empty-state"><p>No upcoming events are published.</p></div>
+        <% } else { %>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Event</th><th class="hide-sm">Location</th></tr></thead>
+            <tbody>
+              <% nextConferences.forEach((c) => { %>
+              <tr>
+                <td class="text-muted"><%= formatDate(c.starts_at) %></td>
+                <td class="td-title"><%= c.short_title %></td>
+                <td class="hide-sm"><%= c.city %>, <%= c.country_name %></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+        <% } %>
+      </section>
+    </div>
+
+    <div>
+      <section class="card" aria-labelledby="quick-title">
+        <div class="card-header"><h2 id="quick-title">Quick actions</h2></div>
+        <div class="quick-actions">
+          <a class="btn btn-accent" href="/admin/posts?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg>New article</a>
+          <a class="btn btn-ghost" href="/admin/conferences?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg>New event</a>
+          <a class="btn btn-ghost" href="/admin/venues?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg>New venue</a>
+          <a class="btn btn-ghost" href="/admin/speakers?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg>New speaker</a>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="activity-title">
+        <div class="card-header"><h2 id="activity-title">Recent activity</h2></div>
+        <% if (!activity.length) { %>
+        <div class="empty-state"><p>Nothing yet.</p></div>
+        <% } else { %>
+        <ul class="activity">
+          <% activity.forEach((a) => { %>
+          <li><span class="activity-dot" aria-hidden="true"></span><span><% if (a.user_name) { %><%= a.user_name %> <%= a.summary || a.action %><% } else { %><%= (a.summary || a.action).replace(/^./, (c) => c.toUpperCase()) %><% } %><time datetime="<%= new Date(a.created_at).toISOString() %>"><%= timeAgo(a.created_at) %></time></span></li>
+          <% }) %>
+        </ul>
+        <% } %>
+      </section>
+    </div>
+  </div>
+</main>
+<%- include('partials/foot') %>
