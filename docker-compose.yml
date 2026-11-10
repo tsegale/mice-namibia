@@ -1,0 +1,22 @@
+# Optional: a local MariaDB for development, same version as typical cPanel
+# hosts. Not needed if you already run MySQL/MariaDB (XAMPP, MySQL Installer).
+#   docker compose up -d       start (data is kept in the "mice-db" volume)
+#   docker compose down        stop
+# Matching .env values: DB_HOST=127.0.0.1 DB_PORT=3306 DB_NAME=mice DB_USER=mice DB_PASSWORD=mice-local
+services:
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: root-local
+      MARIADB_DATABASE: mice
+      MARIADB_USER: mice
+      MARIADB_PASSWORD: mice-local
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    volumes:
+      - mice-db:/var/lib/mysql
+      - ./scripts/docker-test-db.sql:/docker-entrypoint-initdb.d/test-db.sql:ro
+volumes:
+  mice-db:
