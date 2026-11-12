@@ -3,6 +3,9 @@
 const path = require("node:path");
 const config = require("../config");
 
+// Loaded lazily: the knex CLI (npm run migrate) reads this file too.
+const logger = () => require("../lib/logger");
+
 // MySQL/MariaDB via mysql2 (pure JavaScript, nothing to compile on the host).
 // Dates are stored and read as UTC; display code converts to each conference's
 // own IANA timezone. TINYINT(1) columns come back as real booleans so no route
@@ -28,6 +31,14 @@ function knexConfig(db = config.db) {
       },
     },
     pool: { min: 0, max: 10 },
+    // Knex's own warnings (e.g. "Acquire connection error") go through the
+    // app logger, so production output stays one JSON object per line.
+    log: {
+      warn: (msg) => logger().warn({ source: "knex" }, String(msg?.message || msg)),
+      error: (msg) => logger().error({ source: "knex" }, String(msg?.message || msg)),
+      deprecate: (method, alternative) => logger().warn({ source: "knex" }, `${method} is deprecated, use ${alternative}`),
+      debug: (msg) => logger().debug({ source: "knex", msg }, "knex debug"),
+    },
     migrations: {
       directory: path.join(__dirname, "migrations"),
       tableName: "knex_migrations",

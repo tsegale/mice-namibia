@@ -24,7 +24,13 @@ const bool = z
 const schema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   SITE_ENV: z.enum(["local", "staging", "production"]).default("local"),
-  PORT: z.coerce.number().int().positive().default(3000),
+  // A TCP port locally. Passenger hooks listen() and ignores it, but some
+  // hosts hand over a socket path instead, so a non-numeric value is kept.
+  PORT: z
+    .string()
+    .default("3000")
+    .transform((v) => (/^\d+$/.test(v.trim()) ? Number(v) : v.trim()))
+    .refine((v) => (typeof v === "number" ? v > 0 && v < 65536 : v.length > 0), "PORT must be a port number or a socket path"),
   BASE_URL: z.url().default("http://localhost:3000"),
 
   DB_HOST: z.string().min(1).default("127.0.0.1"),
@@ -38,6 +44,9 @@ const schema = z.object({
 
   UPLOADS_DIR: z.string().default("storage/uploads"),
   UPLOAD_MAX_MB: z.coerce.number().positive().default(12),
+  // Used by scripts/backup.sh and checked by npm run doctor. Relative paths
+  // are taken from the app root, so the default sits next to it, not inside.
+  BACKUP_DIR: z.string().default("../backups"),
 
   SMTP_HOST: z.string().default(""),
   SMTP_PORT: z.coerce.number().int().positive().default(465),
@@ -87,6 +96,7 @@ function load(env = process.env) {
       dir: path.resolve(ROOT, c.UPLOADS_DIR),
       maxBytes: Math.round(c.UPLOAD_MAX_MB * 1024 * 1024),
     },
+    backupDir: path.resolve(ROOT, c.BACKUP_DIR),
     mail: {
       host: c.SMTP_HOST,
       port: c.SMTP_PORT,

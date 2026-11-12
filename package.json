@@ -5,7 +5,7 @@
   "description": "Zusammen Travels MICE website and content management backend.",
   "main": "app.js",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "start": "node app.js",
@@ -16,6 +16,8 @@
     "seed": "node scripts/seed.js",
     "create-admin": "node scripts/create-admin.js",
     "test-email": "node scripts/test-email.js",
+    "doctor": "node scripts/doctor.js",
+    "backup": "bash scripts/backup.sh",
     "test": "node --test --test-concurrency=1 \"tests/**/*.test.js\"",
     "lint": "eslint ."
   },

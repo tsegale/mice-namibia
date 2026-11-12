@@ -1,2 +1,5 @@
 # Calendar files must keep CRLF line endings (RFC 5545).
 *.ics -text
+
+# Shell scripts run on Linux (cPanel cron, CI): always LF.
+*.sh text eol=lf

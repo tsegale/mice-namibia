@@ -11,4 +11,7 @@ tools/node_modules/
 !.env.example
 storage/uploads/*
 !storage/uploads/.gitkeep
+storage/test-uploads/
+# Passenger restart marker (touch tmp/restart.txt)
+tmp/
 coverage/

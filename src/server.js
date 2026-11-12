@@ -17,7 +17,9 @@ async function start() {
   }
 
   const app = createApp();
-  // cPanel/Passenger passes its own socket/port via PORT; locally this is 3000.
+  // No host argument: listen on whatever PORT says (a number locally, or a
+  // socket path). Under Passenger the call is intercepted and Passenger picks
+  // the socket itself, so nothing here may assume a TCP port.
   const server = app.listen(config.port, () => {
     logger.info(`MICE site running at ${config.baseUrl} (admin: ${config.baseUrl}/admin)`);
   });
@@ -29,14 +31,35 @@ async function start() {
     throw err;
   });
 
+  // Passenger (and npm start under a terminal) stop the app with a signal.
+  // Stop accepting requests, let in-flight ones finish, close the session
+  // pool and the database, then exit. Forced exit after 10 s.
+  let stopping = false;
   const shutdown = (signal) => {
+    if (stopping) return;
+    stopping = true;
     logger.info(`${signal} received, shutting down`);
-    server.close(async () => {
-      await app.locals.close();
-      await destroy();
-      process.exit(0);
+    setTimeout(() => {
+      logger.error("shutdown took longer than 10 s, exiting anyway");
+      process.exit(1);
+    }, 10000).unref();
+    server.close(async (closeErr) => {
+      let code = 0;
+      if (closeErr) {
+        logger.error({ err: closeErr }, "server close failed");
+        code = 1;
+      }
+      try {
+        await app.locals.close();
+        await destroy();
+      } catch (err) {
+        logger.error({ err }, "closing database connections failed");
+        code = 1;
+      }
+      process.exit(code);
     });
-    setTimeout(() => process.exit(1), 10000).unref();
+    // Keep-alive connections with no request in flight would hold close() open.
+    server.closeIdleConnections();
   };
   process.on("SIGTERM", () => shutdown("SIGTERM"));
   process.on("SIGINT", () => shutdown("SIGINT"));
