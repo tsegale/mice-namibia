@@ -13,7 +13,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { readingMinutes, slugify } = require("../../lib/text");
-const { richText } = require("../../lib/sanitize");
+const { richText, shortText } = require("../../lib/sanitize");
 
 const ROOT = path.resolve(__dirname, "../../..");
 const PUBLIC = path.join(ROOT, "public");
@@ -69,6 +69,18 @@ async function upsert(knex, table, where, row) {
   if (existing) return { id: existing.id ?? existing.iso2, created: false };
   const [id] = await knex(table).insert({ ...where, ...row });
   return { id: id || where.iso2, created: true };
+}
+
+// Collections the client curates by adding and deleting rows (FAQs,
+// partners, gallery) are seeded once: a settings row marks them done, so a
+// later run never brings back something that was deliberately deleted.
+// Within that first run rows are still matched on their natural key.
+async function once(knex, key, fn) {
+  const marker = `seed:${key}`;
+  if (await knex("settings").where({ key: marker }).first()) return false;
+  await fn();
+  await knex("settings").insert({ key: marker, value: new Date().toISOString() });
+  return true;
 }
 
 function createMediaRegistry(knex, sharp) {
@@ -245,6 +257,25 @@ async function run(knex, { log = () => {} } = {}) {
       tally("redirects", red.created);
     }
 
+    /* FAQs (once) ------------------------------------------------------------------ */
+    await once(trx, "faqs", async () => {
+      const { groups } = readJson("faqs.json");
+      for (const [i, g] of groups.entries()) {
+        const group = await upsert(trx, "faq_groups", { slug: g.slug }, { name: g.name, sort_order: i });
+        tally("faq_groups", group.created);
+        for (const [j, f] of g.faqs.entries()) {
+          const r = await upsert(trx, "faqs", { group_id: group.id, question: f.question }, {
+            answer: shortText(f.answer),
+            country_iso2: f.country_iso2,
+            show_on_home: f.show_on_home,
+            sort_order: j,
+            status: "published",
+          });
+          tally("faqs", r.created);
+        }
+      }
+    });
+
     /* Legacy .html addresses from the static review build -------------------------- */
     const legacy = {
       "/index.html": "/",
@@ -265,4 +296,4 @@ async function run(knex, { log = () => {} } = {}) {
   return counts;
 }
 
-module.exports = { run, DESTINATIONS, VENUE_TAGS };
+module.exports = { run, once, DESTINATIONS, VENUE_TAGS };

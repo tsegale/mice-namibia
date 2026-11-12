@@ -1,0 +1,203 @@
+{
+  "note": "Seed source for FAQs (from the reviewed FAQ page). Group order, question order and the homepage preview flags are as on the site.",
+  "groups": [
+    {
+      "slug": "getting-started",
+      "name": "Getting started",
+      "faqs": [
+        {
+          "question": "What does MICE stand for?",
+          "answer": "<p>MICE stands for Meetings, Incentives, Conferences and Exhibitions. It covers corporate events, business meetings, incentive travel, conferences and related group programmes.</p>",
+          "country_iso2": null,
+          "show_on_home": true
+        },
+        {
+          "question": "Which African destinations do you offer for MICE travel?",
+          "answer": "<p>We offer MICE programmes across Botswana, Kenya, Namibia, Rwanda, South Africa, Tanzania, Uganda, Zambia and Zimbabwe.</p>",
+          "country_iso2": null,
+          "show_on_home": true
+        },
+        {
+          "question": "Can you create a tailor-made MICE programme?",
+          "answer": "<p>Yes. We design customised programmes based on your group size, objectives, budget, preferred destination, dates and interests.</p>",
+          "country_iso2": null,
+          "show_on_home": true
+        },
+        {
+          "question": "Can you organise the entire MICE programme?",
+          "answer": "<p>Yes. We can assist with accommodation, conference venues, airport transfers, transportation, meals, activities, excursions, team-building and other event logistics.</p>",
+          "country_iso2": null,
+          "show_on_home": false
+        },
+        {
+          "question": "Can business events be combined with leisure or safari experiences?",
+          "answer": "<p>Absolutely. Africa offers excellent opportunities to combine meetings and conferences with safaris, wildlife, cultural experiences, adventure and leisure extensions.</p>",
+          "country_iso2": null,
+          "show_on_home": true
+        }
+      ]
+    },
+    {
+      "slug": "destinations",
+      "name": "Destinations",
+      "faqs": [
+        {
+          "question": "Why choose Namibia for a MICE event?",
+          "answer": "<p>Namibia offers a unique combination of modern business facilities, spectacular landscapes, wildlife and memorable incentive experiences. It is particularly suitable for companies looking to combine business with an authentic African experience.</p>",
+          "country_iso2": "na",
+          "show_on_home": false
+        },
+        {
+          "question": "What MICE destinations can we visit in Namibia?",
+          "answer": "<p>Popular options include Windhoek, Swakopmund, Walvis Bay, Sossusvlei and the Etosha region, depending on the objectives and length of the programme.</p>",
+          "country_iso2": "na",
+          "show_on_home": false
+        },
+        {
+          "question": "Can you organise a conference and safari in Namibia?",
+          "answer": "<p>Yes. A corporate programme can combine a conference or meeting in Windhoek with safari and leisure experiences in other parts of Namibia.</p>",
+          "country_iso2": "na",
+          "show_on_home": false
+        },
+        {
+          "question": "Why is Botswana suitable for incentive travel?",
+          "answer": "<p>Botswana is renowned for its exceptional wildlife, luxury safari lodges and wilderness experiences, making it an excellent destination for memorable incentive programmes.</p>",
+          "country_iso2": "bw",
+          "show_on_home": false
+        },
+        {
+          "question": "Can you arrange a safari-based corporate incentive in Botswana?",
+          "answer": "<p>Yes. We can design programmes incorporating luxury accommodation, safari experiences, group activities and special dining experiences.</p>",
+          "country_iso2": "bw",
+          "show_on_home": false
+        },
+        {
+          "question": "Why choose Kenya for MICE travel?",
+          "answer": "<p>Kenya offers a strong combination of business facilities, international connectivity, wildlife and coastal experiences, making it suitable for both conferences and incentive travel.</p>",
+          "country_iso2": "ke",
+          "show_on_home": false
+        },
+        {
+          "question": "Can a Kenya conference be combined with a safari?",
+          "answer": "<p>Yes. Groups can combine business events with safari experiences and other leisure activities, creating a balanced corporate programme.</p>",
+          "country_iso2": "ke",
+          "show_on_home": false
+        },
+        {
+          "question": "Why is Rwanda a good MICE destination?",
+          "answer": "<p>Rwanda offers a modern and organised environment for business events, particularly in Kigali, while also providing opportunities for cultural, nature and incentive experiences.</p>",
+          "country_iso2": "rw",
+          "show_on_home": false
+        },
+        {
+          "question": "What MICE experiences can we include in Rwanda?",
+          "answer": "<p>Depending on the programme, groups can enjoy Kigali experiences, cultural activities, nature-based excursions and incentive experiences.</p>",
+          "country_iso2": "rw",
+          "show_on_home": false
+        },
+        {
+          "question": "Why choose South Africa for a MICE event?",
+          "answer": "<p>South Africa offers a wide range of international conference venues, hotels, restaurants, attractions and business infrastructure, making it suitable for events of different sizes and requirements.</p>",
+          "country_iso2": "za",
+          "show_on_home": false
+        },
+        {
+          "question": "Which South African destinations are suitable for MICE?",
+          "answer": "<p>Depending on the programme, popular options include Cape Town, Johannesburg, Durban and the surrounding safari regions.</p>",
+          "country_iso2": "za",
+          "show_on_home": false
+        },
+        {
+          "question": "Can you arrange a South African conference combined with a safari?",
+          "answer": "<p>Yes. Corporate groups can combine meetings or conferences with safari, sightseeing, wine, culinary and other leisure experiences.</p>",
+          "country_iso2": "za",
+          "show_on_home": false
+        },
+        {
+          "question": "Why choose Tanzania for incentive travel?",
+          "answer": "<p>Tanzania provides outstanding opportunities to combine business travel with wildlife, safari and beach experiences, making it an attractive incentive destination.</p>",
+          "country_iso2": "tz",
+          "show_on_home": false
+        },
+        {
+          "question": "Can you combine a conference with a safari in Tanzania?",
+          "answer": "<p>Yes. Programmes can be designed around meetings or conferences followed by safari experiences, with options to extend the trip to Zanzibar.</p>",
+          "country_iso2": "tz",
+          "show_on_home": false
+        },
+        {
+          "question": "Why consider Uganda for MICE travel?",
+          "answer": "<p>Uganda offers a combination of business facilities, nature, wildlife and unique experiences, providing opportunities for companies looking for something different.</p>",
+          "country_iso2": "ug",
+          "show_on_home": false
+        },
+        {
+          "question": "What incentive experiences are available in Uganda?",
+          "answer": "<p>Depending on the itinerary, groups can enjoy wildlife experiences, nature activities, cultural encounters and adventure programmes.</p>",
+          "country_iso2": "ug",
+          "show_on_home": false
+        },
+        {
+          "question": "Why choose Zambia for an incentive programme?",
+          "answer": "<p>Zambia is well suited to incentive travel thanks to its wildlife, natural attractions, adventure activities and authentic safari experiences.</p>",
+          "country_iso2": "zm",
+          "show_on_home": false
+        },
+        {
+          "question": "Can you combine a Zambia business event with Victoria Falls?",
+          "answer": "<p>Yes. Victoria Falls can be incorporated into a corporate or incentive programme, providing an unforgettable experience for delegates.</p>",
+          "country_iso2": "zm",
+          "show_on_home": false
+        },
+        {
+          "question": "Why is Zimbabwe suitable for MICE and incentive travel?",
+          "answer": "<p>Zimbabwe offers spectacular natural attractions, wildlife and cultural experiences, with Victoria Falls being a major attraction for incentive groups.</p>",
+          "country_iso2": "zw",
+          "show_on_home": false
+        },
+        {
+          "question": "Can you organise a corporate programme around Victoria Falls?",
+          "answer": "<p>Yes. We can create programmes combining corporate activities, accommodation, sightseeing, adventure and Victoria Falls experiences.</p>",
+          "country_iso2": "zw",
+          "show_on_home": false
+        }
+      ]
+    },
+    {
+      "slug": "planning",
+      "name": "Planning and logistics",
+      "faqs": [
+        {
+          "question": "How far in advance should we book a MICE programme?",
+          "answer": "<p>We recommend booking as early as possible, particularly for larger groups, peak travel periods and major conferences, to secure suitable venues, accommodation and transportation.</p>",
+          "country_iso2": null,
+          "show_on_home": false
+        },
+        {
+          "question": "Can you accommodate both small and large corporate groups?",
+          "answer": "<p>Yes. We can assist with programmes for small executive groups, medium-sized corporate groups and larger delegations, depending on the destination and requirements.</p>",
+          "country_iso2": null,
+          "show_on_home": false
+        },
+        {
+          "question": "Can you arrange airport transfers and transportation?",
+          "answer": "<p>Yes. We can coordinate airport transfers, private vehicles, coaches, shuttles and transportation between destinations and activities.</p>",
+          "country_iso2": null,
+          "show_on_home": false
+        },
+        {
+          "question": "Can you arrange accommodation and conference venues?",
+          "answer": "<p>Yes. We can source suitable hotels, lodges, resorts and conference venues according to your group size, location, event requirements and budget.</p>",
+          "country_iso2": null,
+          "show_on_home": false
+        },
+        {
+          "question": "How do we request a MICE proposal?",
+          "answer": "<p>Contact us with your destination, preferred dates, number of delegates, type of event, accommodation requirements and any activities you would like to include. We will use this information to develop a tailor-made proposal for your group.</p>",
+          "country_iso2": null,
+          "show_on_home": true
+        }
+      ]
+    }
+  ]
+}

@@ -444,26 +444,7 @@
       <h2 id="faq-title">Frequently Asked Questions</h2>
       <p class="home-faq-lead">Answers to the questions we hear most often from organisations planning MICE experiences across Africa.</p>
       <div class="faq-list">
-      <details class="faq-item">
-        <summary class="faq-question">What does MICE stand for?<span class="faq-icon"></span></summary>
-        <p class="faq-answer">MICE stands for Meetings, Incentives, Conferences and Exhibitions. It covers corporate events, business meetings, incentive travel, conferences and related group programmes.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-question">Which African destinations do you offer for MICE travel?<span class="faq-icon"></span></summary>
-        <p class="faq-answer">We offer MICE programmes across Botswana, Kenya, Namibia, Rwanda, South Africa, Tanzania, Uganda, Zambia and Zimbabwe.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-question">Can you create a tailor-made MICE programme?<span class="faq-icon"></span></summary>
-        <p class="faq-answer">Yes. We design customised programmes based on your group size, objectives, budget, preferred destination, dates and interests.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-question">Can business events be combined with leisure or safari experiences?<span class="faq-icon"></span></summary>
-        <p class="faq-answer">Absolutely. Africa offers excellent opportunities to combine meetings and conferences with safaris, wildlife, cultural experiences, adventure and leisure extensions.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-question">How do we request a MICE proposal?<span class="faq-icon"></span></summary>
-        <p class="faq-answer">Contact us with your destination, preferred dates, number of delegates, type of event, accommodation requirements and any activities you would like to include. We will use this information to develop a tailor-made proposal for your group.</p>
-      </details>
+      <%- homeFaqs.map(C.faqs.homeItem).join("\n") %>
       </div>
       <a href="/faq" class="text-link home-faq-more">View all FAQs <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></a>
     </div>

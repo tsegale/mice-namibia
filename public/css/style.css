@@ -2118,6 +2118,34 @@ h2 em.accent,
   line-height: 1.6;
 }
 
+/* Answers with several paragraphs or a list (edited in the admin) render
+   as a div; one-paragraph answers stay a single p.faq-answer. */
+div.faq-answer > * {
+  margin: 0;
+}
+
+div.faq-answer > * + * {
+  margin-top: 0.75em;
+}
+
+div.faq-answer ul,
+div.faq-answer ol {
+  padding-left: 1.25em;
+}
+
+div.faq-answer ul {
+  list-style: disc;
+}
+
+div.faq-answer ol {
+  list-style: decimal;
+}
+
+.faq-answer a {
+  color: var(--orange-700);
+  text-decoration: underline;
+}
+
 .faq-cta {
   margin-top: var(--space-4);
   text-align: center;

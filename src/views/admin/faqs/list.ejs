@@ -1,0 +1,75 @@
+<% const actions = `<button type="button" class="btn btn-ghost" data-open-panel="/admin/faqs/groups/new"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg><span class="btn-label">Add group</span></button>
+<button type="button" class="btn btn-accent" data-open-panel="/admin/faqs/new" data-deep-link="?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg><span class="btn-label">Add question</span></button>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'faqs', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">Questions on the FAQ page, in their groups. Drag a row by its grip (or focus the grip and use the arrow keys) to change the order; the website follows it straight away. The homepage shows <strong>at most <%= homeLimit %></strong> published questions marked "Homepage", in this order.</p>
+  <% if (markedCount > homeLimit) { %>
+  <div class="alert alert-warn"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span><%= markedCount %> published questions are marked for the homepage. Only the first <%= homeLimit %> are shown there; the others are labelled "Not shown".</span></div>
+  <% } else if (!markedCount) { %>
+  <div class="alert alert-info"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span>No published question is marked for the homepage, so its FAQ list is empty.</span></div>
+  <% } %>
+
+  <section class="card" aria-labelledby="groups-title">
+    <div class="card-header"><h2 id="groups-title">Groups</h2><span class="text-sm">The sections of the FAQ page, in this order.</span></div>
+    <% if (!groups.length) { %>
+    <div class="empty-state">
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-inbox"/></svg>
+      <p>No groups yet. Questions are organised in groups.</p>
+      <button type="button" class="btn btn-accent" data-open-panel="/admin/faqs/groups/new">Add the first group</button>
+    </div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span class="visually-hidden">Order</span></th><th>Group</th><th>Questions</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody data-sortable="/admin/faqs/groups/reorder">
+          <% groups.forEach((g) => { %>
+          <tr data-id="<%= g.id %>" data-label="<%= g.name %>">
+            <%- include('../fields/sort-handle', { label: g.name }) %>
+            <td><button type="button" class="td-title btn-link" data-open-panel="/admin/faqs/groups/<%= g.id %>/edit"><%= g.name %></button><span class="td-sub">/faq#faq-<%= g.slug %></span></td>
+            <td><%= g.faqs.length %></td>
+            <td class="td-actions">
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/faqs/groups/<%= g.id %>/edit" aria-label="Rename <%= g.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </section>
+
+  <% groups.forEach((g) => { %>
+  <section class="card" aria-labelledby="group-<%= g.id %>-title">
+    <div class="card-header">
+      <h2 id="group-<%= g.id %>-title"><%= g.name %></h2>
+      <button type="button" class="btn btn-ghost btn-sm" data-open-panel="/admin/faqs/new?group=<%= g.id %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg>Add question</button>
+    </div>
+    <% if (!g.faqs.length) { %>
+    <div class="empty-state"><p>No questions in this group yet.</p></div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span class="visually-hidden">Order</span></th><th>Question</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody data-sortable="/admin/faqs/reorder">
+          <% g.faqs.forEach((f) => { %>
+          <tr data-id="<%= f.id %>" data-label="<%= f.question %>">
+            <%- include('../fields/sort-handle', { label: f.question }) %>
+            <td><button type="button" class="td-title btn-link" data-open-panel="/admin/faqs/<%= f.id %>/edit" data-deep-link="?edit=<%= f.id %>"><%= f.question %></button><% if (f.country_iso2) { %><span class="td-sub td-flag"><img src="/assets/images/flags/<%= f.country_iso2 %>.svg" alt="" width="16" height="12"><%= countryName[f.country_iso2] || f.country_iso2 %></span><% } %></td>
+            <td><span class="badge-stack"><span class="badge badge-<%= f.status %>"><%= f.status === 'published' ? 'Published' : 'Draft' %></span><% if (onHome.has(f.id)) { %><span class="badge badge-read">Homepage</span><% } else if (f.show_on_home && f.status === 'published') { %><span class="badge badge-draft" title="Only the first <%= homeLimit %> marked questions appear on the homepage">Not shown</span><% } %></span></td>
+            <td class="td-actions">
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/faqs/<%= f.id %>/edit" data-deep-link="?edit=<%= f.id %>" aria-label="Edit <%= f.question %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon btn-icon-danger" data-delete="/admin/faqs/<%= f.id %>" data-label="this question" aria-label="Delete <%= f.question %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </section>
+  <% }) %>
+  <% if (open) { %><span data-autopanel="<%= open %>" hidden></span><% } %>
+</main>
+<%- include('../partials/foot') %>

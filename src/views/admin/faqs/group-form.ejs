@@ -1,0 +1,9 @@
+<% const editing = Boolean(g.id); %>
+<%- include('../partials/panel-form-start', { action: editing ? `/admin/faqs/groups/${g.id}` : '/admin/faqs/groups', method: editing ? 'PUT' : 'POST', title: editing ? 'Rename group' : 'Add a group' }) %>
+    <div class="panel-section">
+      <%- include('../fields/input', { name: 'name', label: 'Group name', value: g.name, required: true, maxlength: 120, attrs: ' autofocus', hint: editing ? `Its link stays /faq#faq-${g.slug}, so existing links keep working after a rename.` : 'Shown as a section heading and a topic link on the FAQ page.' }) %>
+      <% if (editing && questionCount) { %>
+      <p class="form-hint">This group has <%= questionCount %> question<%= questionCount === 1 ? '' : 's' %>. Move or delete them before deleting the group.</p>
+      <% } %>
+    </div>
+<%- include('../partials/panel-form-end', { deleteUrl: editing ? `/admin/faqs/groups/${g.id}` : null, deleteLabel: `the group "${g.name}"` }) %>

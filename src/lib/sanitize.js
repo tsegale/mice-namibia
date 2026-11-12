@@ -38,9 +38,23 @@ function richText(html) {
   return sanitizeHtml(String(html || ""), RICH_TEXT).trim();
 }
 
+// FAQ answers are short: paragraphs, bold, italic, links and lists only.
+// Same link handling as articles; headings, quotes and images are dropped
+// (their text is kept).
+const SHORT_TEXT = {
+  ...RICH_TEXT,
+  allowedTags: ["p", "ul", "ol", "li", "strong", "em", "b", "i", "a", "br"],
+  allowedAttributes: { a: ["href", "title", "target", "rel"] },
+  transformTags: { ...RICH_TEXT.transformTags, h1: "p", h2: "p", h3: "p", h4: "p", blockquote: "p" },
+};
+
+function shortText(html) {
+  return sanitizeHtml(String(html || ""), SHORT_TEXT).trim();
+}
+
 // Plain-text fields: strip every tag.
 function plain(text) {
   return sanitizeHtml(String(text || ""), { allowedTags: [], allowedAttributes: {} }).trim();
 }
 
-module.exports = { richText, plain };
+module.exports = { richText, shortText, plain };

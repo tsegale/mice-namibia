@@ -118,6 +118,7 @@ router.use("/conferences", require("./conferences"));
 router.use("/venues", require("./venues"));
 router.use("/posts", require("./posts"));
 router.use("/speakers", require("./speakers"));
+router.use("/faqs", require("./faqs"));
 router.use("/submissions", require("./submissions"));
 router.use("/subscribers", require("./subscribers"));
 router.use("/account", require("./account"));

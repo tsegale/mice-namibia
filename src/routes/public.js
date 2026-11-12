@@ -11,6 +11,7 @@ const conferences = require("../repositories/conferences");
 const posts = require("../repositories/posts");
 const venues = require("../repositories/venues");
 const speakers = require("../repositories/speakers");
+const faqs = require("../repositories/faqs");
 const { largestUrl } = require("../lib/picture");
 const { conferenceIcs } = require("../lib/ics");
 const C = require("../views/components");
@@ -29,8 +30,14 @@ router.use((req, res, next) => {
 router.get(
   "/",
   wrap(async (req, res) => {
-    const [upcoming, all, featuredVenues, homeSpeakers] = await Promise.all([conferences.upcoming(), posts.published(), venues.featured(), speakers.forHome(4)]);
-    render(res, "home", META.home, { upcoming, latestPosts: all.slice(0, 3), featuredVenues, homeSpeakers });
+    const [upcoming, all, featuredVenues, homeSpeakers, homeFaqs] = await Promise.all([
+      conferences.upcoming(),
+      posts.published(),
+      venues.featured(),
+      speakers.forHome(4),
+      faqs.forHome(),
+    ]);
+    render(res, "home", META.home, { upcoming, latestPosts: all.slice(0, 3), featuredVenues, homeSpeakers, homeFaqs });
   })
 );
 
@@ -48,7 +55,15 @@ router.get(
   })
 );
 
-for (const name of ["gallery", "faq", "partners", "privacy-policy", "terms-and-conditions"]) {
+router.get(
+  "/faq",
+  wrap(async (req, res) => {
+    const faqGroups = await faqs.publishedGroups();
+    render(res, "faq", { ...META.faq, jsonld: faqGroups.length ? [C.faqs.jsonLd(faqGroups)] : [] }, { faqGroups });
+  })
+);
+
+for (const name of ["gallery", "partners", "privacy-policy", "terms-and-conditions"]) {
   router.get(`/${name}`, (req, res) => render(res, name, META[name]));
 }
 

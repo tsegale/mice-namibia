@@ -196,6 +196,8 @@ tr:last-child td { border-bottom: 0; }
 tbody tr:hover td { background: #FAFBFD; }
 .td-title { font-weight: 700; }
 .td-sub { display: block; font-size: 12px; font-weight: 500; color: var(--muted); }
+.td-flag { display: flex; align-items: center; gap: 6px; }
+.td-flag img { flex: none; border-radius: 2px; }
 .td-thumb img, .td-thumb .thumb-empty { width: 64px; height: 44px; object-fit: cover; border-radius: 8px; background: var(--bg); }
 .thumb-empty { display: grid; place-items: center; color: var(--muted); }
 .td-actions { text-align: right; white-space: nowrap; }
