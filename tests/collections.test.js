@@ -318,3 +318,94 @@ test("editors can manage partners; a published partner needs a logo", async () =
   assert.equal(await db()("media").where({ id: up.body.media.id }).first(), undefined, "the unused logo is removed");
   assert.ok(await db()("audit_log").where({ entity: "partner", action: "delete", entity_id: row.id }).first());
 });
+
+/* Gallery ------------------------------------------------------------------------- */
+
+const galleryOrder = () => db()("gallery_items as g").join("media as m", "m.id", "g.media_id").orderBy("g.sort_order").pluck("m.base_url");
+const stripRows = (html) => [...html.matchAll(/<div class="gallery-strip-row gallery-strip-row--(left|right)"><div class="gallery-strip-track">([\s\S]*?)<\/div><\/div>/g)].map((m) => [...m[2].matchAll(/srcset="\/assets\/images\/gallery\/([^"]+)-640\.webp"/g)].map((x) => x[1]));
+
+test("gallery seed matches the reviewed page, keeps its order and is safe to re-run", async () => {
+  const { categories, items } = readJson("gallery.json");
+  const expected = items.map((i) => `/${i.image}`);
+  assert.deepEqual(await galleryOrder(), expected);
+  assert.deepEqual(await db()("gallery_categories").orderBy("sort_order").pluck("slug"), categories.map((c) => c.slug));
+  await seed(db());
+  assert.equal(await count("gallery_items"), 26);
+  assert.deepEqual(await galleryOrder(), expected, "a second run adds nothing and keeps the order");
+});
+
+test("the Gallery page and the photo strips render from the database", async () => {
+  const page = (await request(app).get("/gallery")).text;
+  assert.equal((page.match(/<figure class="gallery-item"/g) || []).length, 26);
+  assert.match(page, /<button type="button" class="chip-filter is-active" data-filter="all" aria-pressed="true">All photos <span>26<\/span><\/button>/);
+  assert.match(page, /<button type="button" class="chip-filter" data-filter="venues" aria-pressed="false">Venues and stays <span>12<\/span><\/button>/);
+  assert.match(page, /<figure class="gallery-item" data-category="events">\s*<a href="\/assets\/images\/gallery\/meetings-incentives-conferences-exhibitions-in-africa-namibia-1920.jpg" class="gallery-item-link" data-lightbox-item data-caption="Fire dancers performing at an evening outdoor event">/);
+  assert.match(page, /<figcaption><span class="gallery-item-cat">Events<\/span>Fire dancers performing at an evening outdoor event<\/figcaption>/);
+
+  const marked = (await db()("gallery_items as g").join("media as m", "m.id", "g.media_id").where("g.show_on_home", true).orderBy("g.sort_order").pluck("m.base_url")).map((u) => u.split("/").pop());
+  for (const url of ["/", "/about"]) {
+    const [top, bottom] = stripRows((await request(app).get(url)).text);
+    assert.deepEqual(top, [...marked.slice(0, 7), ...marked.slice(0, 7)], `${url}: first half, repeated`);
+    assert.deepEqual(bottom, [...marked.slice(7), ...marked.slice(7)], `${url}: second half, repeated`);
+  }
+});
+
+test("bulk upload creates drafts, and a photo cannot be published without a description", async () => {
+  const before = await count("gallery_items");
+  const up = await as(admin)(admin.post("/admin/gallery/upload")).attach("file", path.join(__dirname, "fixtures", "photo.jpg"));
+  assert.equal(up.status, 201);
+  const item = await db()("gallery_items").where({ id: up.body.item.id }).first();
+  assert.deepEqual([item.status, item.alt, item.sort_order], ["draft", "", before], "a draft with no description, at the end");
+  assert.ok((await db()("media").where({ id: item.media_id }).first()).widths, "resized like any photo");
+
+  const category = await db()("gallery_categories").where({ slug: "events" }).first();
+  const refused = await as(admin)(admin.put(`/admin/gallery/${item.id}`)).send({ media_id: item.media_id, alt: "  ", category_id: category.id, status: "published" });
+  assert.equal(refused.status, 422);
+  assert.ok(refused.body.fieldErrors.alt);
+  assert.equal((await db()("gallery_items").where({ id: item.id }).first()).status, "draft", "still a draft");
+  assert.doesNotMatch((await request(app).get("/gallery")).text, new RegExp(`data-caption=""`));
+
+  const ok = await as(admin)(admin.put(`/admin/gallery/${item.id}`)).send({ media_id: item.media_id, alt: "Delegates arriving at the registration desk", category_id: category.id, status: "published" });
+  assert.equal(ok.status, 200);
+  const page = (await request(app).get("/gallery")).text;
+  assert.match(page, /data-caption="Delegates arriving at the registration desk"/);
+  assert.match(page, /All photos <span>27<\/span>/);
+  assert.match(page, /Events <span>6<\/span>/);
+
+  assert.equal((await as(admin)(admin.delete(`/admin/gallery/${item.id}`))).status, 200);
+  assert.equal(await db()("media").where({ id: item.media_id }).first(), undefined, "the photo's files are released");
+});
+
+test("gallery photos reorder within their own list only", async () => {
+  const ids = await db()("gallery_items").orderBy("sort_order").pluck("id");
+  const moved = [...ids.slice(1), ids[0]];
+  assert.equal((await as(admin)(admin.patch("/admin/gallery/reorder")).send({ ids: moved })).status, 200);
+  assert.ok((await request(app).get("/gallery")).text.indexOf("Fire dancers") > (await request(app).get("/gallery")).text.indexOf("Banquet hall"), "the first photo moved to the end");
+
+  const partnerIds = await db()("partners").orderBy("sort_order").pluck("id");
+  assert.equal((await as(admin)(admin.patch("/admin/gallery/reorder")).send({ ids: partnerIds })).status, 422, "partner ids are refused");
+  assert.equal((await as(admin)(admin.patch("/admin/gallery/reorder")).send({ ids: moved.slice(1) })).status, 422, "a partial list is refused");
+  assert.deepEqual(await db()("gallery_items").orderBy("sort_order").pluck("id"), moved, "nothing changed");
+  await as(admin)(admin.patch("/admin/gallery/reorder")).send({ ids });
+});
+
+test("editors can manage the gallery and its categories", async () => {
+  assert.equal((await editor.get("/admin/gallery")).status, 200);
+  const cat = await as(editor)(editor.post("/admin/gallery/categories")).send({ name: "Gala dinners" });
+  assert.equal(cat.status, 201);
+  const c = await db()("gallery_categories").where({ name: "Gala dinners" }).first();
+  assert.equal(c.slug, "gala-dinners");
+
+  const up = await as(editor)(editor.post("/admin/gallery/upload")).attach("file", path.join(__dirname, "fixtures", "photo.jpg"));
+  const id = up.body.item.id;
+  const saved = await as(editor)(editor.put(`/admin/gallery/${id}`)).send({ media_id: up.body.item.media.id, alt: "Gala dinner tables set under lanterns", caption: "Gala night", category_id: c.id, show_on_home: true, status: "published" });
+  assert.equal(saved.status, 200);
+  const page = (await request(app).get("/gallery")).text;
+  assert.match(page, /data-filter="gala-dinners" aria-pressed="false">Gala dinners <span>1<\/span>/);
+  assert.match(page, /<figcaption><span class="gallery-item-cat">Gala dinners<\/span>Gala night<\/figcaption>/, "the caption replaces the description");
+
+  // Deleting a category keeps its photos, without a category.
+  assert.equal((await as(editor)(editor.delete(`/admin/gallery/categories/${c.id}`))).status, 200);
+  assert.equal((await db()("gallery_items").where({ id }).first()).category_id, null);
+  assert.equal((await as(editor)(editor.delete(`/admin/gallery/${id}`))).status, 200);
+});

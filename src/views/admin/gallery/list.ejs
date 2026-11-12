@@ -1,0 +1,84 @@
+<% const actions = `<button type="button" class="btn btn-ghost" data-open-panel="/admin/gallery/categories/new"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg><span class="btn-label">Add category</span></button>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'gallery', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">Photos on the Gallery page, in this order. New photos arrive as <strong>drafts</strong>: give each one a description, then publish it. Photos marked "Homepage" also scroll in the strip on the homepage and About page (<%= onHome %> now). Drag a row by its grip (or focus the grip and use the arrow keys) to change the order.</p>
+  <% if (needAlt) { %>
+  <div class="alert alert-warn"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span><%= needAlt %> photo<%= needAlt === 1 ? ' needs a description' : 's need a description' %> before <%= needAlt === 1 ? 'it' : 'they' %> can be published.</span></div>
+  <% } %>
+
+  <section class="card" aria-labelledby="add-photos-title">
+    <div class="card-header"><h2 id="add-photos-title">Add photos</h2></div>
+    <div class="card-body">
+      <div class="bulk-upload" data-bulk-upload="/admin/gallery/upload">
+        <label class="img-drop">
+          <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple class="visually-hidden">
+          <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-images"/></svg>
+          <span><strong>Choose photos</strong> or drag several here at once</span>
+          <span class="text-sm">JPG, PNG or WebP. They upload one after another and each becomes a draft at the end of the list.</span>
+        </label>
+        <ul class="bulk-list" aria-label="Upload progress" hidden></ul>
+        <p class="visually-hidden" aria-live="polite" data-bulk-status></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="photos-title">
+    <div class="card-header"><h2 id="photos-title">Photos</h2><span class="text-sm"><%= rows.length %> in total</span></div>
+    <% if (!rows.length) { %>
+    <div class="empty-state">
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-images"/></svg>
+      <p>No photos yet. Add some above.</p>
+    </div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span class="visually-hidden">Order</span></th><th class="hide-sm">Photo</th><th>Description</th><th class="hide-sm">Category</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody data-sortable="/admin/gallery/reorder">
+          <% rows.forEach((g, i) => { const label = g.alt || `photo ${i + 1}`; %>
+          <tr data-id="<%= g.id %>" data-label="<%= label %>">
+            <%- include('../fields/sort-handle', { label }) %>
+            <td class="td-thumb hide-sm"><% if (g.media) { %><img src="<%= imageUrl(g.media, 640) %>" alt="" loading="lazy"><% } %></td>
+            <td><button type="button" class="td-title btn-link" data-open-panel="/admin/gallery/<%= g.id %>/edit" data-deep-link="?edit=<%= g.id %>"><%= g.alt || 'Add a description' %></button><% if (!g.alt) { %><span class="td-sub"><%= g.media ? g.media.original_name : '' %></span><% } %></td>
+            <td class="hide-sm"><%= g.category_id ? categoryName[g.category_id] : '' %></td>
+            <td><span class="badge-stack"><% if (!g.alt) { %><span class="badge badge-new">Needs a description</span><% } else { %><span class="badge badge-<%= g.status %>"><%= g.status === 'published' ? 'Published' : 'Draft' %></span><% } %><% if (g.show_on_home) { %><span class="badge badge-read">Homepage</span><% } %></span></td>
+            <td class="td-actions">
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/gallery/<%= g.id %>/edit" data-deep-link="?edit=<%= g.id %>" aria-label="Edit <%= label %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon btn-icon-danger" data-delete="/admin/gallery/<%= g.id %>" data-label="this photo" aria-label="Delete <%= label %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </section>
+
+  <section class="card" aria-labelledby="categories-title">
+    <div class="card-header"><h2 id="categories-title">Categories</h2><span class="text-sm">The filter buttons on the Gallery page, in this order. Empty categories are not shown there.</span></div>
+    <% if (!categories.length) { %>
+    <div class="empty-state"><p>No categories yet.</p></div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span class="visually-hidden">Order</span></th><th>Category</th><th>Photos</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody data-sortable="/admin/gallery/categories/reorder">
+          <% categories.forEach((c) => { %>
+          <tr data-id="<%= c.id %>" data-label="<%= c.name %>">
+            <%- include('../fields/sort-handle', { label: c.name }) %>
+            <td><button type="button" class="td-title btn-link" data-open-panel="/admin/gallery/categories/<%= c.id %>/edit"><%= c.name %></button></td>
+            <td><%= c.count %></td>
+            <td class="td-actions">
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/gallery/categories/<%= c.id %>/edit" aria-label="Rename <%= c.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </section>
+  <% if (open) { %><span data-autopanel="<%= open %>" hidden></span><% } %>
+</main>
+<%- include('../partials/foot') %>

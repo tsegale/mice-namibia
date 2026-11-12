@@ -1,0 +1,205 @@
+{
+  "note": "Seed source for the gallery (from the reviewed Gallery page). caption null = the description doubles as the caption.",
+  "categories": [
+    {
+      "slug": "events",
+      "name": "Events"
+    },
+    {
+      "slug": "venues",
+      "name": "Venues and stays"
+    },
+    {
+      "slug": "leisure",
+      "name": "Dining and leisure"
+    },
+    {
+      "slug": "travel",
+      "name": "Travel"
+    }
+  ],
+  "items": [
+    {
+      "image": "assets/images/gallery/meetings-incentives-conferences-exhibitions-in-africa-namibia",
+      "alt": "Fire dancers performing at an evening outdoor event",
+      "caption": null,
+      "category": "events",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/business-events-and-conferences-in-africa-namibia",
+      "alt": "Banquet hall set with round tables under a chandelier",
+      "caption": null,
+      "category": "venues",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/conference-venues-in-windhoek-namibia",
+      "alt": "Delegates on the green during a golf outing",
+      "caption": null,
+      "category": "leisure",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/africa-namibia-movenpick-windhoek-coffee-bar-barista-drink-couple-2024-01",
+      "alt": "Guests chatting with a barista at the Movenpick Windhoek coffee bar",
+      "caption": null,
+      "category": "leisure",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/incentive-travel-and-corporate-events-africa-namibia",
+      "alt": "Conference hall set classroom style with long tables",
+      "caption": null,
+      "category": "venues",
+      "show_on_home": false
+    },
+    {
+      "image": "assets/images/gallery/conference-centres-in-swakopmund",
+      "alt": "Boardroom with leather chairs and a presentation screen",
+      "caption": null,
+      "category": "venues",
+      "show_on_home": false
+    },
+    {
+      "image": "assets/images/gallery/africa-namibia-movenpick-windhoek-restaurant-couple-dinner-wine-2024-09",
+      "alt": "Couple dining in the Movenpick Windhoek restaurant",
+      "caption": null,
+      "category": "leisure",
+      "show_on_home": false
+    },
+    {
+      "image": "assets/images/gallery/corporate-meetings-and-events-in-africa-namibia",
+      "alt": "Delegates gathered on stage for a group photo at a hospitality forum",
+      "caption": null,
+      "category": "events",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/mice-in-windhoek-namibia",
+      "alt": "Hotel and conference venue entrance lit at dusk",
+      "caption": null,
+      "category": "venues",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/south-africa-conference-venues",
+      "alt": "Meeting room set in a U shape with black chairs",
+      "caption": null,
+      "category": "venues",
+      "show_on_home": false
+    },
+    {
+      "image": "assets/images/gallery/africa-namibia-movenpick-windhoek-outdoor-vitality-yoga-couple-2024-02",
+      "alt": "Guests doing an outdoor yoga session under palm trees",
+      "caption": null,
+      "category": "leisure",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/mice-conference-and-incentive-travel-africa-namibia",
+      "alt": "Delegates in white armchairs following a panel session",
+      "caption": null,
+      "category": "events",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/cape-town-conference-venues-south-africa",
+      "alt": "Ballroom with round banquet tables and patterned carpet",
+      "caption": null,
+      "category": "venues",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/windhoek-country-club-conference-venue",
+      "alt": "Hotel guest room with a king bed and seating area",
+      "caption": null,
+      "category": "venues",
+      "show_on_home": false
+    },
+    {
+      "image": "assets/images/gallery/conference-venues-in-swakopmund",
+      "alt": "Gala dinner table with candles, flowers and red wine",
+      "caption": null,
+      "category": "leisure",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/africa-namibia-movenpick-windhoek-food-2024-03",
+      "alt": "Grilled prawns served with lemon",
+      "caption": null,
+      "category": "leisure",
+      "show_on_home": false
+    },
+    {
+      "image": "assets/images/gallery/meetings-incentives-conferences-exhibitions-south-africa",
+      "alt": "Executive boardroom with a long conference table",
+      "caption": null,
+      "category": "venues",
+      "show_on_home": false
+    },
+    {
+      "image": "assets/images/gallery/best-mice-destinations-in-africa-namibia",
+      "alt": "Speaker on stage at an evening event",
+      "caption": null,
+      "category": "events",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/incentive-travel-and-corporate-events-africa-namibia-1",
+      "alt": "Exhibitors talking with visitors at a trade show stand",
+      "caption": null,
+      "category": "events",
+      "show_on_home": false
+    },
+    {
+      "image": "assets/images/gallery/corporate-events-south-africa",
+      "alt": "Training room set classroom style with a projection screen",
+      "caption": null,
+      "category": "venues",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/conference-and-meeting-planning-services-africa-namibia",
+      "alt": "Large conference hall with red chairs set for a plenary",
+      "caption": null,
+      "category": "venues",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/meetings-in-swakopmund",
+      "alt": "Historic hotel with a courtyard pool and palm trees",
+      "caption": null,
+      "category": "venues",
+      "show_on_home": true
+    },
+    {
+      "image": "assets/images/gallery/mice-in-namibia",
+      "alt": "Banquet room with white covered chairs and long tables",
+      "caption": null,
+      "category": "venues",
+      "show_on_home": false
+    },
+    {
+      "image": "assets/images/gallery/conferences-in-swakopmund",
+      "alt": "Red dunes of the Namib Desert under a blue sky",
+      "caption": null,
+      "category": "travel",
+      "show_on_home": false
+    },
+    {
+      "image": "assets/images/gallery/africa-namibia-movenpick-windhoek-drink-2024-01",
+      "alt": "Cocktail and whisky on a bar counter",
+      "caption": null,
+      "category": "leisure",
+      "show_on_home": false
+    },
+    {
+      "image": "assets/images/gallery/book-flights-south-african-airways",
+      "alt": "South African Airways cabin crew in front of an aircraft",
+      "caption": null,
+      "category": "travel",
+      "show_on_home": false
+    }
+  ]
+}

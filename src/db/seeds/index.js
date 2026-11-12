@@ -321,6 +321,28 @@ async function run(knex, { log = () => {} } = {}) {
       }
     });
 
+    /* Gallery (once) ----------------------------------------------------------------- */
+    await once(trx, "gallery", async () => {
+      const { categories, items } = readJson("gallery.json");
+      const categoryIds = {};
+      for (const [i, c] of categories.entries()) {
+        const r = await upsert(trx, "gallery_categories", { slug: c.slug }, { name: c.name, sort_order: i });
+        categoryIds[c.slug] = r.id;
+        tally("gallery_categories", r.created);
+      }
+      for (const [i, g] of items.entries()) {
+        const r = await upsert(trx, "gallery_items", { media_id: await m(g.image, g.alt) }, {
+          alt: g.alt,
+          caption: g.caption || null,
+          category_id: categoryIds[g.category] || null,
+          show_on_home: g.show_on_home,
+          sort_order: i,
+          status: "published",
+        });
+        tally("gallery_items", r.created);
+      }
+    });
+
     /* Legacy .html addresses from the static review build -------------------------- */
     const legacy = {
       "/index.html": "/",

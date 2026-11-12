@@ -201,9 +201,20 @@ tbody tr:hover td { background: #FAFBFD; }
 /* Logos are shown whole (contain), on the navy tile when they need it. */
 .td-logo { width: 104px; }
 .logo-tile { display: grid; place-items: center; width: 88px; height: 48px; padding: 6px; border: 1px solid var(--border); border-radius: 8px; background: #fff; color: var(--muted); }
-.logo-tile img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.logo-tile img { display: block; width: auto; height: auto; max-width: 74px; max-height: 34px; object-fit: contain; }
 .logo-tile--dark { background: var(--navy-900); border-color: var(--navy-900); }
 .img-input--logo .img-preview img { object-fit: contain; background: #fff; padding: 6px; }
+
+/* Bulk upload (gallery): one row per file with its own progress bar. */
+.bulk-list { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; padding: 0; list-style: none; }
+.bulk-item { display: grid; grid-template-columns: minmax(0, 1fr) 160px auto; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 13px; }
+.bulk-item .progress { margin-top: 0; }
+.bulk-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bulk-state { color: var(--muted); white-space: nowrap; }
+.bulk-item.is-done .bulk-state { color: var(--green-700); }
+.bulk-item.is-failed { border-color: var(--red-700); }
+.bulk-item.is-failed .bulk-state { color: var(--red-700); white-space: normal; }
+@media (max-width: 640px) { .bulk-item { grid-template-columns: 1fr; gap: 6px; } }
 .td-thumb img, .td-thumb .thumb-empty { width: 64px; height: 44px; object-fit: cover; border-radius: 8px; background: var(--bg); }
 .thumb-empty { display: grid; place-items: center; color: var(--muted); }
 .td-actions { text-align: right; white-space: nowrap; }

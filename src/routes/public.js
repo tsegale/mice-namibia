@@ -13,6 +13,7 @@ const venues = require("../repositories/venues");
 const speakers = require("../repositories/speakers");
 const faqs = require("../repositories/faqs");
 const partners = require("../repositories/partners");
+const gallery = require("../repositories/gallery");
 const { largestUrl } = require("../lib/picture");
 const { conferenceIcs } = require("../lib/ics");
 const C = require("../views/components");
@@ -31,23 +32,24 @@ router.use((req, res, next) => {
 router.get(
   "/",
   wrap(async (req, res) => {
-    const [upcoming, all, featuredVenues, homeSpeakers, homeFaqs, marqueePartners] = await Promise.all([
+    const [upcoming, all, featuredVenues, homeSpeakers, homeFaqs, marqueePartners, stripItems] = await Promise.all([
       conferences.upcoming(),
       posts.published(),
       venues.featured(),
       speakers.forHome(4),
       faqs.forHome(),
       partners.published({ marquee: true }),
+      gallery.published({ home: true }),
     ]);
-    render(res, "home", META.home, { upcoming, latestPosts: all.slice(0, 3), featuredVenues, homeSpeakers, homeFaqs, marqueePartners });
+    render(res, "home", META.home, { upcoming, latestPosts: all.slice(0, 3), featuredVenues, homeSpeakers, homeFaqs, marqueePartners, stripItems });
   })
 );
 
 router.get(
   "/about",
   wrap(async (req, res) => {
-    const [upcoming, marqueePartners] = await Promise.all([conferences.upcoming(), partners.published({ marquee: true })]);
-    render(res, "about", META.about, { upcoming, marqueePartners });
+    const [upcoming, marqueePartners, stripItems] = await Promise.all([conferences.upcoming(), partners.published({ marquee: true }), gallery.published({ home: true })]);
+    render(res, "about", META.about, { upcoming, marqueePartners, stripItems });
   })
 );
 
@@ -76,7 +78,15 @@ router.get(
   })
 );
 
-for (const name of ["gallery", "privacy-policy", "terms-and-conditions"]) {
+router.get(
+  "/gallery",
+  wrap(async (req, res) => {
+    const galleryItems = await gallery.published();
+    render(res, "gallery", META.gallery, { galleryItems, galleryCategories: await gallery.categories(galleryItems) });
+  })
+);
+
+for (const name of ["privacy-policy", "terms-and-conditions"]) {
   router.get(`/${name}`, (req, res) => render(res, name, META[name]));
 }
 

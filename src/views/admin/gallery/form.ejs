@@ -1,0 +1,14 @@
+<%- include('../partials/panel-form-start', { action: `/admin/gallery/${g.id}`, method: 'PUT', title: g.alt ? 'Edit photo' : 'Describe this photo' }) %>
+    <div class="panel-section">
+      <div class="panel-section-label">Photo</div>
+      <%- include('../fields/image', { name: 'media_id', label: 'Photo', media: photo, required: true }) %>
+      <%- include('../fields/input', { name: 'alt', label: 'Description', value: g.alt, required: true, maxlength: 255, count: true, attrs: ' autofocus', hint: 'What the photo shows, in one sentence, e.g. "Delegates at a plenary session at the WICC". Read out by screen readers and used by search engines. Needed before publishing.' }) %>
+      <%- include('../fields/input', { name: 'caption', label: 'Caption', value: g.caption, maxlength: 255, hint: 'Optional. Shown on hover and in the full-size view; leave empty to use the description.' }) %>
+      <%- include('../fields/select', { name: 'category_id', label: 'Category', value: g.category_id, empty: 'No category', options: categories.map((c) => ({ value: c.id, label: c.name })) }) %>
+    </div>
+    <div class="panel-section">
+      <div class="panel-section-label">Publishing</div>
+      <%- include('../fields/checkbox', { name: 'show_on_home', label: 'Show in the homepage strip', checked: g.show_on_home, hint: 'The scrolling photo strip on the homepage and About page.' }) %>
+      <%- include('../fields/status', { value: g.status }) %>
+    </div>
+<%- include('../partials/panel-form-end', { deleteUrl: `/admin/gallery/${g.id}`, deleteLabel: 'this photo', viewUrl: g.status === 'published' ? '/gallery' : null }) %>

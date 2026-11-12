@@ -390,6 +390,82 @@
     root.querySelectorAll("[data-slug-from]").forEach(initSlug);
     root.querySelectorAll("[data-tabs]").forEach(initTabs);
     root.querySelectorAll("[data-sortable]").forEach(initSortable);
+    root.querySelectorAll("[data-bulk-upload]").forEach(initBulkUpload);
+  }
+
+  /* Bulk upload (gallery): many files, uploaded one after another, each with
+     its own progress bar. Every file becomes a draft on the server; the page
+     reloads at the end to show them. */
+
+  function initBulkUpload(root) {
+    const url = root.dataset.bulkUpload;
+    const input = root.querySelector("input[type=file]");
+    const drop = root.querySelector(".img-drop");
+    const list = root.querySelector(".bulk-list");
+    const status = root.querySelector("[data-bulk-status]");
+    let busy = false;
+
+    function row(file) {
+      const li = document.createElement("li");
+      li.className = "bulk-item";
+      li.innerHTML = '<span class="bulk-name"></span><div class="progress"><span></span></div><span class="bulk-state">Waiting</span>';
+      li.querySelector(".bulk-name").textContent = file.name;
+      list.appendChild(li);
+      return {
+        progress: (p) => (li.querySelector(".progress span").style.width = `${Math.round(p * 100)}%`),
+        done: (text, ok) => {
+          li.classList.add(ok ? "is-done" : "is-failed");
+          li.querySelector(".bulk-state").textContent = text;
+        },
+        start: () => (li.querySelector(".bulk-state").textContent = "Uploading"),
+      };
+    }
+
+    async function run(files) {
+      if (busy || !files.length) return;
+      busy = true;
+      list.hidden = false;
+      list.textContent = "";
+      const rows = files.map((f) => ({ file: f, ui: row(f) }));
+      let added = 0;
+      for (const [i, { file, ui }] of rows.entries()) {
+        ui.start();
+        if (status) status.textContent = `Uploading ${i + 1} of ${rows.length}: ${file.name}`;
+        try {
+          await uploadFile(file, ui.progress, { url });
+          ui.progress(1);
+          ui.done("Added as a draft", true);
+          added++;
+        } catch (err) {
+          ui.done(err.message, false);
+        }
+      }
+      const failed = rows.length - added;
+      const summary = `${added} photo${added === 1 ? "" : "s"} added as drafts${failed ? `, ${failed} failed` : ""}.`;
+      if (status) status.textContent = summary;
+      busy = false;
+      if (added) {
+        toastAfterReload(`${summary} Add a description to each, then publish.`, failed ? "error" : "success");
+        setTimeout(() => location.reload(), failed ? 4000 : 1200);
+      } else toast(summary, "error");
+    }
+
+    input?.addEventListener("change", () => {
+      run([...input.files]);
+      input.value = "";
+    });
+    drop?.addEventListener("dragover", (e) => {
+      if (!e.dataTransfer.types.includes("Files")) return;
+      e.preventDefault();
+      drop.classList.add("is-dragover");
+    });
+    drop?.addEventListener("dragleave", () => drop.classList.remove("is-dragover"));
+    drop?.addEventListener("drop", (e) => {
+      if (!e.dataTransfer.files.length) return;
+      e.preventDefault();
+      drop.classList.remove("is-dragover");
+      run([...e.dataTransfer.files]);
+    });
   }
 
   // mode "logo" keeps the file as it is (PNG transparency, SVG); fields go

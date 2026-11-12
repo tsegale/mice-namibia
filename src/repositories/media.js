@@ -37,6 +37,7 @@ const REFERENCES = [
   ["venue_images", "media_id"],
   ["speakers", "photo_media_id"],
   ["partners", "logo_media_id"],
+  ["gallery_items", "media_id"],
 ];
 
 async function insert(row, userId) {

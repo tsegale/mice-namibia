@@ -1,0 +1,6 @@
+<% const editing = Boolean(c.id); %>
+<%- include('../partials/panel-form-start', { action: editing ? `/admin/gallery/categories/${c.id}` : '/admin/gallery/categories', method: editing ? 'PUT' : 'POST', title: editing ? 'Rename category' : 'Add a category' }) %>
+    <div class="panel-section">
+      <%- include('../fields/input', { name: 'name', label: 'Category name', value: c.name, required: true, maxlength: 80, attrs: ' autofocus', hint: 'Shown as a filter button on the Gallery page and as the label on each photo.' }) %>
+    </div>
+<%- include('../partials/panel-form-end', { deleteUrl: editing ? `/admin/gallery/categories/${c.id}` : null, deleteLabel: `the category "${c.name}"`, deleteWarning: photoCount ? `Its ${photoCount} photo${photoCount === 1 ? '' : 's'} stay in the gallery, without a category.` : null }) %>
