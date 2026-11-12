@@ -15,9 +15,10 @@ const { z, parse, ValidationError } = require("../../validation/common");
 
 const MAX_ROWS = 2000;
 
-const idsSchema = z.object({
+// Numeric ids, or two-letter codes for lists keyed by iso2 (destinations).
+const idsSchema = (key) => z.object({
   ids: z
-    .array(z.coerce.number().int().positive(), { error: "Send the new order as a list of ids." })
+    .array(key === "id" ? z.coerce.number().int().positive() : z.string().regex(/^[a-z]{2}$/), { error: "Send the new order as a list of ids." })
     .min(1, "Send the new order as a list of ids.")
     .max(MAX_ROWS, `A list can hold at most ${MAX_ROWS} rows.`)
     .refine((ids) => new Set(ids).size === ids.length, "Each row can only appear once."),
@@ -25,12 +26,13 @@ const idsSchema = z.object({
 
 const STALE = "This list has changed since the page was opened. Reload the page and try again.";
 
-function reorderHandler({ table, entity, label, scope = null }) {
+function reorderHandler({ table, entity, label, scope = null, key = "id" }) {
+  const schema = idsSchema(key);
   return async (req, res, next) => {
     try {
-      const { ids } = parse(idsSchema, Array.isArray(req.body) ? { ids: req.body } : req.body);
+      const { ids } = parse(schema, Array.isArray(req.body) ? { ids: req.body } : req.body);
       await db().transaction(async (trx) => {
-        const found = await trx(table).whereIn("id", ids).select(scope ? ["id", scope] : ["id"]);
+        const found = await trx(table).whereIn(key, ids).select(scope ? [key, scope] : [key]);
         if (found.length !== ids.length) throw new ValidationError({ ids: STALE }, STALE);
 
         let list = trx(table);
@@ -40,10 +42,10 @@ function reorderHandler({ table, entity, label, scope = null }) {
           const [value] = groups;
           list = value === null ? list.whereNull(scope) : list.where(scope, value);
         }
-        const all = await list.pluck("id");
+        const all = await list.pluck(key);
         if (all.length !== ids.length) throw new ValidationError({ ids: STALE }, STALE);
 
-        for (const [i, id] of ids.entries()) await trx(table).where({ id }).update({ sort_order: i });
+        for (const [i, id] of ids.entries()) await trx(table).where({ [key]: id }).update({ sort_order: i });
       });
       await audit(req, { action: "reorder", entity, summary: `changed the order of ${label}` });
       res.json({ ok: true, message: "Order saved" });

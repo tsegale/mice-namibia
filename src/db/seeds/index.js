@@ -20,17 +20,18 @@ const PUBLIC = path.join(ROOT, "public");
 const DATA = path.join(ROOT, "content/data");
 const readJson = (name) => JSON.parse(fs.readFileSync(path.join(DATA, name), "utf8"));
 
-// The nine destinations, in the order of the venues brief's country filter.
+// The nine destinations, in the order the site lists them (footer, contact
+// form, Partners and Services tiles). Editable in the admin from here on.
 const DESTINATIONS = [
   ["na", "Namibia", "Africa/Windhoek"],
   ["bw", "Botswana", "Africa/Gaborone"],
   ["za", "South Africa", "Africa/Johannesburg"],
   ["zm", "Zambia", "Africa/Lusaka"],
   ["zw", "Zimbabwe", "Africa/Harare"],
-  ["tz", "Tanzania", "Africa/Dar_es_Salaam"],
   ["ke", "Kenya", "Africa/Nairobi"],
-  ["rw", "Rwanda", "Africa/Kigali"],
+  ["tz", "Tanzania", "Africa/Dar_es_Salaam"],
   ["ug", "Uganda", "Africa/Kampala"],
+  ["rw", "Rwanda", "Africa/Kigali"],
 ];
 
 // From content/specs/06-venues-spec.pdf, in the client's order.
@@ -284,6 +285,24 @@ async function run(knex, { log = () => {} } = {}) {
       const red = await upsert(trx, "redirects", { from_path: `/${p.slug}.html` }, { to_path: `/blog/${slug}`, status_code: 301 });
       tally("redirects", red.created);
     }
+
+    /* Destination details (once): only fills what is still empty ---------------- */
+    await once(trx, "destinations", async () => {
+      const { destinations } = readJson("destinations.json");
+      for (const d of destinations) {
+        const row = await trx("countries").where({ iso2: d.iso2 }).first();
+        if (!row) continue;
+        const fill = {};
+        if (!row.hook) fill.hook = d.hook;
+        if (!row.cities) fill.cities = d.cities;
+        if (!row.photo_media_id) {
+          fill.photo_media_id = await m(d.photo, d.photo_alt);
+          if (!row.photo_alt) fill.photo_alt = d.photo_alt;
+        }
+        if (Object.keys(fill).length) await trx("countries").where({ iso2: d.iso2 }).update(fill);
+        tally("destination details", Object.keys(fill).length > 0);
+      }
+    });
 
     /* FAQs (once) ------------------------------------------------------------------ */
     await once(trx, "faqs", async () => {

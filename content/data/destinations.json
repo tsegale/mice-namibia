@@ -1,0 +1,77 @@
+{
+  "note": "Seed source for the destination details (hook and photo from the homepage tiles, cities from the Services Regional Reach tiles). Order is the site's destination order.",
+  "destinations": [
+    {
+      "iso2": "na",
+      "name": "Namibia",
+      "photo": "assets/images/destinations/namibia-namib-dunes",
+      "photo_alt": "Red dunes of the Namib Desert",
+      "hook": "Modern business facilities, spectacular landscapes and wildlife",
+      "cities": "Windhoek, Swakopmund, Walvis Bay"
+    },
+    {
+      "iso2": "bw",
+      "name": "Botswana",
+      "photo": "assets/images/destinations/botswana-okavango-delta",
+      "photo_alt": "Aerial view of the Okavango River winding through the delta",
+      "hook": "Exceptional wildlife and luxury safari lodges",
+      "cities": "Gaborone, Okavango Delta"
+    },
+    {
+      "iso2": "za",
+      "name": "South Africa",
+      "photo": "assets/images/destinations/south-africa-cape-town",
+      "photo_alt": "Cape Town city centre beneath Table Mountain",
+      "hook": "International conference venues and business infrastructure",
+      "cities": "Cape Town, Johannesburg, Durban"
+    },
+    {
+      "iso2": "zm",
+      "name": "Zambia",
+      "photo": "assets/images/destinations/zambia-victoria-falls-bridge",
+      "photo_alt": "Victoria Falls Bridge spanning the Zambezi gorge",
+      "hook": "Wildlife, adventure and authentic safari experiences",
+      "cities": "Lusaka, Victoria Falls"
+    },
+    {
+      "iso2": "zw",
+      "name": "Zimbabwe",
+      "photo": "assets/images/destinations/zimbabwe-victoria-falls",
+      "photo_alt": "The curtain of water at Victoria Falls",
+      "hook": "Victoria Falls, wildlife and cultural experiences",
+      "cities": "Harare, Victoria Falls"
+    },
+    {
+      "iso2": "ke",
+      "name": "Kenya",
+      "photo": "assets/images/destinations/kenya-nairobi-skyline",
+      "photo_alt": "Nairobi skyline with a highway winding between towers",
+      "hook": "Business facilities, international connectivity and wildlife",
+      "cities": "Nairobi"
+    },
+    {
+      "iso2": "tz",
+      "name": "Tanzania",
+      "photo": "assets/images/destinations/tanzania-serengeti-balloons",
+      "photo_alt": "Hot air balloons over a river in the Serengeti at sunset",
+      "hook": "Business travel combined with safari and beach",
+      "cities": "Dar es Salaam, Zanzibar"
+    },
+    {
+      "iso2": "ug",
+      "name": "Uganda",
+      "photo": "assets/images/destinations/uganda-kampala-lake-victoria",
+      "photo_alt": "Kampala rooftops with Lake Victoria and a rainbow beyond",
+      "hook": "Business facilities, nature and unique experiences",
+      "cities": "Kampala"
+    },
+    {
+      "iso2": "rw",
+      "name": "Rwanda",
+      "photo": "assets/images/destinations/rwanda-kigali-hills",
+      "photo_alt": "Kigali spread across green hills",
+      "hook": "A modern, organised business environment in Kigali",
+      "cities": "Kigali"
+    }
+  ]
+}

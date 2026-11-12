@@ -1,0 +1,35 @@
+<% const editing = Boolean(d.iso2); %>
+<%- include('../partials/panel-form-start', { action: editing ? `/admin/destinations/${d.iso2}` : '/admin/destinations', method: editing ? 'PUT' : 'POST', title: editing ? `Edit ${d.name}` : 'Add a country' }) %>
+    <div class="panel-section">
+      <div class="panel-section-label">Country</div>
+      <% if (editing) { %>
+      <dl class="detail-list">
+        <div><dt>Flag and code</dt><dd class="td-flag"><img src="/assets/images/flags/<%= d.iso2 %>.svg" alt="" width="24" height="18"><%= d.iso2.toUpperCase() %></dd></div>
+        <div><dt>Timezone</dt><dd><%= d.timezone %> <span class="text-sm">(events in <%= d.name %> show their times in it)</span></dd></div>
+      </dl>
+      <p class="form-hint">The code and timezone are fixed once a country exists.</p>
+      <% } else if (!flags.length) { %>
+      <div class="alert alert-info"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span>Every country the site has a flag for is already in the list. To add another one, its flag (the 4:3 SVG from the flag-icons set the site uses) has to be added to the site's flag folder first; ask your developer.</span></div>
+      <% } else { %>
+      <%- include('../fields/select', { name: 'iso2', label: 'Country', value: '', required: true, empty: 'Choose a country', options: flags.map((f) => ({ value: f.iso2, label: `${f.name} (${f.iso2.toUpperCase()})` })), hint: 'Only countries the site has a flag for can be added. The code and the timezone cannot be changed later.' }) %>
+      <%- include('../fields/select', { name: 'timezone', label: 'Timezone', value: '', required: true, empty: 'Choose a timezone', options: timezones.map((t) => ({ value: t, label: t })), hint: 'Events in this country show their times in it.' }) %>
+      <% } %>
+      <% if (editing || flags.length) { %>
+      <%- include('../fields/input', { name: 'name', label: 'Display name', value: d.name, required: true, maxlength: 80, attrs: editing ? ' autofocus' : '', hint: 'As written on the site and in the contact form.' }) %>
+      <% } %>
+    </div>
+    <% if (editing || flags.length) { %>
+    <div class="panel-section">
+      <div class="panel-section-label">Homepage tile</div>
+      <%- include('../fields/input', { name: 'hook', label: 'Hook', value: d.hook, maxlength: 255, count: true, hint: 'One line under the name on the homepage and About tiles.' }) %>
+      <%- include('../fields/image', { name: 'photo_media_id', label: 'Photo', media: photo, hint: 'A landscape photo of the country. The first destination gets the large tile.' }) %>
+      <%- include('../fields/input', { name: 'photo_alt', label: 'Photo description', value: d.photo_alt, maxlength: 255, hint: 'What the photo shows, for screen readers and search engines.' }) %>
+      <%- include('../fields/input', { name: 'cities', label: 'Towns', value: d.cities, maxlength: 255, placeholder: 'Windhoek, Swakopmund, Walvis Bay', hint: 'Shown under the name on the Services Regional Reach tiles.' }) %>
+    </div>
+    <div class="panel-section">
+      <div class="panel-section-label">Publishing</div>
+      <% const inUse = usage && (usage.venues.length || usage.conferences.length); %>
+      <%- include('../fields/checkbox', { name: 'is_destination', label: 'Show as a destination', checked: d.is_destination, hint: inUse ? `Used by ${[usage.venues.length ? `venues: ${usage.venues.join(', ')}` : '', usage.conferences.length ? `events: ${usage.conferences.join(', ')}` : ''].filter(Boolean).join('; ')}. It cannot be switched off while they use it.` : 'Switched off, the country disappears from every destination list and from the contact form.' }) %>
+    </div>
+    <% } %>
+<%- include('../partials/panel-form-end', { hideSave: !editing && !flags.length }) %>

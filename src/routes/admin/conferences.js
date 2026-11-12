@@ -47,7 +47,7 @@ router.get(
 
 async function formData(row) {
   const [countries, speakers] = await Promise.all([
-    db()("countries").orderBy("sort_order"),
+    db()("countries").where((q) => q.where({ is_destination: true }).orWhere({ iso2: row?.country_iso2 || "" })).orderBy("sort_order"),
     db()("speakers").where({ is_sample: false }).orderBy("name").select("id", "name", "role", "status", "consent_confirmed"),
   ]);
   let gallery = [];
@@ -89,7 +89,7 @@ router.get(
 async function save(req, existing) {
   const data = parse(schema, req.body);
   const country = await db()("countries").where({ iso2: data.country_iso2 }).first();
-  if (!country) throw new ValidationError({ country_iso2: "Choose a country." });
+  if (!country || (!country.is_destination && country.iso2 !== existing?.country_iso2)) throw new ValidationError({ country_iso2: "Choose a country." });
   const row = toRow(data, country.timezone);
   row.body = cleanBody(data.body, "body", "Description");
   await assertMedia([data.cover_media_id], "cover_media_id");

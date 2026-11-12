@@ -10,7 +10,6 @@ const { z } = v;
 const str = (x) => (x == null ? "" : String(x).trim());
 
 const EVENT_TYPES = ["Meeting", "Incentive trip", "Conference", "Exhibition or trade show", "Other"];
-const DESTINATIONS = ["Namibia", "Botswana", "South Africa", "Zambia", "Zimbabwe", "Kenya", "Tanzania", "Uganda", "Rwanda"];
 const SERVICES = [
   "Meeting Planning",
   "Incentive Travel",
@@ -50,7 +49,9 @@ const oneOf = (list, message) =>
     .transform(str)
     .refine((s) => s === "" || list.includes(s), message);
 
-const contact = z
+// The destination list comes from the database (Admin > Pages >
+// Destinations), so the schema is built per request from the current names.
+const contactSchema = (destinations) => z
   .object({
     enquiry_type: v.z
       .unknown()
@@ -62,7 +63,7 @@ const contact = z
     phone,
     organisation: v.optionalText(160, "Organisation"),
     event_type: oneOf(EVENT_TYPES, "Choose the type of event."),
-    destination: oneOf(DESTINATIONS, "Choose a destination from the list."),
+    destination: oneOf(destinations, "Choose a destination from the list."),
     dates: v.optionalText(120, "Preferred dates"),
     delegates: v.z
       .unknown()
@@ -81,4 +82,4 @@ const contact = z
 
 const newsletter = z.object({ email });
 
-module.exports = { contact, newsletter, EVENT_TYPES, DESTINATIONS, SERVICES };
+module.exports = { contactSchema, newsletter, EVENT_TYPES, SERVICES };

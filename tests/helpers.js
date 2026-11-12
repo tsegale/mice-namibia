@@ -24,6 +24,10 @@ async function resetDatabase() {
   for (const row of tables) await k.schema.dropTableIfExists(Object.values(row)[0]);
   await k.raw("SET FOREIGN_KEY_CHECKS = 1");
   await k.migrate.latest();
+  // Reference data every page and form relies on: the destination countries
+  // (the contact form validates against them).
+  const { DESTINATIONS } = require("../src/db/seeds");
+  await k("countries").insert(DESTINATIONS.map(([iso2, name, timezone], i) => ({ iso2, name, timezone, is_destination: true, sort_order: i })));
   await k("admin_users").insert({ name: ADMIN.name, email: ADMIN.email, password_hash: await hashPassword(ADMIN.password), role: "admin" });
 }
 

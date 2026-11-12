@@ -1,4 +1,4 @@
-<%# deleteUrl, deleteLabel, deleteWarning, viewUrl, saveLabel %>
+<%# deleteUrl, deleteLabel, deleteWarning, viewUrl, saveLabel, hideSave %>
   </div>
   <div class="panel-footer">
     <div class="inline">
@@ -7,7 +7,7 @@
     </div>
     <div class="panel-footer-right">
       <button type="button" class="btn btn-ghost" data-close-panel>Cancel</button>
-      <button type="submit" class="btn btn-primary"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-check"/></svg><%= locals.saveLabel || 'Save' %></button>
+      <% if (!locals.hideSave) { %><button type="submit" class="btn btn-primary"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-check"/></svg><%= locals.saveLabel || 'Save' %></button><% } %>
     </div>
   </div>
 </form>

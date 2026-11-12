@@ -32,7 +32,7 @@ router.get(
 );
 
 async function formData(row) {
-  const [countries, categories, tags] = await Promise.all([db()("countries").orderBy("sort_order"), db()("venue_categories").orderBy("sort_order"), db()("venue_tags").orderBy("sort_order")]);
+  const [countries, categories, tags] = await Promise.all([db()("countries").where((q) => q.where({ is_destination: true }).orWhere({ iso2: row?.country_iso2 || "" })).orderBy("sort_order"), db()("venue_categories").orderBy("sort_order"), db()("venue_tags").orderBy("sort_order")]);
   let gallery = [];
   let tagIds = [];
   let card = null;
@@ -69,7 +69,7 @@ async function save(req, existing) {
   const data = parse(schema, req.body);
   const [country, category] = await Promise.all([db()("countries").where({ iso2: data.country_iso2 }).first(), db()("venue_categories").where({ id: data.category_id }).first()]);
   const errors = {};
-  if (!country) errors.country_iso2 = "Choose a country.";
+  if (!country || (!country.is_destination && country.iso2 !== existing?.country_iso2)) errors.country_iso2 = "Choose a country.";
   if (!category) errors.category_id = "Choose a venue category.";
   if (data.tag_ids.length && (await db()("venue_tags").whereIn("id", data.tag_ids).pluck("id")).length !== data.tag_ids.length) errors.tag_ids = "One of the product categories no longer exists.";
   if (Object.keys(errors).length) throw new ValidationError(errors);

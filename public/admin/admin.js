@@ -654,7 +654,7 @@
       if (ids.join() === saved.join()) return;
       tbody.setAttribute("aria-busy", "true");
       try {
-        await request(url, { method: "PATCH", body: { ids: ids.map(Number) } });
+        await request(url, { method: "PATCH", body: { ids: ids.map((id) => (/^\d+$/.test(id) ? Number(id) : id)) } });
         saved = ids;
         announce("Order saved.");
         toast("Order saved", "success");

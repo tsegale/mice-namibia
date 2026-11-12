@@ -298,53 +298,9 @@
     <div class="reach-content">
       <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">04</span>&nbsp;/ Regional reach</p>
       <h2 id="reach-title">Regional Reach Across Africa</h2>
-      <p>We deliver services on the ground across <%= numberWord(siteCounts.destinations) %> African destinations, pairing consistent regional standards with local expertise in Namibia, Botswana, South Africa, Zambia, Zimbabwe, Kenya, Tanzania, Uganda, and Rwanda.</p>
+      <p>We deliver services on the ground across <%= numberWord(siteCounts.destinations) %> African destinations, pairing consistent regional standards with local expertise in <%- C.destinations.nameList(siteCounts.destinationList) %>.</p>
       <ul class="reach-tiles" aria-label="Our <%= numberWord(siteCounts.destinations) %> destinations">
-        <li><button type="button" class="reach-tile" data-map-iso="na" aria-pressed="false">
-          <img src="/assets/images/flags/na.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Namibia</span>
-          <span class="reach-tile-cities">Windhoek, Swakopmund, Walvis Bay</span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="bw" aria-pressed="false">
-          <img src="/assets/images/flags/bw.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Botswana</span>
-          <span class="reach-tile-cities">Gaborone, Okavango Delta</span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="za" aria-pressed="false">
-          <img src="/assets/images/flags/za.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">South Africa</span>
-          <span class="reach-tile-cities">Cape Town, Johannesburg, Durban</span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="zm" aria-pressed="false">
-          <img src="/assets/images/flags/zm.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Zambia</span>
-          <span class="reach-tile-cities">Lusaka, Victoria Falls</span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="zw" aria-pressed="false">
-          <img src="/assets/images/flags/zw.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Zimbabwe</span>
-          <span class="reach-tile-cities">Harare, Victoria Falls</span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="ke" aria-pressed="false">
-          <img src="/assets/images/flags/ke.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Kenya</span>
-          <span class="reach-tile-cities">Nairobi</span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="tz" aria-pressed="false">
-          <img src="/assets/images/flags/tz.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Tanzania</span>
-          <span class="reach-tile-cities">Dar es Salaam, Zanzibar</span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="ug" aria-pressed="false">
-          <img src="/assets/images/flags/ug.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Uganda</span>
-          <span class="reach-tile-cities">Kampala</span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="rw" aria-pressed="false">
-          <img src="/assets/images/flags/rw.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Rwanda</span>
-          <span class="reach-tile-cities">Kigali</span>
-        </button></li>
+        <%- C.destinations.reachTiles(siteCounts.destinationList, (d) => d.cities) %>
       </ul>
       <div class="stat-badge">
         <strong data-count-to="<%= siteCounts.destinations %>"><%= siteCounts.destinations %></strong>

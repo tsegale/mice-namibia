@@ -22,51 +22,7 @@
     </div>
     <div class="partner-filter" data-africa-map data-partner-filter>
       <ul class="partner-flags" aria-label="Filter partners by country">
-        <li><button type="button" class="reach-tile" data-map-iso="na" aria-pressed="false">
-          <img src="/assets/images/flags/na.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Namibia</span>
-          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.na || 0) %></span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="bw" aria-pressed="false">
-          <img src="/assets/images/flags/bw.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Botswana</span>
-          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.bw || 0) %></span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="za" aria-pressed="false">
-          <img src="/assets/images/flags/za.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">South Africa</span>
-          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.za || 0) %></span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="zm" aria-pressed="false">
-          <img src="/assets/images/flags/zm.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Zambia</span>
-          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.zm || 0) %></span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="zw" aria-pressed="false">
-          <img src="/assets/images/flags/zw.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Zimbabwe</span>
-          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.zw || 0) %></span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="ke" aria-pressed="false">
-          <img src="/assets/images/flags/ke.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Kenya</span>
-          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.ke || 0) %></span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="tz" aria-pressed="false">
-          <img src="/assets/images/flags/tz.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Tanzania</span>
-          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.tz || 0) %></span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="ug" aria-pressed="false">
-          <img src="/assets/images/flags/ug.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Uganda</span>
-          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.ug || 0) %></span>
-        </button></li>
-        <li><button type="button" class="reach-tile" data-map-iso="rw" aria-pressed="false">
-          <img src="/assets/images/flags/rw.svg" alt="" width="40" height="30">
-          <span class="reach-tile-name">Rwanda</span>
-          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.rw || 0) %></span>
-        </button></li>
+        <%- C.destinations.reachTiles(siteCounts.destinationList, (d) => C.partners.venuesLabel(partnerCounts.byCountry[d.iso2] || 0)) %>
       </ul>
       <div class="partner-list-controls">
         <p class="partner-count" aria-live="polite" data-partner-count>Showing all <%= partnerCounts.total %> partners</p>

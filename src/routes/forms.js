@@ -16,6 +16,7 @@ const { rateLimit, ipKeyGenerator } = require("express-rate-limit");
 const config = require("../config");
 const META = require("./page-meta");
 const conferences = require("../repositories/conferences");
+const destinations = require("../repositories/destinations");
 const { wantsJson } = require("../middleware/auth");
 const { parse, ValidationError } = require("../validation/common");
 const forms = require("../validation/forms");
@@ -25,7 +26,7 @@ const logger = require("../lib/logger");
 
 const router = express.Router();
 const wrap = (fn) => (req, res, next) => fn(req, res, next).catch(next);
-const OPTIONS = { EVENT_TYPES: forms.EVENT_TYPES, DESTINATIONS: forms.DESTINATIONS, SERVICES: forms.SERVICES };
+const destinationNames = async () => (await destinations.published()).map((d) => d.name);
 const PHONE = "+264 81 245 5852";
 
 // Server-rendered newsletter state after a no-JavaScript sign-up.
@@ -73,7 +74,9 @@ const isSpam = (req) => String(req.body?.website || "").trim() !== "";
 /* Contact ----------------------------------------------------------------------- */
 
 async function renderContact(res, status, form) {
-  res.status(status).render("pages/contact", { page: META.contact, upcoming: await conferences.upcoming(), options: OPTIONS, form });
+  const [upcoming, destinationNamesList] = await Promise.all([conferences.upcoming(), destinationNames()]);
+  const options = { EVENT_TYPES: forms.EVENT_TYPES, DESTINATIONS: destinationNamesList, SERVICES: forms.SERVICES };
+  res.status(status).render("pages/contact", { page: META.contact, upcoming, options, form });
 }
 
 router.get(
@@ -105,7 +108,7 @@ router.post(
 
     let data;
     try {
-      data = parse(forms.contact, req.body);
+      data = parse(forms.contactSchema(await destinationNames()), req.body);
     } catch (err) {
       if (!(err instanceof ValidationError)) throw err;
       if (json) return res.status(422).json({ error: "Please check the highlighted fields.", fieldErrors: err.fieldErrors });

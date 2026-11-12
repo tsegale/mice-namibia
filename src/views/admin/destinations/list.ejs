@@ -1,0 +1,30 @@
+<% const actions = `<button type="button" class="btn btn-accent" data-open-panel="/admin/destinations/new"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg><span class="btn-label">Add country</span></button>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'destinations', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">The countries the site works in, in this order: the homepage tiles (the first one is the large tile), the footer flags, the contact form, the venue filter and the Services and Partners tiles all follow it. <strong><%= live %></strong> are shown as destinations, which is also the number written on the site ("<%= numberWord(live) %> African destinations"). Drag a row by its grip (or focus the grip and use the arrow keys) to change the order.</p>
+  <section class="card">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span class="visually-hidden">Order</span></th><th class="hide-sm">Photo</th><th>Country</th><th class="hide-sm">Hook</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody data-sortable="/admin/destinations/reorder">
+          <% rows.forEach((d) => { %>
+          <tr data-id="<%= d.iso2 %>" data-label="<%= d.name %>">
+            <%- include('../fields/sort-handle', { label: d.name }) %>
+            <td class="td-thumb hide-sm"><% if (d.photo) { %><img src="<%= imageUrl(d.photo, 640) %>" alt="" loading="lazy"><% } else { %><span class="thumb-empty"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-image"/></svg></span><% } %></td>
+            <td><button type="button" class="td-title btn-link td-flag" data-open-panel="/admin/destinations/<%= d.iso2 %>/edit" data-deep-link="?edit=<%= d.iso2 %>"><img src="/assets/images/flags/<%= d.iso2 %>.svg" alt="" width="20" height="15"><%= d.name %></button><span class="td-sub"><%= d.iso2.toUpperCase() %> · <%= d.timezone %></span></td>
+            <td class="hide-sm"><span class="td-sub"><%= d.hook %></span></td>
+            <td><% if (d.is_destination) { %><span class="badge badge-published">Destination</span><% } else { %><span class="badge badge-draft">Not shown</span><% } %></td>
+            <td class="td-actions">
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/destinations/<%= d.iso2 %>/edit" data-deep-link="?edit=<%= d.iso2 %>" aria-label="Edit <%= d.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <% if (open) { %><span data-autopanel="<%= open %>" hidden></span><% } %>
+</main>
+<%- include('../partials/foot') %>

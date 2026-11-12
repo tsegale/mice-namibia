@@ -110,7 +110,9 @@ function createApp({ sessionStore } = {}) {
   // Live figures for the public pages (stats cards, footer, page copy).
   // Set before the routes so the 404 and error pages get them too.
   app.use(async (req, res, next) => {
-    if (!["GET", "HEAD"].includes(req.method) || req.path.startsWith("/admin")) return next();
+    // Every public request, POSTs included: a form that fails validation
+    // without JavaScript re-renders its page, footer and all.
+    if (req.path.startsWith("/admin")) return next();
     try {
       res.locals.siteCounts = await require("./repositories/site").counts();
     } catch (err) {

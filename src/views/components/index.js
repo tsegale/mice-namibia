@@ -8,5 +8,6 @@ module.exports = {
   faqs: require("./faqs"),
   partners: require("./partners"),
   gallery: require("./gallery"),
+  destinations: require("./destinations"),
   icons: require("./icons"),
 };
