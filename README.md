@@ -21,8 +21,8 @@ Design rules, client decisions and open content questions live in
 Node.js 22 + Express 5, EJS templates, MySQL/MariaDB through Knex
 (versioned migrations), sessions stored in the database, sharp for image
 resizing, nodemailer for email, zod for validation. One process serves
-everything (pages, admin, uploads), which is what cPanel "Setup Node.js App"
-(Passenger) runs: the entry file is `app.js`.
+everything (pages, admin, uploads), which is what cPanel's Passenger
+(Application Manager) runs: the entry file is `app.js`.
 
 ## Run it locally
 
@@ -122,10 +122,12 @@ itself. Each subscriber has a private unsubscribe link,
 
 ## Deploying
 
-[DEPLOY.md](DEPLOY.md) is the step-by-step guide for cPanel ("Setup Node.js
-App" / Passenger, Node 22, MariaDB): subdomain and SSL, database, deploy key,
-the staging `.env`, first run, backups, uptime check, updates, rollback,
-restoring a backup and troubleshooting.
+Staging runs at https://staging.zusammentravels.com (password protected) on
+the client's cPanel account, under Application Manager (Passenger) with Node
+22. [DEPLOY.md](DEPLOY.md) records how it was set up and how to update it:
+subdomain and SSL, database, the staging `.env`, registering the app, first
+run, backups, uptime check, updates, rollback, restoring a backup and
+troubleshooting.
 
 Operations at a glance:
 

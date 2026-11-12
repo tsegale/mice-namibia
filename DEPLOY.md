@@ -1,17 +1,21 @@
 # Deploying to cPanel (staging)
 
-Step by step for a cPanel host with "Setup Node.js App" (CloudLinux Node.js
-Selector, run by Passenger), Node 22 and MariaDB. Written for the staging
-site; production is the same with `SITE_ENV=production` and no
-`STAGING_BASIC_AUTH`.
+How the staging site at **https://staging.zusammentravels.com** was set up
+(12 Nov 2026) on the client's Namhost cPanel account, and how to update it.
+The host runs LiteSpeed with cPanel's **Application Manager** (Phusion
+Passenger) for Node apps, Node 22 from cPanel's `ea-nodejs22` package and
+MariaDB 10.11. There is no "Setup Node.js App" (CloudLinux) on this account.
 
-Placeholders used below:
+Production will be the same with `SITE_ENV=production`, its own database and
+no `STAGING_BASIC_AUTH`.
+
+The same cPanel account also runs the client's live Zusammen site
+(`zusammentravels.com` in Application Manager) and its backend. Never touch
+those folders or that app.
 
 | Placeholder | Meaning |
 | --- | --- |
-| `<cpuser>` | The cPanel account's username (home folder `/home/<cpuser>`) |
-| `<domain>` | The main domain on the account |
-| `staging.<domain>` | The staging address |
+| `<cpuser>` | The cPanel username (cPanel > General Information > Current User), home `/home/<cpuser>` |
 | `~/mice-staging` | App root: the git checkout, outside `public_html` |
 | `~/mice-data/uploads` | Uploaded images, outside the app root |
 | `~/mice-data/backups` | Daily backups, outside the app root |
@@ -19,142 +23,96 @@ Placeholders used below:
 Keeping uploads and backups outside the app root means a redeploy (or
 deleting and re-cloning the checkout) never touches them.
 
+## Node 22 in the terminal (read this first)
+
+Plain `node` on this server is an old v10. Application Manager runs the app
+with Node 22, and every command you type must use the same one. Start every
+Terminal or SSH session with:
+
+```bash
+export PATH=/opt/cpanel/ea-nodejs22/bin:$PATH
+cd ~/mice-staging
+node -v    # must print v22.x
+```
+
+Every `npm` command below assumes this.
+
 ## 1. Subdomain and HTTPS
 
-1. cPanel > **Domains** (or **Subdomains** on older versions) > Create:
-   `staging.<domain>`. Let cPanel pick the document root (for example
-   `/home/<cpuser>/staging.<domain>`). Passenger writes its `.htaccess`
-   there; nothing else goes in that folder, and it is not the app root.
-2. cPanel > **SSL/TLS Status**: tick `staging.<domain>` and click **Run
-   AutoSSL**. Wait until it shows a valid certificate before going on, since
-   the app only sets secure cookies and a login over plain HTTP will not
-   stick.
+1. cPanel > **Domains** > Create: `staging.zusammentravels.com`. Let cPanel
+   pick the document root. Passenger's settings go there; it is not the app
+   root and nothing else goes in it. (Terminal equivalent:
+   `uapi SubDomain addsubdomain domain=staging rootdomain=zusammentravels.com dir=staging.zusammentravels.com`.)
+2. cPanel > **SSL/TLS Status** > **Run AutoSSL** (or `uapi SSL
+   start_autossl_check`). Check `curl -sI https://staging.zusammentravels.com`
+   shows no certificate error before going on: the app only sets secure
+   cookies, so a login over plain HTTP will not stick.
 
 ## 2. Database and user
 
-cPanel > **MySQL Databases** (the same screen manages MariaDB):
+cPanel > **Manage My Databases**:
 
-1. Create a database, for example `<cpuser>_mice_staging` (cPanel adds the
-   `<cpuser>_` prefix).
-2. Create a user, for example `<cpuser>_mice`, with a generated password.
+1. Create the database `<cpuser>_mice_staging` (cPanel adds the prefix).
+2. **Add New User** `mice` (becomes `<cpuser>_mice`) with a generated
+   password. Regenerate if it contains `'` or `"`: the backup script cannot
+   pass a password with a double quote, and the `.env` line uses single
+   quotes.
 3. **Add User To Database** > **ALL PRIVILEGES**.
-
-Then set its character set (cPanel > **phpMyAdmin** > select the database >
-**Operations** > Collation `utf8mb4_unicode_ci`, or in the SQL tab):
-
-```sql
-ALTER DATABASE <cpuser>_mice_staging CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
 
 ## 3. Get the code onto the server
 
-The repository is private, so the server needs its own **read-only deploy
-key**. Never copy your personal SSH key to the server.
-
-1. Open cPanel > **Terminal** (or SSH in) and make a key with no passphrase:
-
-   ```bash
-   ssh-keygen -t ed25519 -f ~/.ssh/mice_deploy -N "" -C "mice staging deploy key"
-   cat ~/.ssh/mice_deploy.pub
-   ```
-
-2. GitHub > the repository > **Settings** > **Deploy keys** > **Add deploy
-   key**: paste the public key, leave **Allow write access** unticked.
-3. Tell SSH to use that key for GitHub:
-
-   ```bash
-   cat >> ~/.ssh/config <<'EOF'
-   Host github.com
-     IdentityFile ~/.ssh/mice_deploy
-     IdentitiesOnly yes
-   EOF
-   chmod 600 ~/.ssh/config
-   ssh -T git@github.com   # answer "yes"; it should greet the repository
-   ```
-
-4. Clone the backend branch as the app root:
-
-   ```bash
-   git clone --branch phase-2-backend git@github.com:tsegale/mice-namibia.git ~/mice-staging
-   ```
-
-   cPanel > **Git Version Control** > **Create** with the same clone URL and
-   `/home/<cpuser>/mice-staging` as the repository path does the same thing
-   from the browser (it uses the same SSH key). Either way, clone **before**
-   creating the Node.js app in step 4, so the folder holds the code and not
-   cPanel's sample app.
-
-5. Make the data folders:
-
-   ```bash
-   mkdir -p ~/mice-data/uploads ~/mice-data/backups
-   chmod 755 ~/mice-data/uploads
-   chmod 700 ~/mice-data/backups
-   ```
-
-`.env` is never uploaded or committed. It is created on the server in step
-6 and git ignores it, so pulls never overwrite it.
-
-## 4. Create the Node.js app
-
-cPanel > **Setup Node.js App** > **Create Application**:
-
-| Field | Value |
-| --- | --- |
-| Node.js version | The newest 22.x in the list |
-| Application mode | Production |
-| Application root | `mice-staging` (that is, `/home/<cpuser>/mice-staging`, outside `public_html`) |
-| Application URL | `staging.<domain>`, path left empty |
-| Application startup file | `app.js` |
-| Passenger log file | `/home/<cpuser>/logs/mice-staging.log` (if the field is shown) |
-
-Leave the environment variables section empty: all settings live in `.env`
-(one place to check). Click **Create**, then **Stop App** until step 7 is
-done.
-
-At the top of the app's page cPanel shows a command like:
+The repository is public, so the server clones over HTTPS with no key:
 
 ```bash
-source /home/<cpuser>/nodevenv/mice-staging/22/bin/activate && cd /home/<cpuser>/mice-staging
+git clone --branch phase-2-backend https://github.com/tsegale/mice-namibia.git ~/mice-staging
+mkdir -p ~/mice-data/uploads ~/mice-data/backups
+chmod 755 ~/mice-data/uploads
+chmod 700 ~/mice-data/backups
 ```
 
-Every `npm` command below runs in a terminal after that command, so it uses
-the app's Node 22 and its `node_modules`.
+If the repository is ever made private, add a **read-only deploy key**:
+`ssh-keygen -t ed25519 -f ~/.ssh/mice_deploy -N ""`, paste
+`~/.ssh/mice_deploy.pub` into GitHub > Settings > Deploy keys (write access
+off), point `~/.ssh/config` at it for `github.com`, and switch the remote with
+`git remote set-url origin git@github.com:tsegale/mice-namibia.git`. Never
+put a personal key on the server.
 
-## 5. Install
+`.env` is never uploaded or committed. It is created on the server (step 5)
+and git ignores it, so pulls never overwrite it.
+
+## 4. Install
 
 ```bash
 npm ci --omit=dev
 ```
 
-This installs exactly what `package-lock.json` lists, without the
-development tools (ESLint, the test runner, pino-pretty). The app writes
-plain JSON log lines in production and never needs pino-pretty.
+Exactly what `package-lock.json` lists, without the development tools. The
+app logs plain JSON in production and never needs pino-pretty. Check sharp
+works on this server (it did on 12 Nov 2026):
 
-The Node.js Selector keeps `node_modules` inside the virtual environment and
-links it into the app root. If it ever complains that the app root holds a
-real `node_modules` folder, delete that folder and run the command again
-from the activated environment (or use the **Run NPM Install** button once).
+```bash
+node -e "require('sharp')({create:{width:2,height:2,channels:3,background:'#fff'}}).webp().toBuffer().then(()=>console.log('sharp ok'))"
+```
 
-## 6. The staging `.env`
+## 5. The staging `.env`
 
-Create `~/mice-staging/.env` on the server (Terminal: `nano .env`, or File
-Manager > New File) and lock it down with `chmod 600 .env`. Fill in:
+Create `~/mice-staging/.env` (`nano .env`) and `chmod 600 .env`:
 
 ```ini
 NODE_ENV=production
 SITE_ENV=staging
 TRUST_PROXY=true
-BASE_URL=https://staging.<domain>
+BASE_URL=https://staging.zusammentravels.com
 
 DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=<cpuser>_mice_staging
 DB_USER=<cpuser>_mice
-DB_PASSWORD=<the password from step 2>
+DB_PASSWORD='<the password from step 2>'
 
-# New for this server, never reused from a laptop. Make it with:
-#   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+# New for this server, never reused. Make it on the server so it is never
+# shown on screen or copied anywhere:
+#   node -e "process.stdout.write(require('crypto').randomBytes(32).toString('hex'))"
 SESSION_SECRET=<64 hex characters>
 
 # Absolute paths outside the app root, so redeploys never touch them.
@@ -163,33 +121,47 @@ BACKUP_DIR=/home/<cpuser>/mice-data/backups
 UPLOAD_MAX_MB=12
 
 # The corporate.events@zusammentravels.com mailbox (cPanel > Email Accounts >
-# Connect Devices shows the outgoing server and port).
-SMTP_HOST=<outgoing mail server>
+# Connect Devices shows the outgoing server and port). Empty = enquiries are
+# saved in the admin but not emailed.
+SMTP_HOST=
 SMTP_PORT=465
 SMTP_SECURE=true
-SMTP_USER=corporate.events@zusammentravels.com
-SMTP_PASS=<mailbox password>
-MAIL_FROM=corporate.events@zusammentravels.com
-MAIL_TO=corporate.events@zusammentravels.com
+SMTP_USER=
+SMTP_PASS=
+MAIL_FROM=
+MAIL_TO=
 
-# Browser password for the whole staging site while Macedo tests it.
+# Browser password for the whole staging site, user:password.
 STAGING_BASIC_AUTH=<user>:<long random password>
 
 LOG_LEVEL=info
 ```
 
-Notes:
-
 - `SITE_ENV=staging` makes `robots.txt` say `Disallow: /` and adds a
   `noindex` header to every response. `npm run doctor` checks the two agree.
 - `STAGING_BASIC_AUTH` covers everything except `/healthz`, so the uptime
   monitor works without the password.
-- A database password with a double quote in it cannot be used by the
-  backup script; pick one without (cPanel's generator rarely uses them).
+- Leave Application Manager's environment variables empty: all settings live
+  in `.env`, one place to check.
+
+## 6. Register the app
+
+cPanel > **Application Manager** > **Register Application**:
+
+| Field | Value |
+| --- | --- |
+| Application Name | `mice-staging` |
+| Deployment Domain | `staging.zusammentravels.com`, base path `/` |
+| Application Path | `mice-staging` (relative to the home folder) |
+| Deployment Environment | Production |
+| Environment Variables | none |
+
+Click **Deploy**. Passenger finds `app.js` in the application path by
+itself. Do not click **Ensure dependencies**: it runs a plain `npm install`,
+which can change the lock file and add development packages; step 4 already
+installed exactly what is needed.
 
 ## 7. First run
-
-From the activated environment in `~/mice-staging`:
 
 ```bash
 npm run migrate                          # build the tables
@@ -197,37 +169,39 @@ npm run seed -- --allow-production       # starter content, once
 npm run create-admin -- --email you@example.com --name "Your Name"
 npm run doctor                           # must end with 0 failed
 mkdir -p tmp && touch tmp/restart.txt    # restart under Passenger
-```
-
-Then **Start App** in Setup Node.js App (later restarts only need the
-`touch`). Check:
-
-```bash
-curl -s https://staging.<domain>/healthz
+curl -s https://staging.zusammentravels.com/healthz
 # {"status":"ok","db":"ok","migrations":"ok"}
 ```
 
-and open `https://staging.<domain>/admin` in a browser. `npm run
-test-email` sends one test message to `MAIL_TO`.
+`create-admin` asks for the password (hidden); there is no default login.
+
+Signing in at `https://staging.zusammentravels.com/admin` asks twice: first
+the browser pop-up (the `STAGING_BASIC_AUTH` user and password), then the
+admin page (the email and password from `create-admin`). Give Macedo the
+staging password and his own login from **Admin > Users**; never share yours.
 
 `npm run doctor` checks: settings load, database reachable, no pending
-migrations, at least one active admin, `UPLOADS_DIR` writable, sharp can
-make WebP, SMTP login (a warning if SMTP is not set up), and in production
-that `BASE_URL` is https, `SESSION_SECRET` is not a placeholder and
-`TRUST_PROXY` is on, and that `robots.txt` matches `SITE_ENV`. It exits 1 on
-any failure, so it can gate a deploy.
+migrations, at least one active admin, `UPLOADS_DIR` and `BACKUP_DIR`
+writable, sharp can make WebP, SMTP login (a warning while SMTP is empty),
+and in production that `BASE_URL` is https, `SESSION_SECRET` is not a
+placeholder and `TRUST_PROXY` is on, and that `robots.txt` matches
+`SITE_ENV`. It exits 1 on any failure, so it can gate a deploy.
+
+`npm run test-email` sends one test message to `MAIL_TO` once SMTP is set.
 
 ## 8. Daily backup (cron)
 
-cPanel > **Cron Jobs**. Set **Cron Email** to an address someone reads, then
-add (02:15 server time, daily):
+In place since 12 Nov 2026 (cPanel > **Cron Jobs**, 02:15 server time):
 
 ```
 15 2 * * * /bin/bash /home/<cpuser>/mice-staging/scripts/backup.sh
 ```
 
-The script is silent when it works, so cron only emails on failure. Each run
-writes to `BACKUP_DIR`:
+Set **Cron Email** on that page to an inbox someone reads: the script is
+silent when it works, so cron only emails on failure. The account's other
+cron job (Softaculous's WordPress backup) belongs to the main site; leave it.
+
+Each run writes to `BACKUP_DIR`:
 
 - `db-<UTC date-time>.sql.gz`: `mysqldump --single-transaction` of the
   database (a consistent snapshot, no locking of the live site)
@@ -236,17 +210,17 @@ writes to `BACKUP_DIR`:
 
 Files older than 14 days are deleted. The database password goes to
 mysqldump through a temporary option file (mode 600, removed afterwards), so
-it never appears in the process list. Run it by hand once now
-(`bash scripts/backup.sh`) and check `backup.log`.
+it never appears in the process list. `bash scripts/backup.sh` runs one by
+hand.
 
 The backups sit on the same server as the site. Download one now and then
-(File Manager, or `scp`), or ask the host about off-server copies.
+(File Manager), or check what the account's JetBackup already keeps.
 
 ## 9. Uptime check
 
-Any HTTP monitor (UptimeRobot, Better Stack, the host's own):
+Any HTTP monitor (UptimeRobot, Better Stack):
 
-- URL: `https://staging.<domain>/healthz`
+- URL: `https://staging.zusammentravels.com/healthz`
 - Alert when the status is not 200, or the body does not contain
   `"status":"ok"`
 - Every 5 minutes
@@ -258,33 +232,33 @@ needs no password.
 
 ## 10. Deploying an update
 
-Tag what you deploy, so there is always a known version to go back to. On
-your machine: `git tag -a staging-2026-11-20 -m "..."` and push the tag.
-Then on the server, from the activated environment in `~/mice-staging`:
+Optionally tag what you deploy, so there is a named version to go back to
+(on your machine: `git tag -a staging-2026-11-20 -m "..."` and push the
+tag). Then in the cPanel Terminal:
 
 ```bash
-git describe --tags --always      # write down the current version (for rollback)
+export PATH=/opt/cpanel/ea-nodejs22/bin:$PATH
+cd ~/mice-staging
+git rev-parse --short HEAD        # write this down (for rollback)
 bash scripts/backup.sh            # fresh backup in case a migration runs
-git fetch --tags origin
-git checkout staging-2026-11-20   # or: git pull --ff-only (latest phase-2-backend)
+git pull --ff-only                # or: git fetch --tags && git checkout staging-2026-11-20
 npm ci --omit=dev
 npm run migrate
 npm run doctor
 touch tmp/restart.txt
-curl -s https://staging.<domain>/healthz
+curl -s https://staging.zusammentravels.com/healthz
 ```
 
 CSS and JS links carry `?v=<commit>`, so visitors get the new styles right
 after the restart even though static files are cached for a day.
 
-If `npm run doctor` fails, fix what it names before the `touch`: until the
-restart, Passenger keeps running the old code already in memory. (A
+If `npm run doctor` fails, fix what it names before the `touch`. (A
 migration that already ran is not undone by that; see Rollback.)
 
 ## 11. Rollback
 
 ```bash
-git checkout <the version you wrote down>
+git checkout <the commit you wrote down>
 npm ci --omit=dev
 ```
 
@@ -296,6 +270,8 @@ the backup taken just before the update (next section), then `npm run
 doctor` and `touch tmp/restart.txt`. Restoring loses anything saved on the
 site since that backup (enquiries, edits), so export new enquiries from the
 admin first if there are any.
+
+To get back onto the branch afterwards: `git checkout phase-2-backend`.
 
 ## Restore a backup
 
@@ -334,24 +310,22 @@ right, delete `uploads.before-restore`.
 
 To try a backup without touching the live data, create a second database in
 cPanel (for example `<cpuser>_mice_restore`), load the dump into that, and
-compare `SELECT COUNT(*)` per table. This exact round trip (backup, restore
-into a scratch database, row counts and uploads compared) was checked
-against the docker-compose MariaDB 10.11.
+compare `SELECT COUNT(*)` per table. This round trip (backup, restore into a
+scratch database, row counts and uploads compared) was checked against the
+docker-compose MariaDB 10.11.
 
 ## Troubleshooting
 
+**`node -v` says v10, or npm fails with syntax errors.** The Node 22 PATH
+line at the top of this guide was not run in this session.
+
 **Where the logs are.** The app writes one JSON line per request or event to
-stdout, which Passenger captures:
-
-- the **Passenger log file** set in Setup Node.js App (step 4), if your
-  cPanel has that field;
-- otherwise `stderr.log` in the app root, or cPanel > **Metrics** >
-  **Errors** (the Apache error log), depending on the host;
-- `~/mice-data/backups/backup.log` for backups.
-
-Start-up failures (a bad `.env`, pending migrations, database refused) are
-logged there with a plain-English reason, and Apache shows its own
-"Web application could not be started" page.
+stdout and stderr, which Passenger hands to the web server. On this
+LiteSpeed host, look in cPanel > **Metrics** > **Errors** first; if the app's
+lines are not there, ask Namhost support where Passenger application output
+is written for the account. `~/mice-data/backups/backup.log` has the backups.
+`npm run doctor` repeats most start-up problems in plain English, so run it
+first.
 
 **`/healthz` returns 503.** The body says which part:
 
@@ -360,8 +334,9 @@ logged there with a plain-English reason, and Apache shows its own
   message.
 - `"migrations":"pending"`: the code is newer than the tables. Run `npm run
   migrate`, then `touch tmp/restart.txt`.
-- A 503 that is not JSON comes from Apache/Passenger: the app is not running.
-  Check the log above.
+- A 503 that is not JSON comes from the web server: the app is not running.
+  Check it is **Enabled** in Application Manager, run `npm run doctor`, then
+  `touch tmp/restart.txt`.
 
 **Upload errors (`EACCES`, `EPERM`, "permission denied").** `UPLOADS_DIR`
 must be an absolute path that exists and belongs to `<cpuser>`:
@@ -372,11 +347,11 @@ chmod 755 ~/mice-data/uploads
 npm run doctor                    # "UPLOADS_DIR writable" must pass
 ```
 
-If `sharp encodes WebP` fails in the doctor, the server's system libraries
-are too old for sharp's prebuilt binary (CloudLinux 7 and similar). Uploads
-are still stored, without the resized WebP/JPG versions. Ask the host for a
-CloudLinux 8 (or newer) server.
-
 **Admin login does not stick (back to the login page).** `BASE_URL` must be
 `https://...`, `TRUST_PROXY=true`, and the site opened over https. The
 doctor checks all three.
+
+**The browser keeps asking for the staging password.** It is the
+`STAGING_BASIC_AUTH` value in `.env`: the part before the colon is the
+username, the part after it the password. Changing it needs `touch
+tmp/restart.txt`.

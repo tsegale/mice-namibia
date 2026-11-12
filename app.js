@@ -1,6 +1,6 @@
 "use strict";
 
-// Entry point (cPanel "Setup Node.js App" startup file, and `npm start`).
+// Entry point (what Passenger loads under cPanel Application Manager, and `npm start`).
 // CommonJS on purpose: Passenger loads the startup file with require().
 
 let server;
