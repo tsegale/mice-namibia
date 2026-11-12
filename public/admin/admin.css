@@ -376,6 +376,18 @@ label.img-drop { margin: 0; font-size: 13.5px; font-weight: 500; letter-spacing:
 .gallery-handle { color: #A9B4CA; cursor: grab; display: grid; place-items: center; }
 .gallery-item input { padding: 7px 10px; font-size: 13px; }
 .gallery-empty { margin-top: 8px; font-size: 13px; color: var(--muted); }
+
+/* Sortable list tables (drag the grip, or focus it and use the arrow keys) */
+.td-grip { width: 40px; padding-right: 0; }
+.sort-handle {
+  display: grid; place-items: center; width: 32px; height: 32px; padding: 0;
+  border: 1px solid transparent; border-radius: 8px; background: none; color: #A9B4CA; cursor: grab;
+}
+.sort-handle:hover { color: var(--navy-700); background: var(--bg); }
+.sort-handle:focus-visible { outline: 2px solid var(--orange-500); outline-offset: 1px; color: var(--navy-700); }
+tr.is-dragging { opacity: 0.45; }
+tr.is-over > td { box-shadow: inset 0 2px 0 var(--orange-500); }
+tbody[aria-busy="true"] { cursor: progress; }
 .gallery-count { font-weight: 700; color: var(--navy-700); }
 
 /* Tag picker (multi-select with search) ------------------------------------ */

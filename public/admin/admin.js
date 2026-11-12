@@ -389,6 +389,7 @@
     root.querySelectorAll("[data-count]").forEach(initCharCount);
     root.querySelectorAll("[data-slug-from]").forEach(initSlug);
     root.querySelectorAll("[data-tabs]").forEach(initTabs);
+    root.querySelectorAll("[data-sortable]").forEach(initSortable);
   }
 
   function uploadFile(file, onProgress) {
@@ -499,6 +500,111 @@
     root.querySelector("[data-clear]")?.addEventListener("click", () => set(null));
   }
 
+  /* Reordering ---------------------------------------------------------------
+     One implementation for the gallery field and the sortable list tables:
+     drag a row by its grip, or focus the grip and press the arrow keys. A row
+     is only draggable while its grip is held, so text in it stays selectable,
+     and a row can only be dropped inside its own list. */
+
+  let activeDrag = null;
+
+  function bindReorder(row, handle, getIndex, move, list) {
+    handle.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+      e.preventDefault();
+      const i = getIndex();
+      move(i, e.key === "ArrowUp" ? i - 1 : i + 1, { keyboard: true });
+    });
+    handle.addEventListener("pointerdown", () => (row.draggable = true));
+    handle.addEventListener("pointerup", () => (row.draggable = false));
+    row.addEventListener("dragstart", (e) => {
+      activeDrag = { list, from: getIndex() };
+      row.classList.add("is-dragging");
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", "");
+    });
+    row.addEventListener("dragend", () => {
+      activeDrag = null;
+      row.draggable = false;
+      row.classList.remove("is-dragging");
+    });
+    row.addEventListener("dragover", (e) => {
+      if (activeDrag?.list !== list) return;
+      e.preventDefault();
+      row.classList.add("is-over");
+    });
+    row.addEventListener("dragleave", () => row.classList.remove("is-over"));
+    row.addEventListener("drop", (e) => {
+      row.classList.remove("is-over");
+      if (activeDrag?.list !== list) return;
+      e.preventDefault();
+      move(activeDrag.from, getIndex(), { keyboard: false });
+    });
+  }
+
+  // Screen-reader announcements for reordering (one shared live region).
+  let sortStatus = null;
+  function announce(text) {
+    if (!sortStatus) {
+      sortStatus = document.createElement("p");
+      sortStatus.className = "visually-hidden";
+      sortStatus.setAttribute("aria-live", "polite");
+      document.body.appendChild(sortStatus);
+    }
+    sortStatus.textContent = "";
+    setTimeout(() => (sortStatus.textContent = text), 50);
+  }
+
+  /* Sortable list tables: <tbody data-sortable="/admin/x/reorder"> with
+     <tr data-id data-label> rows and a [data-sort-handle] grip in each. Every
+     move is saved with one PATCH of the whole order; if saving fails, the
+     rows go back to the last saved order. Keyboard moves are batched so a
+     run of arrow presses is one request. */
+
+  function initSortable(tbody) {
+    const url = tbody.dataset.sortable;
+    const rows = () => [...tbody.querySelectorAll(":scope > tr[data-id]")];
+    let saved = rows().map((tr) => tr.dataset.id);
+    let timer = null;
+
+    const restore = (ids) => ids.forEach((id) => tbody.appendChild(tbody.querySelector(`:scope > tr[data-id="${CSS.escape(id)}"]`)));
+
+    async function save() {
+      const ids = rows().map((tr) => tr.dataset.id);
+      if (ids.join() === saved.join()) return;
+      tbody.setAttribute("aria-busy", "true");
+      try {
+        await request(url, { method: "PATCH", body: { ids: ids.map(Number) } });
+        saved = ids;
+        announce("Order saved.");
+        toast("Order saved", "success");
+      } catch (err) {
+        restore(saved);
+        announce(`The order could not be saved. ${err.message}`);
+        toast(err.message, "error");
+      } finally {
+        tbody.removeAttribute("aria-busy");
+      }
+    }
+
+    function move(from, to, { keyboard }) {
+      const list = rows();
+      if (to < 0 || to >= list.length || from === to) return;
+      const row = list[from];
+      if (to > from) list[to].after(row);
+      else list[to].before(row);
+      if (keyboard) row.querySelector("[data-sort-handle]")?.focus();
+      announce(`${row.dataset.label || "Row"} moved to position ${to + 1} of ${list.length}.`);
+      clearTimeout(timer);
+      timer = setTimeout(save, keyboard ? 700 : 0);
+    }
+
+    rows().forEach((tr) => {
+      const handle = tr.querySelector("[data-sort-handle]");
+      if (handle) bindReorder(tr, handle, () => rows().indexOf(tr), move, tbody);
+    });
+  }
+
   function initGallery(root) {
     const store = root.querySelector("input[data-json]");
     const list = root.querySelector(".gallery-list");
@@ -533,7 +639,6 @@
       items.forEach((it, i) => {
         const row = document.createElement("div");
         row.className = "gallery-item";
-        row.draggable = true;
         row.dataset.index = i;
         row.innerHTML = `<button type="button" class="gallery-handle btn btn-ghost btn-icon btn-sm" aria-label="Move photo ${i + 1}. Use arrow up and down keys.">${ICON("grip")}</button>
           <img alt="">
@@ -551,33 +656,7 @@
           save();
           render();
         });
-        const handle = row.querySelector(".gallery-handle");
-        handle.addEventListener("keydown", (e) => {
-          if (e.key === "ArrowUp") {
-            e.preventDefault();
-            move(i, i - 1);
-          } else if (e.key === "ArrowDown") {
-            e.preventDefault();
-            move(i, i + 1);
-          }
-        });
-        row.addEventListener("dragstart", (e) => {
-          row.classList.add("is-dragging");
-          e.dataTransfer.effectAllowed = "move";
-          e.dataTransfer.setData("text/plain", String(i));
-        });
-        row.addEventListener("dragend", () => row.classList.remove("is-dragging"));
-        row.addEventListener("dragover", (e) => {
-          e.preventDefault();
-          row.classList.add("is-over");
-        });
-        row.addEventListener("dragleave", () => row.classList.remove("is-over"));
-        row.addEventListener("drop", (e) => {
-          e.preventDefault();
-          row.classList.remove("is-over");
-          const from = Number(e.dataTransfer.getData("text/plain"));
-          if (!Number.isNaN(from)) move(from, i);
-        });
+        bindReorder(row, row.querySelector(".gallery-handle"), () => i, move, root);
         list.appendChild(row);
       });
       if (empty) empty.hidden = items.length > 0;
