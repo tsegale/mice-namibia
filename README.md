@@ -1,5 +1,7 @@
 # MICE Namibia website
 
+[![CI](https://github.com/tsegale/mice-namibia/actions/workflows/ci.yml/badge.svg?branch=phase-2-backend)](https://github.com/tsegale/mice-namibia/actions/workflows/ci.yml?query=branch%3Aphase-2-backend)
+
 The website and admin panel for Zusammen Tours and Travel Agency's MICE
 segment (Meetings, Incentives, Conferences and Exhibitions) across Namibia,
 Botswana, South Africa, Zambia, Zimbabwe, Kenya, Tanzania, Uganda and Rwanda.
@@ -112,6 +114,14 @@ Newsletter sign-ups are stored and exported from Admin > Subscribers as CSV
 for the mailing tool the team uses; the site does not send newsletters
 itself. Each subscriber has a private unsubscribe link,
 `/newsletter/unsubscribe/<token>`, for use in mailings.
+
+## Continuous integration
+
+`.github/workflows/ci.yml` runs `npm ci`, `npm run lint` and `npm test` on
+Node 22 against a MariaDB 10.11 service container, on every push to
+`phase-2-backend` and on pull requests (not on `master`, which is still the
+static GitHub Pages build). Test settings come from the workflow itself; no
+secrets are needed.
 
 ## Deploying (outline, host still to be chosen)
 

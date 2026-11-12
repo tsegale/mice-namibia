@@ -4,6 +4,7 @@ const { test, before, after } = require("node:test");
 const assert = require("node:assert/strict");
 const { request, createApp, resetDatabase, teardown, db } = require("./helpers");
 const { run: seed } = require("../src/db/seeds");
+const config = require("../src/config");
 
 let app;
 before(async () => {
@@ -50,11 +51,21 @@ test("drafts and scheduled posts are not public", async () => {
 });
 
 test("past conferences drop off the upcoming lists", async () => {
-  await db()("conferences").where({ slug: "icsdeg-2027" }).update({ starts_at: new Date("2020-01-01T08:00:00Z"), ends_at: new Date("2020-01-01T15:00:00Z") });
-  const events = await request(app).get("/events");
-  assert.doesNotMatch(events.text, /Sustainable Development and Economic Growth/);
-  const home = await request(app).get("/");
-  assert.match(home.text, /data-count-to="2" data-conference-count>2</);
+  // Pin the other two in the future relative to today, so this test does not
+  // start failing once the seeded January 2027 dates have passed. The real
+  // dates are put back afterwards for the calendar-file test.
+  const DAY = 86400000;
+  const original = await db()("conferences").select("id", "starts_at", "ends_at");
+  try {
+    await db()("conferences").whereNot({ slug: "icsdeg-2027" }).update({ starts_at: new Date(Date.now() + 30 * DAY), ends_at: new Date(Date.now() + 30 * DAY + 7 * 3600000) });
+    await db()("conferences").where({ slug: "icsdeg-2027" }).update({ starts_at: new Date("2020-01-01T08:00:00Z"), ends_at: new Date("2020-01-01T15:00:00Z") });
+    const events = await request(app).get("/events");
+    assert.doesNotMatch(events.text, /Sustainable Development and Economic Growth/);
+    const home = await request(app).get("/");
+    assert.match(home.text, /data-count-to="2" data-conference-count>2</);
+  } finally {
+    for (const row of original) await db()("conferences").where({ id: row.id }).update({ starts_at: row.starts_at, ends_at: row.ends_at });
+  }
 });
 
 test("old .html addresses redirect permanently to the new ones", async () => {
@@ -88,7 +99,7 @@ test("calendar file, sitemap and robots", async () => {
   assert.match(ics.text, /DTSTART:20270108T063000Z\r\n/);
 
   const map = await request(app).get("/sitemap.xml");
-  assert.match(map.text, /<loc>http:\/\/localhost:3000\/venues\/wicc<\/loc>/);
+  assert.ok(map.text.includes(`<loc>${config.baseUrl}/venues/wicc</loc>`), "sitemap uses BASE_URL");
 
   const robots = await request(app).get("/robots.txt");
   assert.match(robots.text, /Disallow: \//, "non-production sites are not indexed");

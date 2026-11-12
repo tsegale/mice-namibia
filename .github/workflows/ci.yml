@@ -1,0 +1,76 @@
+# Lint and test the backend on every push to phase-2-backend and on pull
+# requests. Not on master: master is still the static GitHub Pages build and
+# has no package.json. When the backend is merged into master, add master to
+# both branch lists below.
+name: CI
+
+on:
+  push:
+    branches: [phase-2-backend]
+  pull_request:
+    branches-ignore: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Lint and test (Node 22, MariaDB 10.11)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      mariadb:
+        image: mariadb:10.11
+        env:
+          MARIADB_ROOT_PASSWORD: ci-root
+          MARIADB_DATABASE: mice_test
+          MARIADB_USER: mice
+          MARIADB_PASSWORD: ci-password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=30
+
+    # Test settings only: a throwaway database in a throwaway container, so
+    # nothing here is a secret. tests/helpers.js forces NODE_ENV=test, the
+    # mice_test database, no SMTP and its own uploads folder.
+    env:
+      NODE_ENV: test
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_NAME: mice_test
+      DB_NAME_TEST: mice_test
+      DB_USER: mice
+      DB_PASSWORD: ci-password
+      SESSION_SECRET: ci-only-session-secret-not-used-anywhere-else
+      TZ: UTC
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Service containers cannot take server flags, so the database gets the
+      # image's default collation. Match docker-compose and the README.
+      - name: Set the test database to utf8mb4_unicode_ci
+        run: >-
+          docker exec ${{ job.services.mariadb.id }}
+          mariadb -uroot -pci-root
+          -e "ALTER DATABASE mice_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      - run: npm test
