@@ -1,0 +1,18 @@
+<% const editing = Boolean(p.id); %>
+<%- include('../partials/panel-form-start', { action: editing ? `/admin/partners/${p.id}` : '/admin/partners', method: editing ? 'PUT' : 'POST', title: editing ? `Edit ${p.name}` : 'Add a partner' }) %>
+    <div class="panel-section">
+      <div class="panel-section-label">Partner</div>
+      <%- include('../fields/input', { name: 'name', label: 'Name', value: p.name, required: true, maxlength: 160, attrs: ' autofocus', hint: 'Also the logo\'s description for screen readers and search engines.' }) %>
+      <%- include('../fields/image', { name: 'logo_media_id', label: 'Logo', media: logo, logo: true, required: true }) %>
+      <%- include('../fields/checkbox', { name: 'dark_background', label: 'Show the logo on a navy tile', checked: p.dark_background, hint: 'For logos drawn in white, like Mercure.' }) %>
+      <div class="form-row cols-2">
+        <%- include('../fields/select', { name: 'country_iso2', label: 'Country', value: p.country_iso2, empty: 'Regional brand (no single country)', options: countries.map((c) => ({ value: c.iso2, label: c.name })), hint: 'Used by the flag filter on the Partners page.' }) %>
+        <%- include('../fields/input', { name: 'website_url', type: 'url', label: 'Website', value: p.website_url, maxlength: 255, placeholder: 'https://', hint: 'Optional. The name links to it.' }) %>
+      </div>
+    </div>
+    <div class="panel-section">
+      <div class="panel-section-label">Publishing</div>
+      <%- include('../fields/checkbox', { name: 'show_in_marquee', label: 'Show in the logo strip', checked: p.show_in_marquee, hint: 'The scrolling "Trusted by" strip on the homepage, About and FAQ pages.' }) %>
+      <%- include('../fields/status', { value: p.status }) %>
+    </div>
+<%- include('../partials/panel-form-end', { deleteUrl: editing ? `/admin/partners/${p.id}` : null, deleteLabel: `"${p.name}"`, viewUrl: editing && p.status === 'published' ? '/partners' : null }) %>

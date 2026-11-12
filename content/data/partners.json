@@ -1,0 +1,229 @@
+{
+  "note": "Seed source for partners (from the reviewed Partners page). country_iso2 null = regional brand. Order is the Partners page grid order.",
+  "partners": [
+    {
+      "name": "Movenpick Windhoek",
+      "logo": "assets/images/sponsors/movenpick-windhoek.png",
+      "country_iso2": "na",
+      "dark_background": false,
+      "show_in_marquee": true,
+      "website_url": null
+    },
+    {
+      "name": "Windhoek Country Club",
+      "logo": "assets/images/sponsors/windhoek-country-club.png",
+      "country_iso2": "na",
+      "dark_background": false,
+      "show_in_marquee": true,
+      "website_url": null
+    },
+    {
+      "name": "Hilton Garden Inn",
+      "logo": "assets/images/sponsors/hilton-garden-inn.png",
+      "country_iso2": null,
+      "dark_background": false,
+      "show_in_marquee": true,
+      "website_url": null
+    },
+    {
+      "name": "Hilton Hotels & Resorts",
+      "logo": "assets/images/sponsors/hilton-hotels-and-resorts.png",
+      "country_iso2": null,
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "AVANI Hotels & Resorts",
+      "logo": "assets/images/sponsors/avani-hotels-and-resorts.png",
+      "country_iso2": null,
+      "dark_background": false,
+      "show_in_marquee": true,
+      "website_url": null
+    },
+    {
+      "name": "Mercure Windhoek",
+      "logo": "assets/images/sponsors/mercure-windhoek.png",
+      "country_iso2": "na",
+      "dark_background": true,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "Strand Hotel Swakopmund",
+      "logo": "assets/images/sponsors/strand-hotel-swakopmund.png",
+      "country_iso2": "na",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "Swakopmund Hotel and Entertainment Centre",
+      "logo": "assets/images/sponsors/swakopmund-hotel-and-entertainment-centre.png",
+      "country_iso2": "na",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "Swakopmund Plaza",
+      "logo": "assets/images/sponsors/swakopmund-plaza.png",
+      "country_iso2": "na",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "The Dome Namibia",
+      "logo": "assets/images/sponsors/the-dome-namibia.png",
+      "country_iso2": "na",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "Atlantic Villa Boutique Hotel",
+      "logo": "assets/images/sponsors/atlantic-villa-boutique-hotel.png",
+      "country_iso2": "na",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "Droombos",
+      "logo": "assets/images/sponsors/droombos.png",
+      "country_iso2": "na",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "Sandton Convention Centre",
+      "logo": "assets/images/sponsors/sandton-convention-centre.png",
+      "country_iso2": "za",
+      "dark_background": false,
+      "show_in_marquee": true,
+      "website_url": null
+    },
+    {
+      "name": "Cape Town International Convention Centre",
+      "logo": "assets/images/sponsors/cape-town-international-convention-centre-cticc.jpg",
+      "country_iso2": "za",
+      "dark_background": false,
+      "show_in_marquee": true,
+      "website_url": null
+    },
+    {
+      "name": "Durban ICC",
+      "logo": "assets/images/sponsors/durban-icc.png",
+      "country_iso2": "za",
+      "dark_background": false,
+      "show_in_marquee": true,
+      "website_url": null
+    },
+    {
+      "name": "Phakalane Golf Estate Hotel & Convention Centre",
+      "logo": "assets/images/sponsors/phakalane-golf-estate-hotel-and-convention-centre.png",
+      "country_iso2": "bw",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "Kenyatta International Convention Centre",
+      "logo": "assets/images/sponsors/kenyatta-international-convention-centre-kicc-nairobi.png",
+      "country_iso2": "ke",
+      "dark_background": false,
+      "show_in_marquee": true,
+      "website_url": null
+    },
+    {
+      "name": "Bomas International Convention Complex",
+      "logo": "assets/images/sponsors/bomas-international-convention-complex-bicc-nairobi.jpg",
+      "country_iso2": "ke",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "Hyatt Regency Harare, The Meikles",
+      "logo": "assets/images/sponsors/hyatt-regency-harare-the-meikles-harare.jpg",
+      "country_iso2": "zw",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "The Rainbow Towers Hotel and Conference Centre",
+      "logo": "assets/images/sponsors/the-rainbow-towers-hotel-and-conference-centre.png",
+      "country_iso2": "zw",
+      "dark_background": false,
+      "show_in_marquee": true,
+      "website_url": null
+    },
+    {
+      "name": "Julius Nyerere International Convention Centre",
+      "logo": "assets/images/sponsors/julius-nyerere-international-convention-centre-jnicc-dar-es-salaam.png",
+      "country_iso2": "tz",
+      "dark_background": false,
+      "show_in_marquee": true,
+      "website_url": null
+    },
+    {
+      "name": "International Conference Centre, Kampala",
+      "logo": "assets/images/sponsors/international-conference-centre-kampala.png",
+      "country_iso2": "ug",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "Speke Resort & Convention Centre, Kampala",
+      "logo": "assets/images/sponsors/speke-resort-convention-centre-uganda-kampala.jpg",
+      "country_iso2": "ug",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "Kigali Convention Centre",
+      "logo": "assets/images/sponsors/kigali-convention-centre.jpg",
+      "country_iso2": "rw",
+      "dark_background": false,
+      "show_in_marquee": true,
+      "website_url": null
+    },
+    {
+      "name": "Intare Conference Arena, Kigali",
+      "logo": "assets/images/sponsors/intare-conference-arena-kigali.png",
+      "country_iso2": "rw",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "Lusaka International Convention Centre",
+      "logo": "assets/images/sponsors/lusaka-international-convention-centre-licc-at-ciela-resort-spa.png",
+      "country_iso2": "zm",
+      "dark_background": false,
+      "show_in_marquee": true,
+      "website_url": null
+    },
+    {
+      "name": "Mulungushi International Conference Centre",
+      "logo": "assets/images/sponsors/mulungushi-international-conference-centre.png",
+      "country_iso2": "zm",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    },
+    {
+      "name": "The Grand Palm",
+      "logo": "assets/images/sponsors/the-grand-palm-gold-logo-box.svg",
+      "country_iso2": "bw",
+      "dark_background": false,
+      "show_in_marquee": false,
+      "website_url": null
+    }
+  ]
+}

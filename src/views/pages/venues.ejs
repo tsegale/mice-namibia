@@ -40,7 +40,7 @@
 <%- venues.map((v, i) => C.venues.card(v, i)).join('\n') %>
         </div>
         <div class="venues-empty" data-venue-empty hidden>
-          <p><strong>No venues match these filters yet.</strong> We add venues across all nine destinations regularly, and we can source one for you.</p>
+          <p><strong>No venues match these filters yet.</strong> We add venues across all <%= numberWord(siteCounts.destinations) %> destinations regularly, and we can source one for you.</p>
           <div class="venues-empty-actions">
             <button type="button" class="btn btn-ghost" data-venue-reset>Clear filters</button>
             <a href="/contact?type=proposal#contact-form" class="btn btn-primary">Ask us to source a venue</a>

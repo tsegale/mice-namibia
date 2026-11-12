@@ -38,4 +38,11 @@ function timeAgo(value) {
   return d < 30 ? `${d} d ago` : formatDate(value);
 }
 
-module.exports = { picture, imageUrl, largestUrl, escapeHtml, formatDate, formatDateTime, timeAgo };
+// Numbers written out in page copy ("across nine African destinations").
+const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"];
+function numberWord(n, { capital = false } = {}) {
+  const word = Number.isInteger(n) && n >= 0 && n < WORDS.length ? WORDS[n] : String(n);
+  return capital ? word.charAt(0).toUpperCase() + word.slice(1) : word;
+}
+
+module.exports = { picture, imageUrl, largestUrl, escapeHtml, formatDate, formatDateTime, timeAgo, numberWord };

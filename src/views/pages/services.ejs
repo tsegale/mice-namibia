@@ -9,7 +9,7 @@
     <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Services</li></ol></nav>
     <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Services</p>
     <h1>Services</h1>
-    <p class="page-subtitle">End-to-end meetings, incentives, conferences and exhibitions management across nine African destinations.</p>
+    <p class="page-subtitle">End-to-end meetings, incentives, conferences and exhibitions management across <%= numberWord(siteCounts.destinations) %> African destinations.</p>
   </div>
 </section>
 
@@ -298,8 +298,8 @@
     <div class="reach-content">
       <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">04</span>&nbsp;/ Regional reach</p>
       <h2 id="reach-title">Regional Reach Across Africa</h2>
-      <p>We deliver services on the ground across nine African destinations, pairing consistent regional standards with local expertise in Namibia, Botswana, South Africa, Zambia, Zimbabwe, Kenya, Tanzania, Uganda, and Rwanda.</p>
-      <ul class="reach-tiles" aria-label="Our nine destinations">
+      <p>We deliver services on the ground across <%= numberWord(siteCounts.destinations) %> African destinations, pairing consistent regional standards with local expertise in Namibia, Botswana, South Africa, Zambia, Zimbabwe, Kenya, Tanzania, Uganda, and Rwanda.</p>
+      <ul class="reach-tiles" aria-label="Our <%= numberWord(siteCounts.destinations) %> destinations">
         <li><button type="button" class="reach-tile" data-map-iso="na" aria-pressed="false">
           <img src="/assets/images/flags/na.svg" alt="" width="40" height="30">
           <span class="reach-tile-name">Namibia</span>
@@ -347,7 +347,7 @@
         </button></li>
       </ul>
       <div class="stat-badge">
-        <strong data-count-to="9">9</strong>
+        <strong data-count-to="<%= siteCounts.destinations %>"><%= siteCounts.destinations %></strong>
         <span>African Destinations Served</span>
       </div>
     </div>

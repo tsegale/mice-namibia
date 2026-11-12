@@ -1,0 +1,39 @@
+<% const actions = `<button type="button" class="btn btn-accent" data-open-panel="/admin/partners/new" data-deep-link="?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg><span class="btn-label">Add partner</span></button>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'partners', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">Logos on the Partners page, in this order. Partners marked <strong>"Logo strip"</strong> also scroll across the homepage, About and FAQ pages. Drag a row by its grip (or focus the grip and use the arrow keys) to change the order. The partner counts on the site follow the published partners: <strong><%= publishedCount %></strong> right now, <%= marqueeCount %> of them in the logo strip.</p>
+  <section class="card">
+    <% if (!rows.length) { %>
+    <div class="empty-state">
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-handshake"/></svg>
+      <p>No partners yet.</p>
+      <button type="button" class="btn btn-accent" data-open-panel="/admin/partners/new">Add the first partner</button>
+    </div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span class="visually-hidden">Order</span></th><th class="hide-sm">Logo</th><th>Partner</th><th class="hide-sm">Country</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody data-sortable="/admin/partners/reorder">
+          <% rows.forEach((p) => { %>
+          <tr data-id="<%= p.id %>" data-label="<%= p.name %>">
+            <%- include('../fields/sort-handle', { label: p.name }) %>
+            <td class="td-logo hide-sm"><span class="logo-tile<% if (p.dark_background) { %> logo-tile--dark<% } %>"><% if (p.logo) { %><img src="<%= imageUrl(p.logo) %>" alt="" loading="lazy"><% } else { %><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-image"/></svg><% } %></span></td>
+            <td><button type="button" class="td-title btn-link" data-open-panel="/admin/partners/<%= p.id %>/edit" data-deep-link="?edit=<%= p.id %>"><%= p.name %></button><% if (p.website_url) { %><span class="td-sub"><%= p.website_url.replace(/^https?:\/\//, '') %></span><% } %></td>
+            <td class="hide-sm"><% if (p.country_iso2) { %><span class="td-flag"><img src="/assets/images/flags/<%= p.country_iso2 %>.svg" alt="" width="16" height="12"><%= countryName[p.country_iso2] || p.country_iso2 %></span><% } else { %>Regional brand<% } %></td>
+            <td><span class="badge-stack"><span class="badge badge-<%= p.status %>"><%= p.status === 'published' ? 'Published' : 'Draft' %></span><% if (p.show_in_marquee) { %><span class="badge badge-read">Logo strip</span><% } %></span></td>
+            <td class="td-actions">
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/partners/<%= p.id %>/edit" data-deep-link="?edit=<%= p.id %>" aria-label="Edit <%= p.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon btn-icon-danger" data-delete="/admin/partners/<%= p.id %>" data-label="&quot;<%= p.name %>&quot;" aria-label="Delete <%= p.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </section>
+  <% if (open) { %><span data-autopanel="<%= open %>" hidden></span><% } %>
+</main>
+<%- include('../partials/foot') %>

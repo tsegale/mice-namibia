@@ -1,7 +1,7 @@
-<%# name, label, media (row or null), required, hint %>
+<%# name, label, media (row or null), required, hint, logo (keep the file as it is: PNG, SVG) %>
 <div class="form-group" data-field="<%= name %>">
   <span class="label" id="<%= name %>-label"><%= label %><% if (locals.required) { %> <span class="required" aria-hidden="true">*</span><% } %></span>
-  <div class="img-input" data-image-picker>
+  <div class="img-input<% if (locals.logo) { %> img-input--logo<% } %>" data-image-picker<% if (locals.logo) { %> data-mode="logo"<% } %>>
     <input type="hidden" name="<%= name %>" value="<%= media ? media.id : '' %>">
     <div class="img-tabs" role="tablist" aria-labelledby="<%= name %>-label" data-tabs>
       <button type="button" class="img-tab" role="tab" aria-selected="true" data-tab="upload-<%= name %>">Upload from computer</button>
@@ -9,10 +9,15 @@
     </div>
     <div class="img-tab-panel" data-tab-panel="upload-<%= name %>">
       <label class="img-drop">
-        <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" class="visually-hidden">
+        <input type="file" accept="image/jpeg,image/png,image/webp,image/gif<% if (locals.logo) { %>,image/svg+xml,.svg<% } %>" class="visually-hidden">
         <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-upload"/></svg>
+        <% if (locals.logo) { %>
+        <span><strong>Choose a logo</strong> or drag it here</span>
+        <span class="text-sm">PNG or SVG with a transparent background works best. Kept in its own format, at most 600px wide.</span>
+        <% } else { %>
         <span><strong>Choose a photo</strong> or drag it here</span>
         <span class="text-sm">JPG, PNG or WebP. Large photos are resized for the web automatically.</span>
+        <% } %>
       </label>
       <div class="progress" hidden><span></span></div>
     </div>

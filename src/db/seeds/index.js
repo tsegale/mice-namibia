@@ -116,6 +116,34 @@ function createMediaRegistry(knex, sharp) {
   };
 }
 
+// Logos that ship in public/assets are single files (PNG, JPG, SVG), used
+// as they are: the media row points at the file through file_url.
+const MIME = { png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", svg: "image/svg+xml", webp: "image/webp" };
+
+async function logoMedia(knex, sharp, file, alt = "") {
+  const fileUrl = `/${file.replace(/^\/+/, "")}`;
+  const baseUrl = fileUrl.replace(/\.[a-z]+$/i, "");
+  const existing = await knex("media").where({ base_url: baseUrl }).first();
+  if (existing) return existing.id;
+  const abs = path.join(PUBLIC, fileUrl);
+  if (!fs.existsSync(abs)) throw new Error(`Logo file not found: ${file}`);
+  const ext = path.extname(abs).slice(1).toLowerCase();
+  const meta = await sharp(abs).metadata();
+  const [id] = await knex("media").insert({
+    base_url: baseUrl,
+    file_url: fileUrl,
+    widths: String(meta.width),
+    formats: ext,
+    width: meta.width,
+    height: meta.height,
+    alt,
+    original_name: path.basename(abs),
+    mime: MIME[ext] || "application/octet-stream",
+    is_upload: false,
+  });
+  return id;
+}
+
 async function run(knex, { log = () => {} } = {}) {
   const sharp = require("sharp");
   const counts = {};
@@ -273,6 +301,23 @@ async function run(knex, { log = () => {} } = {}) {
           });
           tally("faqs", r.created);
         }
+      }
+    });
+
+    /* Partners (once) ---------------------------------------------------------------- */
+    await once(trx, "partners", async () => {
+      const { partners } = readJson("partners.json");
+      for (const [i, p] of partners.entries()) {
+        const r = await upsert(trx, "partners", { name: p.name }, {
+          logo_media_id: await logoMedia(trx, sharp, p.logo, p.name),
+          website_url: p.website_url || null,
+          country_iso2: p.country_iso2,
+          dark_background: p.dark_background,
+          show_in_marquee: p.show_in_marquee,
+          sort_order: i,
+          status: "published",
+        });
+        tally("partners", r.created);
       }
     });
 

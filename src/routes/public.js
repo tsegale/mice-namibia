@@ -12,6 +12,7 @@ const posts = require("../repositories/posts");
 const venues = require("../repositories/venues");
 const speakers = require("../repositories/speakers");
 const faqs = require("../repositories/faqs");
+const partners = require("../repositories/partners");
 const { largestUrl } = require("../lib/picture");
 const { conferenceIcs } = require("../lib/ics");
 const C = require("../views/components");
@@ -30,20 +31,24 @@ router.use((req, res, next) => {
 router.get(
   "/",
   wrap(async (req, res) => {
-    const [upcoming, all, featuredVenues, homeSpeakers, homeFaqs] = await Promise.all([
+    const [upcoming, all, featuredVenues, homeSpeakers, homeFaqs, marqueePartners] = await Promise.all([
       conferences.upcoming(),
       posts.published(),
       venues.featured(),
       speakers.forHome(4),
       faqs.forHome(),
+      partners.published({ marquee: true }),
     ]);
-    render(res, "home", META.home, { upcoming, latestPosts: all.slice(0, 3), featuredVenues, homeSpeakers, homeFaqs });
+    render(res, "home", META.home, { upcoming, latestPosts: all.slice(0, 3), featuredVenues, homeSpeakers, homeFaqs, marqueePartners });
   })
 );
 
 router.get(
   "/about",
-  wrap(async (req, res) => render(res, "about", META.about, { upcoming: await conferences.upcoming() }))
+  wrap(async (req, res) => {
+    const [upcoming, marqueePartners] = await Promise.all([conferences.upcoming(), partners.published({ marquee: true })]);
+    render(res, "about", META.about, { upcoming, marqueePartners });
+  })
 );
 
 router.get(
@@ -58,12 +63,20 @@ router.get(
 router.get(
   "/faq",
   wrap(async (req, res) => {
-    const faqGroups = await faqs.publishedGroups();
-    render(res, "faq", { ...META.faq, jsonld: faqGroups.length ? [C.faqs.jsonLd(faqGroups)] : [] }, { faqGroups });
+    const [faqGroups, marqueePartners] = await Promise.all([faqs.publishedGroups(), partners.published({ marquee: true })]);
+    render(res, "faq", { ...META.faq, jsonld: faqGroups.length ? [C.faqs.jsonLd(faqGroups)] : [] }, { faqGroups, marqueePartners });
   })
 );
 
-for (const name of ["gallery", "partners", "privacy-policy", "terms-and-conditions"]) {
+router.get(
+  "/partners",
+  wrap(async (req, res) => {
+    const list = await partners.published();
+    render(res, "partners", META.partners, { partners: list, partnerCounts: partners.counts(list) });
+  })
+);
+
+for (const name of ["gallery", "privacy-policy", "terms-and-conditions"]) {
   router.get(`/${name}`, (req, res) => render(res, name, META[name]));
 }
 

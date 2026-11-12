@@ -6,5 +6,6 @@ module.exports = {
   venues: require("./venues"),
   speakers: require("./speakers"),
   faqs: require("./faqs"),
+  partners: require("./partners"),
   icons: require("./icons"),
 };

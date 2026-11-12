@@ -107,6 +107,18 @@ function createApp({ sessionStore } = {}) {
     })
   );
 
+  // Live figures for the public pages (stats cards, footer, page copy).
+  // Set before the routes so the 404 and error pages get them too.
+  app.use(async (req, res, next) => {
+    if (!["GET", "HEAD"].includes(req.method) || req.path.startsWith("/admin")) return next();
+    try {
+      res.locals.siteCounts = await require("./repositories/site").counts();
+    } catch (err) {
+      req.log.warn({ err: { message: err.message } }, "site counts unavailable");
+    }
+    next();
+  });
+
   app.use("/admin", require("./routes/admin"));
   app.use(require("./routes/forms"));
   app.use(require("./routes/public"));

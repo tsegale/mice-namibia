@@ -2,7 +2,7 @@
 
 const { db } = require("../db/knex");
 
-const COLUMNS = ["id", "base_url", "widths", "formats", "width", "height", "alt", "original_name", "is_upload"];
+const COLUMNS = ["id", "base_url", "file_url", "widths", "formats", "width", "height", "alt", "original_name", "is_upload"];
 
 async function byIds(ids) {
   const unique = [...new Set(ids.filter(Boolean))];
@@ -36,6 +36,7 @@ const REFERENCES = [
   ["venues", "home_media_id"],
   ["venue_images", "media_id"],
   ["speakers", "photo_media_id"],
+  ["partners", "logo_media_id"],
 ];
 
 async function insert(row, userId) {

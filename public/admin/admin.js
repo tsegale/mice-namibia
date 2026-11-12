@@ -392,12 +392,16 @@
     root.querySelectorAll("[data-sortable]").forEach(initSortable);
   }
 
-  function uploadFile(file, onProgress) {
+  // mode "logo" keeps the file as it is (PNG transparency, SVG); fields go
+  // before the file so the server has them when the file arrives.
+  function uploadFile(file, onProgress, { mode, url = "/admin/media", fields = {} } = {}) {
     return new Promise((resolve, reject) => {
       const fd = new FormData();
+      if (mode) fd.append("mode", mode);
+      for (const [k, v] of Object.entries(fields)) fd.append(k, v);
       fd.append("file", file);
       const xhr = new XMLHttpRequest();
-      xhr.open("POST", "/admin/media");
+      xhr.open("POST", url);
       xhr.setRequestHeader("X-CSRF-Token", csrfToken);
       xhr.setRequestHeader("X-Requested-With", "fetch");
       xhr.setRequestHeader("Accept", "application/json");
@@ -410,7 +414,7 @@
           /* ignore */
         }
         if (xhr.status === 401) window.location.href = "/admin/login";
-        if (xhr.status >= 200 && xhr.status < 300) resolve(data.media);
+        if (xhr.status >= 200 && xhr.status < 300) resolve(data.media || data);
         else reject(new Error(data.error || `Upload failed (${xhr.status})`));
       };
       xhr.onerror = () => reject(new Error("Upload failed. Check your connection and try again."));
@@ -459,7 +463,7 @@
       progress.hidden = false;
       bar.style.width = "0%";
       try {
-        const media = await uploadFile(f, (p) => (bar.style.width = `${Math.round(p * 90)}%`));
+        const media = await uploadFile(f, (p) => (bar.style.width = `${Math.round(p * 90)}%`), { mode: root.dataset.mode });
         bar.style.width = "100%";
         set(media);
         toast("Image uploaded", "success");
@@ -487,7 +491,7 @@
       if (!url) return toast("Paste an image link first.", "error");
       importBtn.setAttribute("aria-busy", "true");
       try {
-        const data = await request("/admin/media/import", { method: "POST", body: { url } });
+        const data = await request("/admin/media/import", { method: "POST", body: { url, mode: root.dataset.mode } });
         set(data.media);
         urlInput.value = "";
         toast("Image copied to the website", "success");

@@ -9,7 +9,7 @@
     <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Our Partners</li></ol></nav>
     <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Our Partners</p>
     <h1>Our Partners</h1>
-    <p class="page-subtitle">Hotels, conference centres and convention venues we work with across our nine African destinations.</p>
+    <p class="page-subtitle">Hotels, conference centres and convention venues we work with across our <%= numberWord(siteCounts.destinations) %> African destinations.</p>
   </div>
 </section>
 
@@ -25,196 +25,57 @@
         <li><button type="button" class="reach-tile" data-map-iso="na" aria-pressed="false">
           <img src="/assets/images/flags/na.svg" alt="" width="40" height="30">
           <span class="reach-tile-name">Namibia</span>
-          <span class="reach-tile-cities">9 partner venues</span>
+          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.na || 0) %></span>
         </button></li>
         <li><button type="button" class="reach-tile" data-map-iso="bw" aria-pressed="false">
           <img src="/assets/images/flags/bw.svg" alt="" width="40" height="30">
           <span class="reach-tile-name">Botswana</span>
-          <span class="reach-tile-cities">2 partner venues</span>
+          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.bw || 0) %></span>
         </button></li>
         <li><button type="button" class="reach-tile" data-map-iso="za" aria-pressed="false">
           <img src="/assets/images/flags/za.svg" alt="" width="40" height="30">
           <span class="reach-tile-name">South Africa</span>
-          <span class="reach-tile-cities">3 partner venues</span>
+          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.za || 0) %></span>
         </button></li>
         <li><button type="button" class="reach-tile" data-map-iso="zm" aria-pressed="false">
           <img src="/assets/images/flags/zm.svg" alt="" width="40" height="30">
           <span class="reach-tile-name">Zambia</span>
-          <span class="reach-tile-cities">2 partner venues</span>
+          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.zm || 0) %></span>
         </button></li>
         <li><button type="button" class="reach-tile" data-map-iso="zw" aria-pressed="false">
           <img src="/assets/images/flags/zw.svg" alt="" width="40" height="30">
           <span class="reach-tile-name">Zimbabwe</span>
-          <span class="reach-tile-cities">2 partner venues</span>
+          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.zw || 0) %></span>
         </button></li>
         <li><button type="button" class="reach-tile" data-map-iso="ke" aria-pressed="false">
           <img src="/assets/images/flags/ke.svg" alt="" width="40" height="30">
           <span class="reach-tile-name">Kenya</span>
-          <span class="reach-tile-cities">2 partner venues</span>
+          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.ke || 0) %></span>
         </button></li>
         <li><button type="button" class="reach-tile" data-map-iso="tz" aria-pressed="false">
           <img src="/assets/images/flags/tz.svg" alt="" width="40" height="30">
           <span class="reach-tile-name">Tanzania</span>
-          <span class="reach-tile-cities">1 partner venue</span>
+          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.tz || 0) %></span>
         </button></li>
         <li><button type="button" class="reach-tile" data-map-iso="ug" aria-pressed="false">
           <img src="/assets/images/flags/ug.svg" alt="" width="40" height="30">
           <span class="reach-tile-name">Uganda</span>
-          <span class="reach-tile-cities">2 partner venues</span>
+          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.ug || 0) %></span>
         </button></li>
         <li><button type="button" class="reach-tile" data-map-iso="rw" aria-pressed="false">
           <img src="/assets/images/flags/rw.svg" alt="" width="40" height="30">
           <span class="reach-tile-name">Rwanda</span>
-          <span class="reach-tile-cities">2 partner venues</span>
+          <span class="reach-tile-cities"><%= C.partners.venuesLabel(partnerCounts.byCountry.rw || 0) %></span>
         </button></li>
       </ul>
       <div class="partner-list-controls">
-        <p class="partner-count" aria-live="polite" data-partner-count>Showing all 28 partners</p>
-        <button type="button" class="chip-filter" data-partner-regional aria-pressed="false">Regional brands <span>3</span></button>
-        <button type="button" class="chip-filter is-active" data-partner-all aria-pressed="true">All <span>28</span></button>
+        <p class="partner-count" aria-live="polite" data-partner-count>Showing all <%= partnerCounts.total %> partners</p>
+        <button type="button" class="chip-filter" data-partner-regional aria-pressed="false">Regional brands <span><%= partnerCounts.regional %></span></button>
+        <button type="button" class="chip-filter is-active" data-partner-all aria-pressed="true">All <span><%= partnerCounts.total %></span></button>
       </div>
     </div>
     <ul class="partner-cards" data-partner-list>
-        <li class="partner-card" data-country="na">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/movenpick-windhoek.png" alt="Movenpick Windhoek" width="360" height="137" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Movenpick Windhoek</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/na.svg" alt="" width="20" height="15">Namibia</p>
-        </li>
-        <li class="partner-card" data-country="na">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/windhoek-country-club.png" alt="Windhoek Country Club" width="360" height="297" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Windhoek Country Club</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/na.svg" alt="" width="20" height="15">Namibia</p>
-        </li>
-        <li class="partner-card" data-country="regional">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/hilton-garden-inn.png" alt="Hilton Garden Inn" width="360" height="288" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Hilton Garden Inn</p>
-          <p class="partner-card-place">Regional brand</p>
-        </li>
-        <li class="partner-card" data-country="regional">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/hilton-hotels-and-resorts.png" alt="Hilton Hotels &amp; Resorts" width="360" height="275" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Hilton Hotels &amp; Resorts</p>
-          <p class="partner-card-place">Regional brand</p>
-        </li>
-        <li class="partner-card" data-country="regional">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/avani-hotels-and-resorts.png" alt="AVANI Hotels &amp; Resorts" width="288" height="141" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">AVANI Hotels &amp; Resorts</p>
-          <p class="partner-card-place">Regional brand</p>
-        </li>
-        <li class="partner-card" data-country="na">
-          <div class="partner-card-logo partner-card-logo--dark"><img src="/assets/images/sponsors/mercure-windhoek.png" alt="Mercure Windhoek" width="305" height="137" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Mercure Windhoek</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/na.svg" alt="" width="20" height="15">Namibia</p>
-        </li>
-        <li class="partner-card" data-country="na">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/strand-hotel-swakopmund.png" alt="Strand Hotel Swakopmund" width="360" height="176" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Strand Hotel Swakopmund</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/na.svg" alt="" width="20" height="15">Namibia</p>
-        </li>
-        <li class="partner-card" data-country="na">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/swakopmund-hotel-and-entertainment-centre.png" alt="Swakopmund Hotel and Entertainment Centre" width="342" height="192" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Swakopmund Hotel and Entertainment Centre</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/na.svg" alt="" width="20" height="15">Namibia</p>
-        </li>
-        <li class="partner-card" data-country="na">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/swakopmund-plaza.png" alt="Swakopmund Plaza" width="270" height="153" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Swakopmund Plaza</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/na.svg" alt="" width="20" height="15">Namibia</p>
-        </li>
-        <li class="partner-card" data-country="na">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/the-dome-namibia.png" alt="The Dome Namibia" width="272" height="177" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">The Dome Namibia</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/na.svg" alt="" width="20" height="15">Namibia</p>
-        </li>
-        <li class="partner-card" data-country="na">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/atlantic-villa-boutique-hotel.png" alt="Atlantic Villa Boutique Hotel" width="316" height="309" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Atlantic Villa Boutique Hotel</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/na.svg" alt="" width="20" height="15">Namibia</p>
-        </li>
-        <li class="partner-card" data-country="na">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/droombos.png" alt="Droombos" width="326" height="105" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Droombos</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/na.svg" alt="" width="20" height="15">Namibia</p>
-        </li>
-        <li class="partner-card" data-country="za">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/sandton-convention-centre.png" alt="Sandton Convention Centre" width="360" height="70" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Sandton Convention Centre</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/za.svg" alt="" width="20" height="15">South Africa</p>
-        </li>
-        <li class="partner-card" data-country="za">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/cape-town-international-convention-centre-cticc.jpg" alt="Cape Town International Convention Centre" width="271" height="149" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Cape Town International Convention Centre</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/za.svg" alt="" width="20" height="15">South Africa</p>
-        </li>
-        <li class="partner-card" data-country="za">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/durban-icc.png" alt="Durban ICC" width="233" height="156" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Durban ICC</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/za.svg" alt="" width="20" height="15">South Africa</p>
-        </li>
-        <li class="partner-card" data-country="bw">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/phakalane-golf-estate-hotel-and-convention-centre.png" alt="Phakalane Golf Estate Hotel &amp; Convention Centre" width="360" height="74" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Phakalane Golf Estate Hotel &amp; Convention Centre</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/bw.svg" alt="" width="20" height="15">Botswana</p>
-        </li>
-        <li class="partner-card" data-country="ke">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/kenyatta-international-convention-centre-kicc-nairobi.png" alt="Kenyatta International Convention Centre" width="360" height="255" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Kenyatta International Convention Centre</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/ke.svg" alt="" width="20" height="15">Kenya</p>
-        </li>
-        <li class="partner-card" data-country="ke">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/bomas-international-convention-complex-bicc-nairobi.jpg" alt="Bomas International Convention Complex" width="170" height="141" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Bomas International Convention Complex</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/ke.svg" alt="" width="20" height="15">Kenya</p>
-        </li>
-        <li class="partner-card" data-country="zw">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/hyatt-regency-harare-the-meikles-harare.jpg" alt="Hyatt Regency Harare, The Meikles" width="144" height="190" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Hyatt Regency Harare, The Meikles</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/zw.svg" alt="" width="20" height="15">Zimbabwe</p>
-        </li>
-        <li class="partner-card" data-country="zw">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/the-rainbow-towers-hotel-and-conference-centre.png" alt="The Rainbow Towers Hotel and Conference Centre" width="201" height="84" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">The Rainbow Towers Hotel and Conference Centre</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/zw.svg" alt="" width="20" height="15">Zimbabwe</p>
-        </li>
-        <li class="partner-card" data-country="tz">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/julius-nyerere-international-convention-centre-jnicc-dar-es-salaam.png" alt="Julius Nyerere International Convention Centre" width="360" height="202" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Julius Nyerere International Convention Centre</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/tz.svg" alt="" width="20" height="15">Tanzania</p>
-        </li>
-        <li class="partner-card" data-country="ug">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/international-conference-centre-kampala.png" alt="International Conference Centre, Kampala" width="360" height="255" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">International Conference Centre, Kampala</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/ug.svg" alt="" width="20" height="15">Uganda</p>
-        </li>
-        <li class="partner-card" data-country="ug">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/speke-resort-convention-centre-uganda-kampala.jpg" alt="Speke Resort &amp; Convention Centre, Kampala" width="292" height="184" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Speke Resort &amp; Convention Centre, Kampala</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/ug.svg" alt="" width="20" height="15">Uganda</p>
-        </li>
-        <li class="partner-card" data-country="rw">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/kigali-convention-centre.jpg" alt="Kigali Convention Centre" width="152" height="64" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Kigali Convention Centre</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/rw.svg" alt="" width="20" height="15">Rwanda</p>
-        </li>
-        <li class="partner-card" data-country="rw">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/intare-conference-arena-kigali.png" alt="Intare Conference Arena, Kigali" width="360" height="195" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Intare Conference Arena, Kigali</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/rw.svg" alt="" width="20" height="15">Rwanda</p>
-        </li>
-        <li class="partner-card" data-country="zm">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/lusaka-international-convention-centre-licc-at-ciela-resort-spa.png" alt="Lusaka International Convention Centre" width="314" height="125" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Lusaka International Convention Centre</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/zm.svg" alt="" width="20" height="15">Zambia</p>
-        </li>
-        <li class="partner-card" data-country="zm">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/mulungushi-international-conference-centre.png" alt="Mulungushi International Conference Centre" width="360" height="99" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">Mulungushi International Conference Centre</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/zm.svg" alt="" width="20" height="15">Zambia</p>
-        </li>
-        <li class="partner-card" data-country="bw">
-          <div class="partner-card-logo"><img src="/assets/images/sponsors/the-grand-palm-gold-logo-box.svg" alt="The Grand Palm" width="332" height="130" loading="lazy" decoding="async"></div>
-          <p class="partner-card-name">The Grand Palm</p>
-          <p class="partner-card-place"><img src="/assets/images/flags/bw.svg" alt="" width="20" height="15">Botswana</p>
-        </li>
+        <%- partners.map(C.partners.card).join("\n") %>
     </ul>
   </div>
 </section>
@@ -253,8 +114,8 @@
         <h2 id="overview-title">Event Participation Overview</h2>
         <p>Access comprehensive insights into attendee engagement, session performance, and overall participation metrics.</p>
         <dl class="overview-stats">
-          <div><dt>African destinations</dt><dd data-count-to="9">9</dd></div>
-          <div><dt>Partner venues and hotels</dt><dd data-count-to="28">28</dd></div>
+          <div><dt>African destinations</dt><dd data-count-to="<%= siteCounts.destinations %>"><%= siteCounts.destinations %></dd></div>
+          <div><dt>Partner venues and hotels</dt><dd data-count-to="<%= siteCounts.partners %>"><%= siteCounts.partners %></dd></div>
         </dl>
       </div>
     </aside>

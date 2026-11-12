@@ -42,8 +42,10 @@ function picture(media, { sizes = "100vw", alt = "", lazy = true, priority = fal
 }
 
 // Single best URL (for Open Graph images, admin thumbnails, JSON-LD).
+// Single-file images (logos) have one address, file_url.
 function imageUrl(media, prefer = 1280) {
   if (!media || !media.base_url) return "";
+  if (media.file_url) return media.file_url;
   const widths = widthsOf(media);
   const w = widths.includes(prefer) ? prefer : widths.filter((x) => x <= prefer).pop() || widths[0];
   return variantUrl(media, w, "jpg");
@@ -52,6 +54,7 @@ function imageUrl(media, prefer = 1280) {
 // Largest JPG (lightbox links, Open Graph).
 function largestUrl(media) {
   if (!media || !media.base_url) return "";
+  if (media.file_url) return media.file_url;
   const widths = widthsOf(media);
   const fmt = String(media.formats || "jpg").split(",").find((f) => f !== "webp") || "jpg";
   return variantUrl(media, widths[widths.length - 1], fmt);

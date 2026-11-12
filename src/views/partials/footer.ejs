@@ -5,7 +5,7 @@
           <img src="/assets/images/zusammen-logo.png" alt="Zusammen Tours and Travel Agency, home" width="41" height="44" loading="lazy">
           <span class="brand-lockup-tagline" aria-hidden="true"><span>Meetings, Incentives</span><span>Conferences, Exhibitions</span></span>
         </a>
-        <p>End-to-end meetings, incentives, conferences and exhibitions management across nine African destinations.</p>
+        <p>End-to-end meetings, incentives, conferences and exhibitions management across <%= locals.siteCounts ? numberWord(siteCounts.destinations) : 'our' %> African destinations.</p>
         <div class="footer-contact">
           <a href="tel:+264812455852"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+264 81 245 5852</a>
           <a href="mailto:corporate.events@zusammentravels.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg>corporate.events@zusammentravels.com</a>
@@ -52,7 +52,7 @@
     </div>
 
     <div class="container footer-flags">
-      <p class="footer-flags-label">Nine destinations</p>
+      <p class="footer-flags-label"><%= locals.siteCounts ? numberWord(siteCounts.destinations, { capital: true }) + ' destinations' : 'Our destinations' %></p>
       <ul>
         <li><img src="/assets/images/flags/na.svg" alt="" width="24" height="18" loading="lazy">Namibia</li>
         <li><img src="/assets/images/flags/bw.svg" alt="" width="24" height="18" loading="lazy">Botswana</li>
