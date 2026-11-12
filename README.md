@@ -73,6 +73,8 @@ refuses to run against production unless given `--allow-production`.
 | `npm run seed` | Load the starter content (safe to re-run) |
 | `npm run create-admin` | Add an admin login, or reset its password |
 | `npm run test-email` | Check the SMTP settings and send a test message |
+| `npm run doctor` | Pass/warn/fail checklist of the server setup; exits 1 on any failure |
+| `npm run backup` | Database dump and uploads archive into `BACKUP_DIR` (daily cron job) |
 | `npm test` | Run the test suite against `mice_test` (wiped every run) |
 | `npm run lint` | ESLint |
 
@@ -95,9 +97,12 @@ src/views/partials/       Shared header, bands, footer
 src/views/components/     Cards and lists used on several pages
 src/views/admin/          Admin templates
 public/                   CSS, JS, fonts and images served as-is
-storage/uploads/          Uploaded images (not in git; back it up)
+scripts/                  seed, create-admin, test-email, doctor, backup.sh
+storage/uploads/          Uploaded images locally (not in git; on a server use UPLOADS_DIR)
 content/                  Client briefs, articles and seed data (not served)
 tests/                    API tests (node:test + supertest)
+.github/workflows/ci.yml  Lint and tests on every push (GitHub Actions)
+DEPLOY.md                 cPanel staging guide
 ```
 
 ## Email
@@ -115,6 +120,26 @@ for the mailing tool the team uses; the site does not send newsletters
 itself. Each subscriber has a private unsubscribe link,
 `/newsletter/unsubscribe/<token>`, for use in mailings.
 
+## Deploying
+
+[DEPLOY.md](DEPLOY.md) is the step-by-step guide for cPanel ("Setup Node.js
+App" / Passenger, Node 22, MariaDB): subdomain and SSL, database, deploy key,
+the staging `.env`, first run, backups, uptime check, updates, rollback,
+restoring a backup and troubleshooting.
+
+Operations at a glance:
+
+- `GET /healthz` returns `{"status":"ok","db":"ok","migrations":"ok"}`, or
+  HTTP 503 when the database is down or a migration is pending. Nothing else
+  is in the response, and it is reachable without the staging password.
+- `npm run doctor` before every restart.
+- `scripts/backup.sh` daily from cron: `mysqldump --single-transaction` plus
+  a `tar.gz` of `UPLOADS_DIR`, 14 days kept in `BACKUP_DIR`.
+- In production, logs are JSON lines on stdout (Passenger captures them),
+  cookies are secure-only, HSTS is on and the proxy is trusted.
+- CSS and JS links carry `?v=<short commit>` (or the package version without
+  a `.git` folder), so a deploy is never hidden by the one-day static cache.
+
 ## Continuous integration
 
 `.github/workflows/ci.yml` runs `npm ci`, `npm run lint` and `npm test` on
@@ -122,20 +147,6 @@ Node 22 against a MariaDB 10.11 service container, on every push to
 `phase-2-backend` and on pull requests (not on `master`, which is still the
 static GitHub Pages build). Test settings come from the workflow itself; no
 secrets are needed.
-
-## Deploying (outline, host still to be chosen)
-
-1. Create the MySQL database and user in cPanel.
-2. Upload the code (without `node_modules`, `.env` and `storage/uploads`),
-   then in "Setup Node.js App" choose Node 22, application root, startup
-   file `app.js`, and run `npm install` there.
-3. Create `.env` on the server with `NODE_ENV=production`, the real
-   `BASE_URL`, database, SMTP and a new `SESSION_SECRET`. Set
-   `SITE_ENV=staging` (and optionally `STAGING_BASIC_AUTH`) for a test site,
-   so search engines are told to stay away.
-4. `npm run migrate`, `npm run seed -- --allow-production` once,
-   `npm run create-admin`, then restart the app.
-5. Back up the database and `storage/uploads` together.
 
 ## Lessons from the Zusammen build, applied here
 
