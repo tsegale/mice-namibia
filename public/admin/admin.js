@@ -798,8 +798,14 @@
     const out = input.closest(".form-group")?.querySelector(".char-count");
     if (!out) return;
     const max = Number(input.dataset.count);
+    // data-warn: the length search engines show (60 for titles, 160 for
+    // descriptions). Longer is allowed, the counter just says it will be cut.
+    const warn = Number(input.dataset.warn) || 0;
     const update = () => {
-      out.textContent = `${input.value.length} / ${max}`;
+      const n = input.value.length;
+      const over = warn && n > warn;
+      out.textContent = over ? `${n} / ${max}, over ${warn}: may be cut off in search results` : `${n} / ${max}`;
+      out.classList.toggle("char-count--warn", Boolean(over));
     };
     input.addEventListener("input", update);
     update();

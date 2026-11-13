@@ -96,8 +96,9 @@ async function main() {
       } finally {
         mailer.close();
       }
-      if (!config.mail.to) return warn(`login OK as ${config.mail.user}, but MAIL_TO is empty`);
-      return `login OK as ${config.mail.user}`;
+      const to = await require("../src/services/enquiries").recipients();
+      if (!to) return warn(`login OK as ${config.mail.user}, but nobody receives enquiries (Admin > Settings > Enquiry emails and MAIL_TO are empty)`);
+      return `login OK as ${config.mail.user}, enquiries go to ${to}`;
     });
 
     if (config.isProd) {

@@ -25,6 +25,7 @@ module.exports = { byIds, attach, COLUMNS };
 const { removeImageFiles } = require("../lib/images");
 const { imageUrl } = require("../lib/picture");
 const logger = require("../lib/logger");
+const settings = require("../services/settings");
 
 // Every column that can point at a media row. Used to decide whether an
 // uploaded image is still needed before its files are deleted.
@@ -52,7 +53,10 @@ function forClient(m) {
 
 async function unreferenced(ids) {
   const out = [];
+  // Images held inside Admin > Settings (the default share image).
+  const inSettings = new Set(await settings.mediaIds());
   for (const mid of [...new Set(ids.filter(Boolean))]) {
+    if (inSettings.has(mid)) continue;
     let used = false;
     for (const [table, col] of REFERENCES) {
       if (await db()(table).where(col, mid).first()) {

@@ -1,10 +1,10 @@
-<% const page = { title: 'Something went wrong | MICE Namibia', noindex: true }; %>
+<% const page = { title: 'Something went wrong | ' + (locals.site ? site.siteName : 'MICE Namibia'), noindex: true }; %>
 <%- include('../partials/top', { page }) %>
 <section class="section">
   <div class="container">
     <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><%= status %></p>
     <h1><%= status >= 500 ? 'Something went wrong on our side' : message %></h1>
-    <p><%= status >= 500 ? 'Please try again in a moment. If it keeps happening, call us on +264 81 245 5852.' : '' %></p>
+    <p><%= status >= 500 ? 'Please try again in a moment. If it keeps happening, call us on ' + (locals.site ? site.contact.phone : '') + '.' : '' %></p>
     <p><a class="btn btn-primary" href="/">Back to the homepage</a></p>
   </div>
 </section>

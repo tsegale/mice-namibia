@@ -1,24 +1,28 @@
 "use strict";
 
-// Titles, descriptions and share images of the fixed pages, carried over from
-// the reviewed static site. Detail pages (events, articles, venues) build
-// theirs from the database.
+// The fixed pages' address, share image, menu item and newsletter variant,
+// carried over from the reviewed static site. Their titles and descriptions
+// are edited under Admin > Settings > SEO (defaults in services/settings.js);
+// detail pages (events, articles, venues) build theirs from the database.
+//
+// The two noindex pages are not in the SEO settings: their title (without the
+// site name, which is added) and description stay here.
 
 module.exports = {
-  "home": {"title": "MICE Namibia | Meetings, Incentives, Conferences & Exhibitions", "description": "MICE Namibia delivers end-to-end meetings, incentives, conferences and exhibitions management across nine African destinations.", "path": "/", "image": "/assets/images/hero/hero-01-wicc-keynote-1280.jpg", "nav": "/", "newsletter": "home"},
-  "about": {"title": "About Us | MICE Namibia", "description": "Zusammen Travels brings the world closer through a global digital experience that inspires exploration, connection, and discovery.", "path": "/about", "image": "/assets/images/venues/windhoek-country-club-resort-casino/gardens-1280.jpg", "nav": "/about", "newsletter": "default"},
-  "services": {"title": "Services | MICE Namibia", "description": "Integrated event and destination management services for meetings, incentives, conferences, exhibitions and corporate travel across Africa.", "path": "/services", "image": "/assets/images/venues/the-westin-cape-town/conference-venue-1-1280.jpg", "nav": "/services", "newsletter": "default"},
-  "gallery": {"title": "Gallery | MICE Namibia", "description": "Photos of the venues, events and experiences we work with across our African destinations.", "path": "/gallery", "image": "/assets/images/gallery/corporate-meetings-and-events-in-africa-namibia-1280.jpg", "nav": "/gallery", "newsletter": "default"},
-  "faq": {"title": "FAQ | MICE Namibia", "description": "Answers to common questions about planning meetings, incentives, conferences and exhibitions across nine African destinations.", "path": "/faq", "image": "/assets/images/gallery/conference-and-meeting-planning-services-africa-namibia-1280.jpg", "nav": "/faq", "newsletter": "home"},
-  "partners": {"title": "Our Partners | MICE Namibia", "description": "Zusammen Travels proudly collaborates with valued partners who champion innovation, growth, and the creation of exceptional event experiences.", "path": "/partners", "image": "/assets/images/venues/windhoek-country-club-resort-casino/restaurant-1280.jpg", "nav": "/partners", "newsletter": "default"},
-  "pricing": {"title": "Pricing | MICE Namibia", "description": "Ticket plans for our upcoming conferences in Africa: Early Bird, Standard and VIP, with prices on request.", "path": "/pricing", "image": "/assets/images/venues/wicc/gallery-07-1280.jpg", "nav": "/pricing", "newsletter": "default"},
-  "contact": {"title": "Contact Us | MICE Namibia", "description": "Get in touch with MICE Namibia to plan your next meeting, incentive trip, conference or exhibition.", "path": "/contact", "image": "/assets/images/venues/wicc/event-5-1280.jpg", "nav": "/contact", "newsletter": "default"},
-  "team": {"title": "Meet Our Team | MICE Namibia", "description": "Meet the CEO, team and speakers behind MICE Namibia.", "path": "/team", "nav": "/team", "newsletter": "default"},
-  "privacy-policy": {"title": "Privacy Policy | MICE Namibia", "description": "Privacy Policy for MICE Namibia.", "path": "/privacy-policy", "image": "/assets/images/venues/the-westin-cape-town/spa-1280.jpg", "nav": "/privacy-policy", "newsletter": "default"},
-  "terms-and-conditions": {"title": "Terms and Conditions | MICE Namibia", "description": "Terms and Conditions for MICE Namibia.", "path": "/terms-and-conditions", "image": "/assets/images/venues/movenpick/poolside-1280.jpg", "nav": "/terms-and-conditions", "newsletter": "default"},
-  "unsubscribe": {"title": "Newsletter | MICE Namibia", "description": "Manage your MICE Namibia event alerts.", "nav": "", "newsletter": "none", "noindex": true},
-  "not-found": {"title": "Page not found | MICE Namibia", "description": "The page you are looking for has moved or no longer exists.", "nav": "", "newsletter": "default", "noindex": true},
-  "events": {"title": "Events | MICE Namibia", "description": "Upcoming conferences across Africa with MICE Namibia: dates, venues, calendar files and registration of interest.", "path": "/events", "image": "/assets/images/venues/windhoek-country-club-resort-casino/reception-1280.jpg", "nav": "/events", "newsletter": "default"},
-  "blog": {"title": "Insights & Resources | MICE Namibia", "description": "Explore expert insights, industry trends, practical guides, and innovative ideas from MICE Namibia.", "path": "/blog", "image": "/assets/images/venues/movenpick/coffee-bar-1280.jpg", "nav": "/blog", "newsletter": "default"},
-  "venues": {"title": "Venues | MICE Namibia", "description": "Explore conference centres, hotels and resorts across Namibia and South Africa suited to meetings, incentives, conferences and exhibitions.", "path": "/venues", "image": "/assets/images/venues/wicc/event-4-1280.jpg", "nav": "/venues", "newsletter": "default"},
+  "home": {"path": "/", "image": "/assets/images/hero/hero-01-wicc-keynote-1280.jpg", "nav": "/", "newsletter": "home"},
+  "about": {"path": "/about", "image": "/assets/images/venues/windhoek-country-club-resort-casino/gardens-1280.jpg", "nav": "/about", "newsletter": "default"},
+  "services": {"path": "/services", "image": "/assets/images/venues/the-westin-cape-town/conference-venue-1-1280.jpg", "nav": "/services", "newsletter": "default"},
+  "gallery": {"path": "/gallery", "image": "/assets/images/gallery/corporate-meetings-and-events-in-africa-namibia-1280.jpg", "nav": "/gallery", "newsletter": "default"},
+  "faq": {"path": "/faq", "image": "/assets/images/gallery/conference-and-meeting-planning-services-africa-namibia-1280.jpg", "nav": "/faq", "newsletter": "home"},
+  "partners": {"path": "/partners", "image": "/assets/images/venues/windhoek-country-club-resort-casino/restaurant-1280.jpg", "nav": "/partners", "newsletter": "default"},
+  "pricing": {"path": "/pricing", "image": "/assets/images/venues/wicc/gallery-07-1280.jpg", "nav": "/pricing", "newsletter": "default"},
+  "contact": {"path": "/contact", "image": "/assets/images/venues/wicc/event-5-1280.jpg", "nav": "/contact", "newsletter": "default"},
+  "team": {"path": "/team", "nav": "/team", "newsletter": "default"},
+  "privacy-policy": {"path": "/privacy-policy", "image": "/assets/images/venues/the-westin-cape-town/spa-1280.jpg", "nav": "/privacy-policy", "newsletter": "default"},
+  "terms-and-conditions": {"path": "/terms-and-conditions", "image": "/assets/images/venues/movenpick/poolside-1280.jpg", "nav": "/terms-and-conditions", "newsletter": "default"},
+  "events": {"path": "/events", "image": "/assets/images/venues/windhoek-country-club-resort-casino/reception-1280.jpg", "nav": "/events", "newsletter": "default"},
+  "blog": {"path": "/blog", "image": "/assets/images/venues/movenpick/coffee-bar-1280.jpg", "nav": "/blog", "newsletter": "default"},
+  "venues": {"path": "/venues", "image": "/assets/images/venues/wicc/event-4-1280.jpg", "nav": "/venues", "newsletter": "default"},
+  "unsubscribe": {"title": "Newsletter", "description": "Manage your MICE Namibia event alerts.", "nav": "", "newsletter": "none", "noindex": true},
+  "not-found": {"title": "Page not found", "description": "The page you are looking for has moved or no longer exists.", "nav": "", "newsletter": "default", "noindex": true},
 };

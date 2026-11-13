@@ -2,7 +2,7 @@
 
 const logger = require("../lib/logger");
 const { wantsJson } = require("./auth");
-const META_404 = require("../routes/page-meta")["not-found"];
+const seo = require("../services/seo");
 
 function notFound(req, res, next) {
   const err = new Error("Page not found");
@@ -31,14 +31,17 @@ function errorHandler(err, req, res, next) {
     return res.json({ error: message, ...(err.fieldErrors ? { fieldErrors: err.fieldErrors } : {}) });
   }
   const view = isAdmin ? "admin/error" : status === 404 ? "pages/not-found" : "public/error";
-  const locals = isAdmin || status !== 404 ? { status, message } : { status, message, page: META_404 };
-  return res.render(view, locals, (renderErr, html) => {
-    if (renderErr) {
-      logger.error({ err: renderErr }, "error view failed");
-      return res.type("text").send(`${status} ${message}`);
-    }
-    return res.send(html);
-  });
+  const fail = (renderErr) => {
+    logger.error({ err: renderErr }, "error view failed");
+    return res.type("text").send(`${status} ${message}`);
+  };
+  const show = (locals) => res.render(view, locals, (renderErr, html) => (renderErr ? fail(renderErr) : res.send(html)));
+  if (isAdmin || status !== 404) return show({ status, message });
+  // The not-found page carries the site name from Admin > Settings.
+  return seo
+    .page("not-found", res.locals)
+    .then((page) => show({ status, message, page }))
+    .catch(fail);
 }
 
 module.exports = { notFound, errorHandler };

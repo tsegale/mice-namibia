@@ -18,8 +18,11 @@
       { key: 'subscribers', label: 'Subscribers', href: '/admin/subscribers', icon: 'mail' },
     ] },
   ];
-  // Only admins see (and can open) the Users page.
-  if (currentUser.role === 'admin') NAV.push({ section: 'Settings', items: [ { key: 'users', label: 'Users', href: '/admin/users', icon: 'users' } ] });
+  // Only admins see (and can open) Settings and Users.
+  if (currentUser.role === 'admin') NAV.push({ section: 'Settings', items: [
+    { key: 'settings', label: 'Site settings', href: '/admin/settings', icon: 'sliders' },
+    { key: 'users', label: 'Users', href: '/admin/users', icon: 'users' },
+  ] });
   const initials = (currentUser.name || '?').split(/\s+/).map((p) => p[0]).slice(0, 2).join('').toUpperCase();
 %>
 <a class="visually-hidden" href="#main">Skip to content</a>

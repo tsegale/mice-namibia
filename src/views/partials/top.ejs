@@ -1,8 +1,8 @@
 <%
   // page: { title, description, path, image, ogTitle, ogType, noindex, jsonld: [json strings], nav, newsletter }
   const canonical = baseUrl + (page.path || '/');
-  const ogImage = page.image ? (page.image.startsWith('http') ? page.image : baseUrl + page.image) : baseUrl + '/assets/images/venues/wicc/gallery-05-1280.jpg';
-  const ogTitle = page.ogTitle || page.title.replace(/ \| MICE Namibia.*$/, '');
+  const ogImage = page.image ? (page.image.startsWith('http') ? page.image : baseUrl + page.image) : (locals.site ? (site.defaultImage.startsWith('http') ? site.defaultImage : baseUrl + site.defaultImage) : baseUrl + '/assets/images/venues/wicc/gallery-05-1280.jpg');
+  const ogTitle = page.ogTitle || (locals.site ? page.title.split(' | ' + site.siteName)[0] : page.title);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +13,7 @@
 <% if (page.description) { %>  <meta name="description" content="<%= page.description %>">
 <% } %><% if (page.noindex) { %>  <meta name="robots" content="noindex">
 <% } else { %>  <link rel="canonical" href="<%= canonical %>">
-  <meta property="og:site_name" content="MICE Namibia">
+  <meta property="og:site_name" content="<%= locals.site ? site.siteName : 'MICE Namibia' %>">
   <meta property="og:type" content="<%= page.ogType || 'website' %>">
   <meta property="og:title" content="<%= ogTitle %>">
 <% if (page.description) { %>  <meta property="og:description" content="<%= page.description %>">

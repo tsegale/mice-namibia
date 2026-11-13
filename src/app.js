@@ -13,8 +13,23 @@ const { db } = require("./db/knex");
 const { cspNonce, securityHeaders, stagingGuard } = require("./middleware/security");
 const { notFound, errorHandler } = require("./middleware/errors");
 const viewHelpers = require("./lib/view-helpers");
+const settingsService = require("./services/settings");
 const { assetVersion } = require("./lib/version");
 const { checkHealth } = require("./lib/health");
+
+// What the public templates read from Admin > Settings, ready to print.
+async function publicSettings(counts) {
+  const s = await settingsService.all();
+  const id = s.seo.default_image_media_id;
+  const image = id ? (await require("./repositories/media").byIds([id])).get(id) : null;
+  return {
+    ...s,
+    siteName: s.seo.site_name,
+    tel: settingsService.telHref(s.contact.phone),
+    companyLine: settingsService.fill(s.footer.company_line, counts),
+    defaultImage: image ? viewHelpers.imageUrl(image, 1280) : "/assets/images/venues/wicc/gallery-05-1280.jpg",
+  };
+}
 
 // One Express app serves everything from one origin: the public site, the
 // admin, uploaded images and the admin's JSON endpoints. No CORS anywhere
@@ -109,16 +124,23 @@ function createApp({ sessionStore } = {}) {
 
   // Live figures for the public pages (stats cards, footer, page copy).
   // Set before the routes so the 404 and error pages get them too.
+  // Every public request, POSTs included: a form that fails validation
+  // without JavaScript re-renders its page, footer and all.
   app.use(async (req, res, next) => {
-    // Every public request, POSTs included: a form that fails validation
-    // without JavaScript re-renders its page, footer and all.
     if (req.path.startsWith("/admin")) return next();
     try {
       res.locals.siteCounts = await require("./repositories/site").counts();
     } catch (err) {
       req.log.warn({ err: { message: err.message } }, "site counts unavailable");
     }
-    next();
+    try {
+      // Contact details, social links, footer text and site name from Admin >
+      // Settings (the defaults when nothing is saved or the table is down).
+      res.locals.site = await publicSettings(res.locals.siteCounts);
+      next();
+    } catch (err) {
+      next(err);
+    }
   });
 
   app.use("/admin", require("./routes/admin"));

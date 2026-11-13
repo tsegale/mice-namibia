@@ -7,6 +7,7 @@
 const config = require("../config");
 const { db } = require("../db/knex");
 const mailer = require("./mailer");
+const settings = require("./settings");
 const { escapeHtml } = require("../lib/text");
 
 const DETAIL_LABELS = [
@@ -66,7 +67,14 @@ async function create(data, req) {
   return db()("submissions").where({ id }).first();
 }
 
-function buildEmail(row) {
+// Who gets contact-form notifications: Admin > Settings > Enquiry emails,
+// or MAIL_TO from .env while that is empty.
+async function recipients() {
+  return (await settings.get("enquiries")).notify_to || config.mail.to;
+}
+
+async function buildEmail(row) {
+  const [seo, contact] = await Promise.all([settings.get("seo"), settings.get("contact")]);
   const adminUrl = `${config.baseUrl}/admin/submissions?open=${row.id}`;
   const lines = [
     ["Name", row.name],
@@ -84,6 +92,8 @@ function buildEmail(row) {
     "",
     `Reply to this email to answer ${row.name} directly.`,
     `Open it in the admin panel: ${adminUrl}`,
+    "",
+    `${seo.site_name} | ${contact.phone} | ${contact.email}`,
   ].join("\n");
   const html = `<!doctype html><html><body style="font-family:Arial,Helvetica,sans-serif;color:#1D3161;font-size:15px;line-height:1.5">
 <h2 style="margin:0 0 12px;font-size:20px">${escapeHtml(row.subject)} from ${escapeHtml(row.name)}</h2>
@@ -93,11 +103,12 @@ ${lines.map(([k, v]) => `<tr><td style="color:#6B7280;vertical-align:top;padding
 <h3 style="margin:20px 0 6px;font-size:16px">Message</h3>
 <p style="white-space:pre-wrap;margin:0">${escapeHtml(row.message || "(no message)")}</p>
 <p style="margin:24px 0 0;color:#6B7280;font-size:13px">Reply to this email to answer ${escapeHtml(row.name)} directly, or <a href="${escapeHtml(adminUrl)}" style="color:#B5560C">open it in the admin panel</a>.</p>
+<p style="margin:16px 0 0;color:#6B7280;font-size:12px">${escapeHtml(seo.site_name)} | ${escapeHtml(contact.phone)} | ${escapeHtml(contact.email)}</p>
 </body></html>`;
   return {
-    to: config.mail.to,
+    to: await recipients(),
     replyTo: { name: row.name, address: row.email },
-    subject: `[MICE Namibia] ${row.subject} from ${row.name}`,
+    subject: `[${seo.site_name}] ${row.subject} from ${row.name}`,
     text,
     html,
   };
@@ -105,11 +116,11 @@ ${lines.map(([k, v]) => `<tr><td style="color:#6B7280;vertical-align:top;padding
 
 // Sends the notification and records the outcome on the submission.
 async function notifyTeam(row) {
-  const result = await mailer.send(buildEmail(row));
+  const result = await mailer.send(await buildEmail(row));
   await db()("submissions")
     .where({ id: row.id })
     .update({ email_status: result.status, email_error: result.error ? result.error.slice(0, 255) : null });
   return result;
 }
 
-module.exports = { create, notifyTeam, buildEmail, detailList, parseDetails };
+module.exports = { create, notifyTeam, buildEmail, recipients, detailList, parseDetails };

@@ -6,7 +6,8 @@
 
 const express = require("express");
 const config = require("../config");
-const META = require("./page-meta");
+const seo = require("../services/seo");
+const settings = require("../services/settings");
 const conferences = require("../repositories/conferences");
 const posts = require("../repositories/posts");
 const venues = require("../repositories/venues");
@@ -20,7 +21,10 @@ const C = require("../views/components");
 
 const router = express.Router();
 const wrap = (fn) => (req, res, next) => fn(req, res, next).catch(next);
-const render = (res, view, page, data = {}) => res.render(`pages/${view}`, { page, ...data });
+// `page` is a fixed page's key (title and description from Admin > Settings
+// > SEO) or a ready page object (detail pages).
+const render = async (res, view, page, data = {}) =>
+  res.render(`pages/${view}`, { page: typeof page === "string" ? await seo.page(page, res.locals) : page, ...data });
 
 // Public pages can be cached briefly by the browser; admins see changes on
 // the next reload.
@@ -41,7 +45,7 @@ router.get(
       partners.published({ marquee: true }),
       gallery.published({ home: true }),
     ]);
-    render(res, "home", META.home, { upcoming, latestPosts: all.slice(0, 3), featuredVenues, homeSpeakers, homeFaqs, marqueePartners, stripItems });
+    await render(res, "home", "home", { upcoming, latestPosts: all.slice(0, 3), featuredVenues, homeSpeakers, homeFaqs, marqueePartners, stripItems });
   })
 );
 
@@ -49,7 +53,7 @@ router.get(
   "/about",
   wrap(async (req, res) => {
     const [upcoming, marqueePartners, stripItems] = await Promise.all([conferences.upcoming(), partners.published({ marquee: true }), gallery.published({ home: true })]);
-    render(res, "about", META.about, { upcoming, marqueePartners, stripItems });
+    await render(res, "about", "about", { upcoming, marqueePartners, stripItems });
   })
 );
 
@@ -58,7 +62,7 @@ router.get(
   wrap(async (req, res) => {
     const all = await posts.published();
     const picks = all.filter((p) => p.services_position).sort((a, b) => a.services_position - b.services_position);
-    render(res, "services", META.services, { servicePosts: (picks.length ? picks : all).slice(0, 3) });
+    await render(res, "services", "services", { servicePosts: (picks.length ? picks : all).slice(0, 3) });
   })
 );
 
@@ -66,7 +70,7 @@ router.get(
   "/faq",
   wrap(async (req, res) => {
     const [faqGroups, marqueePartners] = await Promise.all([faqs.publishedGroups(), partners.published({ marquee: true })]);
-    render(res, "faq", { ...META.faq, jsonld: faqGroups.length ? [C.faqs.jsonLd(faqGroups)] : [] }, { faqGroups, marqueePartners });
+    await render(res, "faq", { ...(await seo.page("faq", res.locals)), jsonld: faqGroups.length ? [C.faqs.jsonLd(faqGroups)] : [] }, { faqGroups, marqueePartners });
   })
 );
 
@@ -74,7 +78,7 @@ router.get(
   "/partners",
   wrap(async (req, res) => {
     const list = await partners.published();
-    render(res, "partners", META.partners, { partners: list, partnerCounts: partners.counts(list) });
+    await render(res, "partners", "partners", { partners: list, partnerCounts: partners.counts(list) });
   })
 );
 
@@ -82,21 +86,21 @@ router.get(
   "/gallery",
   wrap(async (req, res) => {
     const galleryItems = await gallery.published();
-    render(res, "gallery", META.gallery, { galleryItems, galleryCategories: await gallery.categories(galleryItems) });
+    await render(res, "gallery", "gallery", { galleryItems, galleryCategories: await gallery.categories(galleryItems) });
   })
 );
 
 for (const name of ["privacy-policy", "terms-and-conditions"]) {
-  router.get(`/${name}`, (req, res) => render(res, name, META[name]));
+  router.get(`/${name}`, wrap((req, res) => render(res, name, name)));
 }
 
-router.get("/pricing", wrap(async (req, res) => render(res, "pricing", META.pricing, { upcoming: await conferences.upcoming() })));
+router.get("/pricing", wrap(async (req, res) => render(res, "pricing", "pricing", { upcoming: await conferences.upcoming() })));
 // /contact is in routes/forms.js with the form handlers.
-router.get("/team", wrap(async (req, res) => render(res, "team", META.team, { teamSpeakers: await speakers.forTeamPage(8) })));
+router.get("/team", wrap(async (req, res) => render(res, "team", "team", { teamSpeakers: await speakers.forTeamPage(8) })));
 
 /* Events -------------------------------------------------------------------- */
 
-router.get("/events", wrap(async (req, res) => render(res, "events", META.events, { upcoming: await conferences.upcoming() })));
+router.get("/events", wrap(async (req, res) => render(res, "events", "events", { upcoming: await conferences.upcoming() })));
 
 router.get(
   "/events/:slug.ics",
@@ -119,7 +123,7 @@ router.get(
       res,
       "event",
       {
-        title: `${conference.short_title} | ${conference.city} | MICE Namibia`,
+        title: await seo.title(`${conference.short_title} | ${conference.city}`),
         description: conference.excerpt,
         path: conference.url,
         image: largestUrl(conference.cover) || null,
@@ -133,7 +137,7 @@ router.get(
 
 /* Blog --------------------------------------------------------------------------- */
 
-router.get("/blog", wrap(async (req, res) => render(res, "blog", META.blog, { posts: await posts.published() })));
+router.get("/blog", wrap(async (req, res) => render(res, "blog", "blog", { posts: await posts.published() })));
 
 router.get(
   "/blog/:slug",
@@ -145,13 +149,13 @@ router.get(
       res,
       "post",
       {
-        title: `${post.seo_title || post.title} | MICE Namibia`,
+        title: await seo.title(post.seo_title || post.title),
         description: post.seo_description || post.excerpt,
         path: post.url,
         image: largestUrl(post.cover) || null,
         ogType: "article",
         nav: "/blog",
-        jsonld: [C.posts.jsonLd(post, config.baseUrl)],
+        jsonld: [C.posts.jsonLd(post, config.baseUrl, (await settings.get("footer")).copyright_holder)],
       },
       { post, posts: all, article: C.posts.withHeadingIds(post.body) }
     );
@@ -164,7 +168,7 @@ router.get(
   "/venues",
   wrap(async (req, res) => {
     const [list, categories, countries] = await Promise.all([venues.published(), venues.categories(), venues.countries()]);
-    render(res, "venues", META.venues, { venues: list, categories, countries });
+    await render(res, "venues", "venues", { venues: list, categories, countries });
   })
 );
 
@@ -178,7 +182,7 @@ router.get(
       res,
       "venue",
       {
-        title: `${venue.name} | MICE Namibia Venues`,
+        title: `${venue.name} | ${(await settings.get("seo")).site_name} Venues`,
         description: String(venue.description).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160),
         path: venue.url,
         image: largestUrl(venue.gallery[0]?.media || venue.card) || null,

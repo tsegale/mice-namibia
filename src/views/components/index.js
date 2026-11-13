@@ -9,5 +9,6 @@ module.exports = {
   partners: require("./partners"),
   gallery: require("./gallery"),
   destinations: require("./destinations"),
+  site: require("./site"),
   icons: require("./icons"),
 };

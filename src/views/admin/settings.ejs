@@ -1,0 +1,73 @@
+<%- include('partials/head', { title }) %>
+<body>
+<%- include('partials/shell', { title, active: 'settings' }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">Details printed across the public site. A save shows on the site straight away. Email server settings stay in the server's <strong>.env</strong> file.</p>
+
+  <nav class="filter-bar settings-tabs" aria-label="Settings sections">
+    <% tabs.forEach((t) => { %><a class="filter-btn" href="/admin/settings?tab=<%= t.key %>"<% if (t.key === tab) { %> aria-current="page"<% } %>><%= t.label %></a><% }) %>
+  </nav>
+
+  <%
+    const tabLabel = tabs.find((t) => t.key === tab).label;
+    const placeholders = `Write {destinations} or {partners} to print the live counts as words (now "${numberWord(counts.destinations)}" and "${numberWord(counts.partners)}").`;
+  %>
+  <form data-admin-form action="/admin/settings/<%= tab %>" data-method="PUT" novalidate>
+    <section class="card settings-card" aria-labelledby="settings-title">
+      <div class="card-header"><h2 id="settings-title"><%= tab === 'seo' ? 'Site name and share image' : tabLabel %></h2></div>
+      <div class="card-body">
+        <div class="alert alert-error" data-form-error role="alert" hidden><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span></span></div>
+
+        <% if (tab === 'contact') { %>
+        <%- include('fields/input', { name: 'phone', type: 'tel', label: 'Phone', value: values.phone, required: true, maxlength: 40, hint: 'As visitors should read it, e.g. +264 81 245 5852. Shown in the mobile menu, footer, contact page and the Let\'s Connect band; the call link is made from it.' }) %>
+        <%- include('fields/input', { name: 'email', type: 'email', label: 'Email', value: values.email, required: true, maxlength: 190, hint: 'The public address in the mobile menu, footer and contact page. Who receives the contact form is set under Enquiry emails.' }) %>
+        <%- include('fields/input', { name: 'address', label: 'Office address', value: values.address, required: true, maxlength: 160, hint: 'Shown as "Main address" on the contact page.' }) %>
+        <%- include('fields/input', { name: 'map_query', label: 'Map search', value: values.map_query, required: true, maxlength: 160, hint: 'What the contact page map looks up on Google Maps: a street address or a place name, e.g. Windhoek,Namibia.' }) %>
+
+        <% } else if (tab === 'social') { %>
+        <p class="form-hint settings-lead">The icons in the footer and on the contact page. Leave an address empty to hide its icon.</p>
+        <% [['facebook', 'Facebook'], ['instagram', 'Instagram'], ['youtube', 'YouTube'], ['x', 'X'], ['linkedin', 'LinkedIn'], ['tripadvisor', 'TripAdvisor']].forEach(([key, label]) => { %>
+        <%- include('fields/input', { name: key, type: 'url', label, value: values[key], maxlength: 255, placeholder: 'https://' }) %>
+        <% }) %>
+
+        <% } else if (tab === 'footer') { %>
+        <%- include('fields/textarea', { name: 'company_line', label: 'Company line', value: values.company_line, required: true, maxlength: 300, rows: 3, hint: 'The sentence under the logo in the footer. ' + placeholders }) %>
+        <%- include('fields/input', { name: 'copyright_holder', label: 'Copyright holder', value: values.copyright_holder, required: true, maxlength: 160, hint: 'Printed as "Copyright ' + new Date().getFullYear() + ' [this]. All rights reserved." The year updates by itself. Also named as the publisher in the blog articles\' search data.' }) %>
+
+        <% } else if (tab === 'enquiries') { %>
+        <%- include('fields/textarea', { name: 'notify_to', label: 'Send contact-form notifications to', value: values.notify_to, maxlength: 2000, rows: 3, hint: 'One or more addresses, separated by commas (at most 10). Every enquiry is saved under Enquiries first, then emailed here with Reply-To set to the visitor.' }) %>
+        <div class="alert alert-info"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span><% if (mailTo) { %>Left empty, notifications go to <strong><%= mailTo %></strong>, the MAIL_TO address in the server settings.<% } else { %>Left empty, notifications go to MAIL_TO from the server settings, which is not set either: enquiries are then saved but not emailed.<% } %></span></div>
+
+        <% } else if (tab === 'seo') { %>
+        <%- include('fields/input', { name: 'site_name', label: 'Site name', value: values.site_name, required: true, maxlength: 60, hint: 'Added to the end of every page title ("FAQ | ' + values.site_name + '") and used as the site name when a page is shared. A title that already contains it is left as it is.' }) %>
+        <%- include('fields/image', { name: 'default_image_media_id', label: 'Default share image', media: shareImage, hint: 'Shown when a page without its own photo is shared on social media or in a chat. Landscape, at least 1200px wide. Empty: the Windhoek International Convention Centre photo the site ships with.' }) %>
+        <% } %>
+      </div>
+      <% if (tab !== 'seo') { %>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-check"/></svg>Save <%= tabLabel.toLowerCase() %></button>
+      </div>
+      <% } %>
+    </section>
+
+    <% if (tab === 'seo') { %>
+    <section class="card settings-card" aria-labelledby="seo-pages-title">
+      <div class="card-header"><h2 id="seo-pages-title">Page titles and descriptions</h2></div>
+      <div class="card-body">
+        <p class="form-hint settings-lead">What search engines show for each page. Titles over 60 characters and descriptions over 160 are usually cut off; the counter turns orange past that. The counter does not include the site name added to the title. <%= placeholders %></p>
+        <% pages.forEach((p) => { %>
+        <div class="seo-page">
+          <h3><%= p.label %> <span><%= p.path %></span></h3>
+          <%- include('fields/input', { name: `pages.${p.key}.title`, label: 'Title', value: values.pages[p.key].title, required: true, maxlength: 120, count: true, warn: 60 }) %>
+          <%- include('fields/textarea', { name: `pages.${p.key}.description`, label: 'Description', value: values.pages[p.key].description, maxlength: 300, rows: 2, count: true, warn: 160 }) %>
+        </div>
+        <% }) %>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-check"/></svg>Save SEO</button>
+      </div>
+    </section>
+    <% } %>
+  </form>
+</main>
+<%- include('partials/foot') %>

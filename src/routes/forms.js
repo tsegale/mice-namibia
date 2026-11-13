@@ -14,7 +14,8 @@
 const express = require("express");
 const { rateLimit, ipKeyGenerator } = require("express-rate-limit");
 const config = require("../config");
-const META = require("./page-meta");
+const seo = require("../services/seo");
+const settings = require("../services/settings");
 const conferences = require("../repositories/conferences");
 const destinations = require("../repositories/destinations");
 const { wantsJson } = require("../middleware/auth");
@@ -27,7 +28,6 @@ const logger = require("../lib/logger");
 const router = express.Router();
 const wrap = (fn) => (req, res, next) => fn(req, res, next).catch(next);
 const destinationNames = async () => (await destinations.published()).map((d) => d.name);
-const PHONE = "+264 81 245 5852";
 
 // Server-rendered newsletter state after a no-JavaScript sign-up.
 router.use((req, res, next) => {
@@ -76,7 +76,7 @@ const isSpam = (req) => String(req.body?.website || "").trim() !== "";
 async function renderContact(res, status, form) {
   const [upcoming, destinationNamesList] = await Promise.all([conferences.upcoming(), destinationNames()]);
   const options = { EVENT_TYPES: forms.EVENT_TYPES, DESTINATIONS: destinationNamesList, SERVICES: forms.SERVICES };
-  res.status(status).render("pages/contact", { page: META.contact, upcoming, options, form });
+  res.status(status).render("pages/contact", { page: await seo.page("contact", res.locals), upcoming, options, form });
 }
 
 router.get(
@@ -87,11 +87,13 @@ router.get(
   })
 );
 
-const contactLimiter = limiter(8, 60, (req, res, next) => {
-  const error = `You have sent several messages in a short time. Please wait a little, or call us on ${PHONE}.`;
-  if (wantsJson(req)) return res.status(429).json({ error });
-  renderContact(res, 429, { values: req.body || {}, errors: {}, error }).catch(next);
-});
+const contactLimiter = limiter(8, 60, (req, res, next) =>
+  (async () => {
+    const error = `You have sent several messages in a short time. Please wait a little, or call us on ${(await settings.get("contact")).phone}.`;
+    if (wantsJson(req)) return res.status(429).json({ error });
+    return renderContact(res, 429, { values: req.body || {}, errors: {}, error });
+  })().catch(next)
+);
 
 router.post(
   "/contact",
@@ -170,7 +172,7 @@ router.get(
   "/newsletter/unsubscribe/:token",
   wrap(async (req, res) => {
     const sub = await subscribers.byToken(req.params.token);
-    res.status(sub ? 200 : 404).render("pages/unsubscribe", { page: META.unsubscribe, state: !sub ? "invalid" : sub.status === "unsubscribed" ? "done" : "confirm", token: req.params.token });
+    res.status(sub ? 200 : 404).render("pages/unsubscribe", { page: await seo.page("unsubscribe", res.locals), state: !sub ? "invalid" : sub.status === "unsubscribed" ? "done" : "confirm", token: req.params.token });
   })
 );
 
@@ -180,7 +182,7 @@ router.post(
     const sub = await subscribers.byToken(req.params.token);
     if (sub && sub.status !== "unsubscribed") await subscribers.unsubscribe(sub.id);
     if (wantsJson(req) || req.body?.["List-Unsubscribe"]) return res.status(sub ? 200 : 404).json({ ok: Boolean(sub) });
-    res.status(sub ? 200 : 404).render("pages/unsubscribe", { page: META.unsubscribe, state: sub ? "done" : "invalid", token: req.params.token });
+    res.status(sub ? 200 : 404).render("pages/unsubscribe", { page: await seo.page("unsubscribe", res.locals), state: sub ? "done" : "invalid", token: req.params.token });
   })
 );
 

@@ -33,7 +33,7 @@ function getTransport() {
 async function send(message) {
   const t = getTransport();
   if (!t) return { status: "skipped", error: "Email is not set up yet (SMTP_HOST and SMTP_USER are empty)." };
-  if (!message.to) return { status: "skipped", error: "No recipient address is set (MAIL_TO is empty)." };
+  if (!message.to) return { status: "skipped", error: "No recipient address is set (Admin > Settings > Enquiry emails and MAIL_TO are both empty)." };
   try {
     await t.sendMail({ from: config.mail.from, ...message });
     return { status: "sent" };

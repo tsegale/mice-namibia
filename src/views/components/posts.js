@@ -166,7 +166,8 @@ function meta(p) {
   return `<p class="post-meta"><span class="chip chip--category">${esc(p.category || "")}</span>${readTime(p)}<span>${esc(p.author_name)}</span></p>`;
 }
 
-function jsonLd(p, baseUrl) {
+// publisher: the copyright holder from Admin > Settings > Footer.
+function jsonLd(p, baseUrl, publisher) {
   return JSON.stringify({
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -179,7 +180,7 @@ function jsonLd(p, baseUrl) {
     articleSection: p.category || undefined,
     timeRequired: `PT${p.reading_minutes}M`,
     author: { "@type": "Organization", name: p.author_name },
-    publisher: { "@type": "Organization", name: "Zusammen Tours and Travel Agency (MICE Department)", logo: { "@type": "ImageObject", url: `${baseUrl}/assets/images/zusammen-logo.png` } },
+    publisher: { "@type": "Organization", name: publisher, logo: { "@type": "ImageObject", url: `${baseUrl}/assets/images/zusammen-logo.png` } },
   }).replace(/</g, "\\u003c");
 }
 
