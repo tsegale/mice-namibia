@@ -35,3 +35,18 @@ from him before the Node + Express backend (Phase 2) starts.
 8. Speakers (names, photos, consent), CEO and team photos when ready.
 9. Contact and newsletter forms are not sending yet; they will be wired in
    Phase 2 (which inbox should enquiries go to?).
+
+## Content still needed from the client
+
+The admin can now hold all of this; the site shows honest placeholders until
+it arrives. Nothing below is invented on the client's behalf.
+
+| What | Where it goes in the admin | Until then the site shows |
+| --- | --- | --- |
+| CEO name and photo (and a short message, optional) | Pages > Team > Edit CEO block | The "Photo coming soon" CEO card |
+| Team photos, names, roles, and each person's consent to appear | Pages > Team | Four "Team member coming soon" slides |
+| Confirmed speakers (name, photo, role, consent) | Content > Speakers | The four badged "Sample" cards and open slots |
+| The correct logo for International Conference Centre Kampala (the file sent shows the KICC, Kenyatta, logo) | Pages > Partners | The KICC logo under the Kampala name |
+| Real event photos for EDULEARN 2027, ICSDEG 2027 and ICCRSGT 2027 (Drive EVENTS folders 1 to 3, four photos each) | Content > Events, per event | Stand-in photos from the site's own library |
+| Ticket prices per conference and tier | Content > Events, the price table in each event | "Price on request"; the homepage ticket section stays hidden |
+| Confirmation that EDULEARN is right (the write-up says "ICENLT" twice) | Content > Events | "EDULEARN" throughout |

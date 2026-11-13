@@ -129,6 +129,8 @@ SMTP_SECURE=true
 SMTP_USER=
 SMTP_PASS=
 MAIL_FROM=
+# Fallback recipient for contact-form notifications. Once addresses are set
+# in Admin > Settings > Enquiry emails, those are used instead.
 MAIL_TO=
 
 # Browser password for the whole staging site, user:password.
@@ -187,7 +189,9 @@ and in production that `BASE_URL` is https, `SESSION_SECRET` is not a
 placeholder and `TRUST_PROXY` is on, and that `robots.txt` matches
 `SITE_ENV`. It exits 1 on any failure, so it can gate a deploy.
 
-`npm run test-email` sends one test message to `MAIL_TO` once SMTP is set.
+`npm run test-email` sends one test message, once SMTP is set, to whoever
+receives enquiries: the addresses in Admin > Settings > Enquiry emails, or
+`MAIL_TO` while those are empty.
 
 ## 8. Daily backup (cron)
 
@@ -254,6 +258,43 @@ after the restart even though static files are cached for a day.
 
 If `npm run doctor` fails, fix what it names before the `touch`. (A
 migration that already ran is not undone by that; see Rollback.)
+
+### When an update adds seed content
+
+Some updates also add starter content: the release notes (commit messages)
+say so. Run the seed after the migration and before the restart:
+
+```bash
+npm run migrate
+npm run seed -- --allow-production
+```
+
+The seed only adds what is missing and never changes or restores anything
+edited or deleted in the admin, so running it when nothing is new is
+harmless.
+
+### The Phase 3 content update (Nov 2026)
+
+Destinations, site settings, team, pricing and legal pages became editable.
+On staging this update needs both steps above:
+
+- `npm run migrate` adds migrations 007 to 010 (destination details, team
+  members, ticket tiers and prices, legal document versions).
+- `npm run seed -- --allow-production` fills in the destination details,
+  adds the three ticket tiers (no prices) and version 1 of the Privacy
+  Policy and the Terms from `content/legal/*.md`, each once.
+
+Then, signed in as an admin:
+
+1. **Settings > Site settings > Enquiry emails**: enter who receives the
+   contact form, or leave it empty to keep using `MAIL_TO`. Check with `npm
+   run test-email`.
+2. **Settings > Legal pages**: both documents show version 1, effective 01
+   January 2027. `/privacy-policy` and `/terms-and-conditions` look exactly
+   as before.
+3. **Pages > Team** and the price table under **Events** stay empty until
+   the client sends real content; the site keeps its placeholders and
+   "Price on request" until then.
 
 ## 11. Rollback
 

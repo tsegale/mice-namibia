@@ -8,13 +8,30 @@ Botswana, South Africa, Zambia, Zimbabwe, Kenya, Tanzania, Uganda and Rwanda.
 
 - Public site: every page is rendered on the server from the database, so
   content is in the HTML for search engines and works without JavaScript.
-- Admin panel at `/admin`: events, venues, blog articles, speakers, contact
-  enquiries, newsletter subscribers and admin accounts (admins manage users;
-  editors manage content and the inbox). Later phases add the remaining
-  pages (FAQs, gallery, partners, team, settings).
+- Admin panel at `/admin` (see "Admin sections" below). Editors manage the
+  content and the inbox; admins also manage site settings, the legal pages
+  and user accounts.
 
 Design rules, client decisions and open content questions live in
 `CLAUDE.md` and `REVIEW-NOTES.md`.
+
+## Admin sections
+
+| Section | Role | What it edits |
+| --- | --- | --- |
+| Content > Events | editor | Conferences, their photos and speakers, and the ticket price table (one row per tier) |
+| Content > Venues, Blog, Speakers | editor | Venue pages, articles, speakers (real ones need consent before publishing) |
+| Pages > Destinations | editor | The countries: name, hook, photo, cities, on/off, order. New ones only from the shipped flag files; one in use by a venue or event cannot be switched off |
+| Pages > FAQs, Partners, Gallery | editor | The FAQ page and homepage preview, partner logos and the logo strip, gallery photos and categories |
+| Pages > Team | editor | The CEO block and the team carousel (placeholders stay until real people are published with consent) |
+| Pages > Pricing | editor | Ticket tiers: name, tagline, features, "Most popular" |
+| Inbox > Enquiries, Subscribers | editor | Contact-form enquiries, newsletter sign-ups (CSV) |
+| Settings > Site settings | admin | Contact details, social links, footer text, enquiry email recipients, SEO (site name, share image, every fixed page's title and description) |
+| Settings > Legal pages | admin | New versions of the Privacy Policy and Terms: upload, preview, word diff, publish with an effective date. Versions are never edited or deleted |
+| Settings > Users | admin | Admin accounts |
+
+Every change in the admin is written to the activity log (dashboard).
+Lists with a grip handle are reordered by dragging or with the arrow keys.
 
 ## Stack
 
@@ -58,9 +75,15 @@ You need Node.js 22 LTS and a MySQL or MariaDB server.
    for the admin panel.
 
 `npm run seed` loads the reviewed content (3 conferences, 4 venues, 10
-articles, sample speakers, destinations, redirects from the old `.html`
-addresses). It only adds what is missing, never overwrites edits, and
-refuses to run against production unless given `--allow-production`.
+articles, sample speakers, destinations, FAQs, partners, gallery, the three
+ticket tiers, version 1 of both legal documents, redirects from the old
+`.html` addresses). It only adds what is missing and never overwrites edits.
+Collections the client curates (destination details, FAQs, partners,
+gallery, ticket tiers, legal documents) are added once, marked by a
+`seed:<name>` row in `settings`, so something deleted in the admin never
+comes back. It refuses to run against production unless given
+`--allow-production`. No people, prices or legal text are invented: the
+team, the CEO block and the prices start empty.
 
 ## Scripts
 
@@ -89,8 +112,10 @@ src/db/seeds/             Starter content loader
 src/routes/public.js      Public pages
 src/routes/forms.js       Contact form and newsletter (with and without JS)
 src/routes/admin/         Admin panel, one file per section
+src/routes/page-meta.js   Fixed pages' addresses, share images, menu items
 src/repositories/         Database reads shared by pages
-src/services/             Login, slugs, email, enquiries, subscribers
+src/services/             Login, slugs, email, enquiries, subscribers, settings, SEO, legal
+src/lib/                  Helpers: images, dates, money (price format), legal markdown, word diff
 src/validation/           Form rules and their messages
 src/views/pages/          Public page templates
 src/views/partials/       Shared header, bands, footer
@@ -108,7 +133,8 @@ DEPLOY.md                 cPanel staging guide
 ## Email
 
 Contact-form enquiries are always saved in the admin inbox first, then
-emailed to `MAIL_TO` with Reply-To set to the visitor, so replying from the
+emailed to the addresses in Admin > Settings > Enquiry emails (or `MAIL_TO`
+from `.env` while that is empty) with Reply-To set to the visitor, so replying from the
 mailbox answers them directly. If the mail server is down the enquiry is
 kept and marked "Email failed", with a button to send it again. With
 `SMTP_HOST` empty (local development) nothing is sent and enquiries are
