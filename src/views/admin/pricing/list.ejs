@@ -1,0 +1,39 @@
+<% const actions = `<button type="button" class="btn btn-accent" data-open-panel="/admin/pricing/new" data-deep-link="?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg><span class="btn-label">Add tier</span></button>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'pricing', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">The ticket plans on the Pricing page, in this order. <strong>Prices are per event</strong>: enter them in the event's panel under Events. A tier without a price for an event shows "Price on request" with the Request Pricing button. The homepage shows a ticket section only once the next upcoming event has at least one price. Drag a row by its grip (or focus the grip and use the arrow keys) to change the order.</p>
+  <section class="card">
+    <% if (!rows.length) { %>
+    <div class="empty-state">
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-tag"/></svg>
+      <p>No ticket tiers yet.</p>
+      <button type="button" class="btn btn-accent" data-open-panel="/admin/pricing/new">Add the first tier</button>
+    </div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span class="visually-hidden">Order</span></th><th>Tier</th><th class="hide-sm">Features</th><th class="hide-sm">Prices set</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody data-sortable="/admin/pricing/reorder">
+          <% rows.forEach((t) => { %>
+          <tr data-id="<%= t.id %>" data-label="<%= t.name %>">
+            <%- include('../fields/sort-handle', { label: t.name }) %>
+            <td><button type="button" class="td-title btn-link" data-open-panel="/admin/pricing/<%= t.id %>/edit" data-deep-link="?edit=<%= t.id %>"><%= t.name %></button><% if (t.tagline) { %><span class="td-sub"><%= t.tagline %></span><% } %></td>
+            <td class="hide-sm"><%= t.features.length %></td>
+            <td class="hide-sm"><%= counts[t.id] ? `${counts[t.id]} event${counts[t.id] === 1 ? '' : 's'}` : 'None (on request)' %></td>
+            <td><span class="badge-stack"><span class="badge badge-<%= t.status %>"><%= t.status === 'published' ? 'Published' : 'Draft' %></span><% if (t.highlighted) { %><span class="badge badge-read">Most popular</span><% } %></span></td>
+            <td class="td-actions">
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/pricing/<%= t.id %>/edit" data-deep-link="?edit=<%= t.id %>" aria-label="Edit <%= t.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon btn-icon-danger" data-delete="/admin/pricing/<%= t.id %>" data-label="the tier &quot;<%= t.name %>&quot;"<% if (counts[t.id]) { %> data-warning="Its prices for <%= counts[t.id] %> event<%= counts[t.id] === 1 ? '' : 's' %> are deleted with it. This cannot be undone."<% } %> aria-label="Delete <%= t.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </section>
+  <% if (open) { %><span data-autopanel="<%= open %>" hidden></span><% } %>
+</main>
+<%- include('../partials/foot') %>

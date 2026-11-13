@@ -13,6 +13,7 @@ const posts = require("../repositories/posts");
 const venues = require("../repositories/venues");
 const speakers = require("../repositories/speakers");
 const team = require("../repositories/team");
+const pricing = require("../repositories/pricing");
 const faqs = require("../repositories/faqs");
 const partners = require("../repositories/partners");
 const gallery = require("../repositories/gallery");
@@ -46,7 +47,8 @@ router.get(
       partners.published({ marquee: true }),
       gallery.published({ home: true }),
     ]);
-    await render(res, "home", "home", { upcoming, latestPosts: all.slice(0, 3), featuredVenues, homeSpeakers, homeFaqs, marqueePartners, stripItems });
+    const homePricing = await pricing.forHome(upcoming);
+    await render(res, "home", "home", { upcoming, latestPosts: all.slice(0, 3), featuredVenues, homeSpeakers, homeFaqs, marqueePartners, stripItems, homePricing });
   })
 );
 
@@ -95,7 +97,13 @@ for (const name of ["privacy-policy", "terms-and-conditions"]) {
   router.get(`/${name}`, wrap((req, res) => render(res, name, name)));
 }
 
-router.get("/pricing", wrap(async (req, res) => render(res, "pricing", "pricing", { upcoming: await conferences.upcoming() })));
+router.get(
+  "/pricing",
+  wrap(async (req, res) => {
+    const upcoming = await conferences.upcoming();
+    await render(res, "pricing", "pricing", { upcoming, tiers: await pricing.forPricingPage(upcoming) });
+  })
+);
 // /contact is in routes/forms.js with the form handlers.
 router.get(
   "/team",

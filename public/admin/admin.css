@@ -320,6 +320,13 @@ select {
 .ceo-summary { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .ceo-summary-text { flex: 1 1 200px; min-width: 0; }
 .card-note { padding-bottom: 0; font-size: 13px; color: var(--muted); }
+.price-table { width: 100%; border-collapse: collapse; }
+.price-table th, .price-table td { padding: 6px 8px 6px 0; text-align: left; vertical-align: middle; }
+.price-table thead th { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+.price-table tbody th { font-size: 14px; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--text); background: none; }
+.price-table td.form-group { margin: 0; }
+.price-table td:nth-child(2) { width: 42%; }
+.price-table td:nth-child(3) { width: 96px; padding-right: 0; }
 .seo-page { padding: 16px 0; border-top: 1px solid var(--border); }
 .seo-page:first-child { border-top: 0; padding-top: 0; }
 .seo-page h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }

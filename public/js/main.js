@@ -979,8 +979,9 @@ function initFaqSearch() {
   }
 }
 
-/* Pricing: the "Tickets for" picker retitles the tiers and points their
-   Request Pricing links at the chosen conference. */
+/* Pricing: the "Tickets for" picker retitles the tiers, shows each tier's
+   price for the chosen conference ("Price on request" when it has none) and
+   points their Request Pricing links at it. */
 
 function initTicketPicker() {
   var picker = document.querySelector("[data-ticket-picker]");
@@ -993,6 +994,16 @@ function initTicketPicker() {
     });
     document.querySelectorAll("[data-ticket-link]").forEach(function (a) {
       a.href = a.getAttribute("href").replace(/event=[^&#]*/, "event=" + encodeURIComponent(checked.value));
+    });
+    document.querySelectorAll("[data-prices]").forEach(function (el) {
+      var prices = {};
+      try {
+        prices = JSON.parse(el.getAttribute("data-prices"));
+      } catch (err) {
+        // Keep the price the server rendered.
+        return;
+      }
+      el.textContent = prices[checked.value] || "Price on request";
     });
   }
   picker.addEventListener("change", apply);

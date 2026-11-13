@@ -23,48 +23,11 @@
     <div class="pricing-picker-wrap">
 <%- C.conferences.pricingPicker(upcoming) %>
     </div>
+<%_ if (!C.pricing.hasPrices(tiers)) { _%>
     <!-- TODO: real ticket prices pending from the client; tiers show "Price on request". -->
+<%_ } _%>
     <div class="pricing-grid" data-reveal-stagger>
-      <article class="pricing-card">
-        <h3 class="pricing-card-name">Early Bird</h3>
-        <p class="pricing-card-for">Tickets for <strong data-ticket-for><%= upcoming[0] ? upcoming[0].short_title : '' %></strong></p>
-        <p class="pricing-card-price">Price on request</p>
-        <p class="pricing-card-desc">Perfect for early planners who want full conference access at the best price.</p>
-        <ul class="pricing-card-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Full conference access</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>All keynote sessions</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Networking events</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Event materials</span></li>
-        </ul>
-        <a data-ticket-link href="/contact?type=proposal&amp;event=<%= upcoming[0] ? upcoming[0].slug : '' %>&amp;tier=Early%20Bird#contact-form" class="btn btn-secondary">Request Pricing<span class="visually-hidden">: Early Bird</span></a>
-      </article>
-      <article class="pricing-card pricing-card--featured">
-        <span class="pricing-badge">Most popular</span>
-        <h3 class="pricing-card-name">Standard</h3>
-        <p class="pricing-card-for">Tickets for <strong data-ticket-for><%= upcoming[0] ? upcoming[0].short_title : '' %></strong></p>
-        <p class="pricing-card-price">Price on request</p>
-        <p class="pricing-card-desc">Best value ticket with complete access to sessions and workshops.</p>
-        <ul class="pricing-card-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>All Early Bird features</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Hands-on workshops</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Speaker meet &amp; greet</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Session recordings</span></li>
-        </ul>
-        <a data-ticket-link href="/contact?type=proposal&amp;event=<%= upcoming[0] ? upcoming[0].slug : '' %>&amp;tier=Standard#contact-form" class="btn btn-primary">Request Pricing<span class="visually-hidden">: Standard</span></a>
-      </article>
-      <article class="pricing-card">
-        <h3 class="pricing-card-name">VIP</h3>
-        <p class="pricing-card-for">Tickets for <strong data-ticket-for><%= upcoming[0] ? upcoming[0].short_title : '' %></strong></p>
-        <p class="pricing-card-price">Price on request</p>
-        <p class="pricing-card-desc">Premium experience with exclusive access and VIP privileges.</p>
-        <ul class="pricing-card-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>All Standard features</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>VIP seating</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Exclusive networking dinner</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg><span>Priority registration</span></li>
-        </ul>
-        <a data-ticket-link href="/contact?type=proposal&amp;event=<%= upcoming[0] ? upcoming[0].slug : '' %>&amp;tier=VIP#contact-form" class="btn btn-secondary">Request Pricing<span class="visually-hidden">: VIP</span></a>
-      </article>
+<%- C.pricing.cards(tiers, upcoming[0]) %>
     </div>
   </div>
 </section>

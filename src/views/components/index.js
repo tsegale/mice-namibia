@@ -11,5 +11,6 @@ module.exports = {
   destinations: require("./destinations"),
   site: require("./site"),
   team: require("./team"),
+  pricing: require("./pricing"),
   icons: require("./icons"),
 };

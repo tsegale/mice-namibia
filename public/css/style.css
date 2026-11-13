@@ -3374,6 +3374,17 @@ div.faq-answer ol {
   color: var(--color-muted);
 }
 
+/* Homepage ticket section: the conference the tiers are for. */
+.home-pricing-event a {
+  font-weight: 600;
+  color: var(--navy-700);
+}
+
+.home-pricing-event span {
+  display: block;
+  margin-top: 0.15rem;
+}
+
 
 /* ---- Conferences: shared bits ------------------------------------------ */
 

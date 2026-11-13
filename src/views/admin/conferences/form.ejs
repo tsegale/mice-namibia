@@ -49,6 +49,29 @@
     <% } %>
 
     <div class="panel-section">
+      <div class="panel-section-label">Ticket prices</div>
+      <% if (!prices.length) { %>
+      <p class="form-hint">There are no ticket tiers yet. Add them under Pages &gt; Pricing.</p>
+      <% } else { %>
+      <div class="form-group" data-field="prices">
+        <table class="price-table">
+          <thead><tr><th scope="col">Tier</th><th scope="col">Price</th><th scope="col">Currency</th></tr></thead>
+          <tbody>
+            <% prices.forEach((p) => { const base = `prices.${p.tier.id}`; %>
+            <tr>
+              <th scope="row"><%= p.tier.name %><% if (p.tier.status !== 'published') { %> <span class="badge badge-draft">Draft</span><% } %></th>
+              <td class="form-group"><label class="visually-hidden" for="f-<%= base %>.amount">Price for <%= p.tier.name %></label><input type="text" inputmode="decimal" id="f-<%= base %>.amount" name="<%= base %>.amount" value="<%= p.amount %>" placeholder="On request" autocomplete="off"></td>
+              <td class="form-group"><label class="visually-hidden" for="f-<%= base %>.currency">Currency for <%= p.tier.name %></label><select id="f-<%= base %>.currency" name="<%= base %>.currency"><% currencies.forEach((code) => { %><option value="<%= code %>"<% if (code === p.currency) { %> selected<% } %>><%= code %></option><% }) %></select></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <p class="form-hint">The full price, e.g. 1250 or 1250.50, shown on the site as "N$ 1 250". Leave a price empty for "Price on request". Once the next upcoming event has a price, the homepage shows its ticket plans.</p>
+      </div>
+      <% } %>
+    </div>
+
+    <div class="panel-section">
       <div class="panel-section-label">Publishing</div>
       <%- include('../fields/status', { value: c.status }) %>
     </div>

@@ -362,6 +362,21 @@ async function run(knex, { log = () => {} } = {}) {
       }
     });
 
+    /* Ticket tiers (once; prices are never seeded) ------------------------------- */
+    await once(trx, "pricing_tiers", async () => {
+      const { tiers } = readJson("pricing.json");
+      for (const [i, t] of tiers.entries()) {
+        const r = await upsert(trx, "pricing_tiers", { name: t.name }, {
+          tagline: t.tagline,
+          features: JSON.stringify(t.features),
+          highlighted: t.highlighted,
+          sort_order: i,
+          status: "published",
+        });
+        tally("pricing_tiers", r.created);
+      }
+    });
+
     /* Legacy .html addresses from the static review build -------------------------- */
     const legacy = {
       "/index.html": "/",

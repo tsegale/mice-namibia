@@ -234,6 +234,23 @@
     <div class="services-cta"><a href="/events" class="btn btn-ghost btn-ghost--light">View all events</a></div>
   </div>
 </section>
+<%_ if (homePricing) { _%>
+
+<%# Spec 01 p.7: ticket tiers for the next conference, shown only once it has a real price. Unnumbered eyebrow: the section comes and goes, so the numbers after it never shift. %>
+<section class="section section--sand home-pricing" aria-labelledby="home-pricing-title">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow"><span class="stripe" aria-hidden="true"></span>Tickets</p>
+      <h2 id="home-pricing-title">Ticket Plans for <em class="accent"><%= homePricing.conference.short_title %></em></h2>
+      <p class="home-pricing-event"><a href="<%= homePricing.conference.url %>"><%= homePricing.conference.title %></a><span><%= C.conferences.helpers.dateLong(homePricing.conference) %>, <%= homePricing.conference.city %>, <%= homePricing.conference.country %></span></p>
+    </div>
+    <div class="pricing-grid" data-reveal-stagger>
+<%- C.pricing.cards(homePricing.tiers, homePricing.conference) %>
+    </div>
+    <div class="services-cta"><a href="/pricing" class="btn btn-outline">All ticket plans</a></div>
+  </div>
+</section>
+<%_ } _%>
 
 <section class="section home-venues" aria-labelledby="venues-title">
   <div class="container">

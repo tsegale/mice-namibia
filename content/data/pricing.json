@@ -1,0 +1,23 @@
+{
+  "_note": "Ticket tiers as on the reviewed Pricing page (seed source, added once). No prices: real ticket prices are pending from the client and are entered per conference in the admin.",
+  "tiers": [
+    {
+      "name": "Early Bird",
+      "tagline": "Perfect for early planners who want full conference access at the best price.",
+      "features": ["Full conference access", "All keynote sessions", "Networking events", "Event materials"],
+      "highlighted": false
+    },
+    {
+      "name": "Standard",
+      "tagline": "Best value ticket with complete access to sessions and workshops.",
+      "features": ["All Early Bird features", "Hands-on workshops", "Speaker meet & greet", "Session recordings"],
+      "highlighted": true
+    },
+    {
+      "name": "VIP",
+      "tagline": "Premium experience with exclusive access and VIP privileges.",
+      "features": ["All Standard features", "VIP seating", "Exclusive networking dinner", "Priority registration"],
+      "highlighted": false
+    }
+  ]
+}

@@ -11,6 +11,9 @@ const { conference: schema, toRow } = require("../../validation/conferences");
 const { cleanBody, assertMedia, replaceImages } = require("../../services/content");
 const { uniqueSlug } = require("../../services/slugs");
 const { recordMove } = require("../../middleware/redirects");
+const pricing = require("../../repositories/pricing");
+const { price: priceSchema } = require("../../validation/pricing");
+const { amountInput, formatPrice, CURRENCIES } = require("../../lib/money");
 
 const router = express.Router();
 const wrap = (fn) => (req, res, next) => fn(req, res, next).catch(next);
@@ -60,8 +63,39 @@ async function formData(row) {
     cover = map.get(row.cover_media_id) || null;
     speakerIds = await db()("conference_speakers").where({ conference_id: row.id }).orderBy("sort_order").pluck("speaker_id");
   }
-  return { countries, speakers, gallery, speakerIds, cover };
+  // The ticket price table: one row per tier, empty = "Price on request".
+  const tiers = await pricing.tiers();
+  const current = row?.id ? (await pricing.pricesFor([row.id])).get(row.id) || new Map() : new Map();
+  const prices = tiers.map((t) => ({ tier: t, amount: amountInput(current.get(t.id)?.amount_cents), currency: current.get(t.id)?.currency || "NAD" }));
+  return { countries, speakers, gallery, speakerIds, cover, prices, currencies: CURRENCIES };
 }
+
+// The price table's fields, "prices.<tier id>.amount" and ".currency". Only
+// tiers that are in the submitted form are changed; an empty amount removes
+// that tier's price (it shows "Price on request" again).
+async function parsePrices(body) {
+  const tiers = await db()("pricing_tiers").select("id", "name");
+  const touched = [];
+  const rows = [];
+  const errors = {};
+  for (const t of tiers) {
+    const amount = body[`prices.${t.id}.amount`];
+    const currency = body[`prices.${t.id}.currency`];
+    if (amount === undefined && currency === undefined) continue;
+    touched.push(t.id);
+    const r = priceSchema.safeParse({ amount, currency });
+    if (!r.success) {
+      for (const issue of r.error.issues) errors[`prices.${t.id}.${issue.path[0]}`] ??= issue.message;
+    } else if (r.data.amount !== null) {
+      rows.push({ tier_id: t.id, amount_cents: r.data.amount, currency: r.data.currency });
+    }
+  }
+  if (Object.keys(errors).length) throw new ValidationError(errors);
+  return { touched, rows, names: new Map(tiers.map((t) => [t.id, t.name])) };
+}
+
+const priceSummary = (map, names) =>
+  [...names.keys()].filter((id) => map.has(id)).map((id) => `${names.get(id)} ${formatPrice(map.get(id).amount_cents, map.get(id).currency).replace(/\u00a0/g, " ")}`).join(", ") || "none";
 
 router.get(
   "/new",
@@ -88,6 +122,7 @@ router.get(
 
 async function save(req, existing) {
   const data = parse(schema, req.body);
+  const prices = await parsePrices(req.body || {});
   const country = await db()("countries").where({ iso2: data.country_iso2 }).first();
   if (!country || (!country.is_destination && country.iso2 !== existing?.country_iso2)) throw new ValidationError({ country_iso2: "Choose a country." });
   const row = toRow(data, country.timezone);
@@ -99,6 +134,7 @@ async function save(req, existing) {
     if (found.length !== data.speaker_ids.length) throw new ValidationError({ speaker_ids: "One of the chosen speakers no longer exists." });
   }
 
+  const pricesBefore = existing ? (await pricing.pricesFor([existing.id])).get(existing.id) || new Map() : new Map();
   let releasable = [];
   const id = await db().transaction(async (trx) => {
     row.slug = await uniqueSlug("conferences", data.slug || data.short_title, { excludeId: existing?.id, trx });
@@ -114,10 +150,17 @@ async function save(req, existing) {
     releasable.push(...(await replaceImages(trx, "conference_images", "conference_id", confId, data.gallery)));
     await trx("conference_speakers").where({ conference_id: confId }).delete();
     if (data.speaker_ids.length) await trx("conference_speakers").insert(data.speaker_ids.map((sid, i) => ({ conference_id: confId, speaker_id: sid, sort_order: i })));
+    if (prices.touched.length) {
+      await trx("conference_prices").where({ conference_id: confId }).whereIn("tier_id", prices.touched).delete();
+      if (prices.rows.length) await trx("conference_prices").insert(prices.rows.map((p) => ({ ...p, conference_id: confId })));
+    }
     return confId;
   });
   await media.releaseIfUnused(releasable);
   await audit(req, { action: existing ? "update" : "create", entity: "conference", entityId: id, summary: `${existing ? "updated" : "added"} the event "${row.short_title}"` });
+  const pricesAfter = (await pricing.pricesFor([id])).get(id) || new Map();
+  const [was, now] = [priceSummary(pricesBefore, prices.names), priceSummary(pricesAfter, prices.names)];
+  if (was !== now) await audit(req, { action: "update", entity: "conference", entityId: id, summary: `set the ticket prices for "${row.short_title}": ${now}` });
   return { id, row };
 }
 
