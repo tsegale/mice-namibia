@@ -10,5 +10,6 @@ module.exports = {
   gallery: require("./gallery"),
   destinations: require("./destinations"),
   site: require("./site"),
+  team: require("./team"),
   icons: require("./icons"),
 };

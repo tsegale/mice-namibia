@@ -102,6 +102,19 @@ const GROUPS = {
     defaults: { notify_to: "" },
     schema: z.object({ notify_to: emailList }),
   },
+  // The "Meet Our CEO" block on the Team page, edited under Pages > Team.
+  // Empty until the client sends it; the page shows its placeholder until
+  // it is published with at least a name and a photo.
+  ceo: {
+    defaults: { name: "", title: "", photo_media_id: null, message: "", status: "draft" },
+    schema: z.object({
+      name: text(160, "Name"),
+      title: text(120, "Title"),
+      photo_media_id: v.id("Photo"),
+      message: text(1500, "Short message"),
+      status: v.status,
+    }),
+  },
   seo: {
     defaults: { site_name: "MICE Namibia", default_image_media_id: null, pages: DEFAULT_PAGES },
     schema: z.object({

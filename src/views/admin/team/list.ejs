@@ -1,0 +1,57 @@
+<% const actions = `<button type="button" class="btn btn-accent" data-open-panel="/admin/team/new" data-deep-link="?new=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg><span class="btn-label">Add team member</span></button>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'team', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">The Meet the Team page. Real people appear only once they are <strong>published and have agreed to it</strong>. Until then the page keeps its placeholders: the "photo coming soon" CEO card, and "Team member coming soon" slides in the carousel. Placeholders and real people are never shown together.</p>
+
+  <% const ceoLive = ceo.status === 'published' && ceo.name && ceo.photo_media_id; %>
+  <section class="card" aria-labelledby="ceo-title">
+    <div class="card-header">
+      <h2 id="ceo-title">Meet Our CEO</h2>
+      <span class="badge badge-<%= ceoLive ? 'published' : 'draft' %>"><%= ceoLive ? 'Live' : 'Placeholder on the site' %></span>
+    </div>
+    <div class="card-body ceo-summary">
+      <span class="td-thumb"><% if (ceoPhoto) { %><img src="<%= imageUrl(ceoPhoto, 640) %>" alt="" loading="lazy"><% } else { %><span class="thumb-empty"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-user"/></svg></span><% } %></span>
+      <span class="ceo-summary-text">
+        <% if (ceo.name) { %><strong><%= ceo.name %></strong><% if (ceo.title) { %><span class="td-sub"><%= ceo.title %></span><% } %><% } else { %><span class="td-sub">No name or photo yet. The site shows the "photo coming soon" card.</span><% } %>
+      </span>
+      <button type="button" class="btn btn-ghost" data-open-panel="/admin/team/ceo/edit" data-deep-link="?ceo=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg>Edit CEO block</button>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="members-title">
+    <div class="card-header"><h2 id="members-title">Team carousel</h2></div>
+    <% if (!rows.length) { %>
+    <div class="empty-state">
+      <svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-users"/></svg>
+      <p>No team members yet. The site shows four "Team member coming soon" slides.</p>
+      <button type="button" class="btn btn-accent" data-open-panel="/admin/team/new">Add the first team member</button>
+    </div>
+    <% } else { %>
+    <p class="card-body card-note"><%= liveCount ? `${liveCount} live on the site, in this order.` : 'None live yet, so the site still shows the "coming soon" slides.' %> Drag a row by its grip (or focus the grip and use the arrow keys) to change the order.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span class="visually-hidden">Order</span></th><th class="hide-sm">Photo</th><th>Name</th><th>Consent</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody data-sortable="/admin/team/reorder">
+          <% rows.forEach((m) => { %>
+          <tr data-id="<%= m.id %>" data-label="<%= m.name %>">
+            <%- include('../fields/sort-handle', { label: m.name }) %>
+            <td class="td-thumb hide-sm"><% if (m.photo) { %><img src="<%= imageUrl(m.photo, 640) %>" alt="" loading="lazy"><% } else { %><span class="thumb-empty"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-user"/></svg></span><% } %></td>
+            <td><button type="button" class="td-title btn-link" data-open-panel="/admin/team/<%= m.id %>/edit" data-deep-link="?edit=<%= m.id %>"><%= m.name %></button><% if (m.role) { %><span class="td-sub"><%= m.role %></span><% } %></td>
+            <td><% if (m.consent_confirmed) { %><span class="badge badge-published">Confirmed</span><% } else { %><span class="badge badge-new">Waiting</span><% } %></td>
+            <td><span class="badge badge-<%= m.status %>"><%= m.status === 'published' ? 'Published' : 'Draft' %></span></td>
+            <td class="td-actions">
+              <button type="button" class="btn btn-ghost btn-sm btn-icon" data-open-panel="/admin/team/<%= m.id %>/edit" data-deep-link="?edit=<%= m.id %>" aria-label="Edit <%= m.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-sm btn-icon btn-icon-danger" data-delete="/admin/team/<%= m.id %>" data-label="&quot;<%= m.name %>&quot;" aria-label="Delete <%= m.name %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-trash"/></svg></button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </section>
+  <% if (open) { %><span data-autopanel="<%= open %>" hidden></span><% } %>
+</main>
+<%- include('../partials/foot') %>

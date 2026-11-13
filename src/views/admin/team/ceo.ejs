@@ -1,0 +1,15 @@
+<%- include('../partials/panel-form-start', { action: '/admin/team/ceo', method: 'PUT', title: 'Meet Our CEO' }) %>
+    <div class="panel-section">
+      <div class="panel-section-label">CEO</div>
+      <div class="form-row cols-2">
+        <%- include('../fields/input', { name: 'name', label: 'Name', value: c.name, maxlength: 160, attrs: ' autofocus', hint: 'Needed before publishing.' }) %>
+        <%- include('../fields/input', { name: 'title', label: 'Title', value: c.title, maxlength: 120, placeholder: 'Chief Executive Officer' }) %>
+      </div>
+      <%- include('../fields/image', { name: 'photo_media_id', label: 'Photo', media: photo, hint: 'At least 1200px wide, shown in a 4:3 frame. Needed before publishing.' }) %>
+      <%- include('../fields/textarea', { name: 'message', label: 'Short message', value: c.message, maxlength: 1500, rows: 5, count: true, hint: "A few sentences in the CEO's own words. A blank line starts a new paragraph. Left empty, the page keeps its current introduction." }) %>
+    </div>
+    <div class="panel-section">
+      <div class="panel-section-label">Publishing</div>
+      <%- include('../fields/status', { value: c.status, hint: 'While this is a draft, the site keeps the "photo coming soon" card.' }) %>
+    </div>
+<%- include('../partials/panel-form-end', { viewUrl: c.status === 'published' ? '/team' : null }) %>

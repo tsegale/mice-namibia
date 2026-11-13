@@ -122,6 +122,7 @@ router.use("/destinations", require("./destinations"));
 router.use("/faqs", require("./faqs"));
 router.use("/partners", require("./partners"));
 router.use("/gallery", require("./gallery"));
+router.use("/team", require("./team"));
 router.use("/submissions", require("./submissions"));
 router.use("/subscribers", require("./subscribers"));
 router.use("/account", require("./account"));

@@ -1,0 +1,17 @@
+<% const editing = Boolean(m.id); %>
+<%- include('../partials/panel-form-start', { action: editing ? `/admin/team/${m.id}` : '/admin/team', method: editing ? 'PUT' : 'POST', title: editing ? `Edit ${m.name}` : 'Add a team member' }) %>
+    <div class="panel-section">
+      <div class="panel-section-label">Team member</div>
+      <div class="form-row cols-2">
+        <%- include('../fields/input', { name: 'name', label: 'Name', value: m.name, required: true, maxlength: 160, attrs: ' autofocus' }) %>
+        <%- include('../fields/input', { name: 'role', label: 'Role', value: m.role, maxlength: 120, placeholder: 'Event Coordinator' }) %>
+      </div>
+      <%- include('../fields/image', { name: 'photo_media_id', label: 'Photo', media: photo, required: true, hint: 'A portrait, at least 800px wide, shown in a 4:3 frame. Needed before publishing.' }) %>
+      <%- include('../fields/input', { name: 'linkedin_url', type: 'url', label: 'LinkedIn', value: m.linkedin_url, maxlength: 255, placeholder: 'https://www.linkedin.com/in/', hint: 'Optional. Shown as a small LinkedIn link under the name.' }) %>
+    </div>
+    <div class="panel-section">
+      <div class="panel-section-label">Publishing</div>
+      <%- include('../fields/checkbox', { name: 'consent_confirmed', label: 'This person has agreed to appear on the website', checked: m.consent_confirmed, hint: 'Required before publishing. Keep their written consent (email is fine) on file.' }) %>
+      <%- include('../fields/status', { value: m.status, hint: 'The first published member replaces the "coming soon" slides on the Team page.' }) %>
+    </div>
+<%- include('../partials/panel-form-end', { deleteUrl: editing ? `/admin/team/${m.id}` : null, deleteLabel: `"${m.name}"`, viewUrl: editing && m.status === 'published' && m.consent_confirmed ? '/team' : null }) %>

@@ -12,6 +12,7 @@ const conferences = require("../repositories/conferences");
 const posts = require("../repositories/posts");
 const venues = require("../repositories/venues");
 const speakers = require("../repositories/speakers");
+const team = require("../repositories/team");
 const faqs = require("../repositories/faqs");
 const partners = require("../repositories/partners");
 const gallery = require("../repositories/gallery");
@@ -96,7 +97,13 @@ for (const name of ["privacy-policy", "terms-and-conditions"]) {
 
 router.get("/pricing", wrap(async (req, res) => render(res, "pricing", "pricing", { upcoming: await conferences.upcoming() })));
 // /contact is in routes/forms.js with the form handlers.
-router.get("/team", wrap(async (req, res) => render(res, "team", "team", { teamSpeakers: await speakers.forTeamPage(8) })));
+router.get(
+  "/team",
+  wrap(async (req, res) => {
+    const [teamSpeakers, teamMembers, ceo] = await Promise.all([speakers.forTeamPage(8), team.published(), team.ceo()]);
+    await render(res, "team", "team", { teamSpeakers, teamMembers, ceo });
+  })
+);
 
 /* Events -------------------------------------------------------------------- */
 

@@ -3294,6 +3294,86 @@ div.faq-answer ol {
   color: var(--color-muted);
 }
 
+/* Real team members (Admin > Pages > Team): same card and 4:3 frame as the
+   placeholder slides, with name, role and an optional LinkedIn link. */
+.team-slide-media {
+  aspect-ratio: 4 / 3;
+  /* Without it the frame grows to the photo's own height. */
+  overflow: hidden;
+  background: var(--color-bg-alt);
+}
+
+.team-slide-media picture,
+.team-slide-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.team-slide-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-2);
+  padding: var(--space-3);
+}
+
+.team-slide-name {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: var(--step-1);
+}
+
+.team-slide-role {
+  order: 3;
+  flex-basis: 100%;
+  margin: 0.15rem 0 0;
+  font-size: var(--step--1);
+  color: var(--color-muted);
+}
+
+.team-slide-link {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--navy-700);
+  border: 1px solid var(--color-border);
+}
+
+.team-slide-link svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+}
+
+.team-slide-link:hover,
+.team-slide-link:focus-visible {
+  color: #FFFFFF;
+  background: #0A66C2;
+  border-color: #0A66C2;
+}
+
+.ceo-name {
+  margin-bottom: var(--space-2);
+}
+
+.ceo-name strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  color: var(--navy-700);
+}
+
+.ceo-name span {
+  display: block;
+  font-size: var(--step--1);
+  color: var(--color-muted);
+}
+
 
 /* ---- Conferences: shared bits ------------------------------------------ */
 
