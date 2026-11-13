@@ -1,0 +1,25 @@
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'legal' }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro">The client's legal documents, published as versions. A new version is pasted or uploaded as markdown, checked in a preview and a word-by-word comparison, and published with the date it takes effect. <strong>Published versions are never changed or deleted</strong>; earlier ones stay listed on the site under "Previous versions".</p>
+  <section class="card">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Document</th><th>In effect since</th><th class="hide-sm">Versions</th><th class="hide-sm">Last published</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody>
+          <% rows.forEach((d) => { %>
+          <tr>
+            <td><a class="td-title" href="/admin/legal/<%= d.slug %>"><%= d.title %></a><span class="td-sub">/<%= d.slug %></span></td>
+            <td><%= d.effective || 'Not published' %></td>
+            <td class="hide-sm"><%= d.count %></td>
+            <td class="hide-sm"><%= d.published_at ? formatDateTime(d.published_at) : '' %></td>
+            <td class="td-actions"><a class="btn btn-ghost btn-sm" href="/admin/legal/<%= d.slug %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-plus"/></svg>New version</a></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<%- include('../partials/foot') %>

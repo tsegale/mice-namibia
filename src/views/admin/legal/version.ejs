@@ -1,0 +1,26 @@
+<% const publicUrl = page.isCurrent ? `/${page.doc.slug}` : `/${page.doc.slug}/versions/${page.version.version_number}`; %>
+<% const actions = `<a class="btn btn-ghost" href="${publicUrl}" target="_blank" rel="noopener"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-external"/></svg><span class="btn-label">View on site</span></a>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'legal', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro"><a href="/admin/legal">Legal pages</a> / <a href="/admin/legal/<%= page.doc.slug %>"><%= page.doc.title %></a> / Version <%= page.version.version_number %>. Read only: published versions are never changed.</p>
+  <section class="card">
+    <div class="card-body">
+      <dl class="detail-list">
+        <div><dt>Effective</dt><dd><%= page.effective %><% if (page.isCurrent) { %> <span class="badge badge-published">Current</span><% } else if (page.until) { %> until <%= page.until %><% } %></dd></div>
+        <div><dt>Published</dt><dd><%= formatDateTime(version.published_at) %> by <%= version.published_by_name || 'the initial import' %></dd></div>
+        <div><dt>Note</dt><dd><%= version.note %></dd></div>
+      </dl>
+    </div>
+  </section>
+  <section class="card" aria-labelledby="rendered-title">
+    <div class="card-header"><h2 id="rendered-title">As shown on the site</h2></div>
+    <div class="card-body"><div class="legal-preview"><%- page.html %></div></div>
+  </section>
+  <section class="card" aria-labelledby="markdown-title">
+    <div class="card-header"><h2 id="markdown-title">Markdown</h2></div>
+    <div class="card-body"><pre class="legal-markdown"><%= markdown %></pre></div>
+  </section>
+</main>
+<%- include('../partials/foot') %>

@@ -3374,6 +3374,37 @@ div.faq-answer ol {
   color: var(--color-muted);
 }
 
+/* Legal pages: earlier versions (Admin > Legal pages). */
+.legal-archived {
+  padding: var(--space-2) var(--space-3);
+  border-left: 4px solid var(--orange-500);
+  background: var(--sand-50);
+  font-weight: 600;
+}
+
+.legal-versions-link {
+  margin-top: var(--space-3);
+  font-size: var(--step--1);
+}
+
+.legal-versions {
+  max-width: var(--measure);
+}
+
+.legal-version-list {
+  margin: var(--space-3) 0 0;
+  padding-left: 1.5rem;
+}
+
+.legal-version-list li {
+  margin-bottom: var(--space-1);
+}
+
+.legal-version-list .chip {
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
 /* Homepage ticket section: the conference the tiers are for. */
 .home-pricing-event a {
   font-weight: 600;
@@ -5819,6 +5850,7 @@ div.faq-answer ol {
   .newsletter-section,
   .back-to-top,
   .legal-toc,
+  .legal-versions-link,
   .legal-contact-card .btn,
   .skip-link,
   .breadcrumbs,

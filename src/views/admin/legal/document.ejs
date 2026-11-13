@@ -1,0 +1,72 @@
+<% const actions = `<a class="btn btn-ghost" href="/${doc.slug}" target="_blank" rel="noopener"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-external"/></svg><span class="btn-label">View on site</span></a>`; %>
+<%- include('../partials/head', { title }) %>
+<body>
+<%- include('../partials/shell', { title, active: 'legal', actions }) %>
+<main class="main" id="main" tabindex="-1">
+  <p class="page-intro"><a href="/admin/legal">Legal pages</a> / <%= doc.title %>. <% if (current) { %>Version <%= current.version_number %> is on the site, in effect since <strong><%= currentEffective %></strong>.<% } %> Write the text in your usual editor, save it as markdown, then paste or upload it here. Never change the clauses on the client's behalf: publish only the text they sent.</p>
+
+  <form data-admin-form action="/admin/legal/<%= doc.slug %>/versions" data-method="POST" novalidate data-legal-form data-preview-url="/admin/legal/<%= doc.slug %>/preview">
+    <section class="card" aria-labelledby="new-version-title">
+      <div class="card-header"><h2 id="new-version-title">1. The new text</h2></div>
+      <div class="card-body">
+        <div class="alert alert-error" data-form-error role="alert" hidden><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-alert"/></svg><span></span></div>
+        <div class="form-group">
+          <label class="btn btn-ghost legal-upload"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-upload"/></svg>Upload a .md file<input type="file" accept=".md,.markdown,.txt,text/markdown,text/plain" class="visually-hidden" data-md-file></label>
+          <span class="form-hint" data-md-file-name>Or edit the current text below.</span>
+        </div>
+        <%- include('../fields/textarea', { name: 'markdown', label: 'Markdown', value: current ? current.markdown : '', rows: 18, required: true, hint: 'Starts with "# ' + doc.title + '", then "**Effective Date: 01 January 2028**" (optional), then each section as "## 1. Heading". Lists start with "- " or "1. ". **Bold** is kept; emails and +264 phone numbers become links.' }) %>
+        <button type="button" class="btn btn-secondary" data-legal-preview><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-eye"/></svg>Preview and compare</button>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="preview-title" data-legal-result hidden>
+      <div class="card-header"><h2 id="preview-title">2. Check it</h2><span class="text-sm" data-diff-summary></span></div>
+      <div class="card-body legal-check">
+        <div>
+          <h3 class="legal-check-title">Changes from the current version</h3>
+          <p class="form-hint">Removed words are <del>struck through</del>, added words are <ins>underlined</ins>.</p>
+          <div class="legal-diff" data-legal-diff></div>
+        </div>
+        <div>
+          <h3 class="legal-check-title">As it will look on the site</h3>
+          <div class="legal-preview" data-legal-preview-out></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="publish-title">
+      <div class="card-header"><h2 id="publish-title">3. Publish</h2></div>
+      <div class="card-body">
+        <div class="form-row cols-2">
+          <%- include('../fields/input', { name: 'effective_date', type: 'date', label: 'Effective date', value: '', required: true, hint: 'Shown in the badge at the top of the page. If the text has an "Effective Date" line, use the same date.' }) %>
+          <%- include('../fields/textarea', { name: 'note', label: 'Note', value: '', required: true, maxlength: 500, rows: 2, hint: 'What changed and why, e.g. "Client update of 3 March: new cookie section." Kept with the version.' }) %>
+        </div>
+        <div class="alert alert-warn"><svg class="icon" aria-hidden="true"><use href="/admin/icons.svg#i-lock"/></svg><span>Publishing replaces the page on the site at once. The version cannot be edited or deleted afterwards; a mistake is fixed by publishing another version.</span></div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-check"/></svg>Publish new version</button>
+      </div>
+    </section>
+  </form>
+
+  <section class="card" aria-labelledby="versions-title">
+    <div class="card-header"><h2 id="versions-title">Published versions</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Version</th><th>Effective</th><th class="hide-sm">Published</th><th>Note</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+        <tbody>
+          <% versions.forEach((x) => { %>
+          <tr>
+            <td><%= x.version_number %><% if (x.isCurrent) { %> <span class="badge badge-published">Current</span><% } %></td>
+            <td><%= x.effective %></td>
+            <td class="hide-sm"><%= formatDateTime(x.published_at) %><span class="td-sub"><%= x.published_by_name || 'Initial import' %></span></td>
+            <td><%= x.note %></td>
+            <td class="td-actions"><a class="btn btn-ghost btn-sm btn-icon" href="/admin/legal/<%= doc.slug %>/versions/<%= x.version_number %>" aria-label="View version <%= x.version_number %>"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-eye"/></svg></a></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<%- include('../partials/foot') %>

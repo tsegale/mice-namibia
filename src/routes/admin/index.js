@@ -128,6 +128,7 @@ router.use("/submissions", require("./submissions"));
 router.use("/subscribers", require("./subscribers"));
 router.use("/account", require("./account"));
 router.use("/settings", requireRole("admin"), require("./settings"));
+router.use("/legal", requireRole("admin"), require("./legal"));
 router.use("/users", requireRole("admin"), require("./users"));
 
 router.get("/", async (req, res, next) => {

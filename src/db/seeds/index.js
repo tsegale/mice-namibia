@@ -14,6 +14,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { readingMinutes, slugify } = require("../../lib/text");
 const { richText, shortText } = require("../../lib/sanitize");
+const legalMarkdown = require("../../lib/legal-markdown");
 
 const ROOT = path.resolve(__dirname, "../../..");
 const PUBLIC = path.join(ROOT, "public");
@@ -374,6 +375,27 @@ async function run(knex, { log = () => {} } = {}) {
           status: "published",
         });
         tally("pricing_tiers", r.created);
+      }
+    });
+
+    /* Legal documents (once): version 1 is the client's markdown as delivered ---- */
+    await once(trx, "legal", async () => {
+      for (const slug of ["privacy-policy", "terms-and-conditions"]) {
+        const markdown = fs.readFileSync(path.join(ROOT, "content/legal", `${slug}.md`), "utf8");
+        const { title, effective } = legalMarkdown.render(markdown);
+        if (!title || !effective?.iso) throw new Error(`content/legal/${slug}.md needs a "# Title" and an "**Effective Date: ...**" line`);
+        const doc = await upsert(trx, "legal_documents", { slug }, { title });
+        tally("legal_documents", doc.created);
+        if (await trx("legal_document_versions").where({ document_id: doc.id }).first()) continue;
+        const [versionId] = await trx("legal_document_versions").insert({
+          document_id: doc.id,
+          version_number: 1,
+          markdown,
+          effective_date: effective.iso,
+          note: `The client's document as delivered (content/legal/${slug}.md).`,
+        });
+        await trx("legal_documents").where({ id: doc.id }).update({ current_version_id: versionId });
+        tally("legal_document_versions", true);
       }
     });
 

@@ -1,0 +1,49 @@
+<%- include('../partials/top') %>
+<% const h = legal.header; %>
+<section class="page-header">
+  <picture class="page-header-media">
+    <source type="image/webp" srcset="<%= h.widths.map((w) => `${h.base}-${w}.webp ${w}w`).join(', ') %>" sizes="100vw">
+    <img src="<%= h.base %>-1280.jpg" srcset="<%= h.widths.map((w) => `${h.base}-${w}.jpg ${w}w`).join(', ') %>" sizes="100vw" alt="" width="<%= h.width %>" height="<%= h.height %>" fetchpriority="high">
+  </picture>
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page"><%= legal.doc.title %></li></ol></nav>
+    <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Legal</p>
+    <h1><%= legal.doc.title %></h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container legal-layout">
+    <nav class="legal-toc" aria-labelledby="toc-title" data-toc>
+      <h2 id="toc-title">On this page</h2>
+      <ol>
+<%_ legal.sections.forEach((s) => { _%>
+        <li><a href="#<%= s.id %>"><%- s.html %></a></li>
+<%_ }) _%>
+      </ol>
+    </nav>
+
+    <article class="legal-body">
+      <p class="effective-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>Effective Date: <%= legal.effective %></p>
+<%_ if (!legal.isCurrent) { _%>
+
+      <p class="legal-archived" role="note">This is a previous version of the <%= legal.doc.title %>, in effect from <%= legal.effective %><% if (legal.until) { %> until <%= legal.until %><% } %>. <a href="/<%= legal.doc.slug %>">Read the current version</a>.</p>
+<%_ } _%>
+
+<%- legal.html %>
+
+      <aside class="legal-contact-card" aria-labelledby="legal-contact-title">
+        <div>
+          <h2 id="legal-contact-title"><%= legal.contactHeading %></h2>
+          <p>Email <a href="mailto:<%= site.contact.email %>"><%= site.contact.email %></a> or call <a href="<%= site.tel %>"><%= site.contact.phone %></a>.</p>
+        </div>
+        <a href="/contact#contact-form" class="btn btn-primary">Contact Us</a>
+      </aside>
+<%_ if (legal.versions.length > 1) { _%>
+      <p class="legal-versions-link"><a href="/<%= legal.doc.slug %>/versions">Previous versions</a></p>
+<%_ } _%>
+    </article>
+  </div>
+</section>
+
+<%- include('../partials/bottom') %>

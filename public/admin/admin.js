@@ -915,6 +915,56 @@
     });
   }
 
+  /* Legal pages: upload a .md file into the textarea, then preview the new
+     version and compare it word by word with the current one. The preview
+     HTML comes from the server's legal renderer, which escapes all text. */
+
+  function initLegalForm(form) {
+    const textarea = form.querySelector('textarea[name="markdown"]');
+    const fileInput = form.querySelector("[data-md-file]");
+    const fileName = form.querySelector("[data-md-file-name]");
+    const result = form.querySelector("[data-legal-result]");
+    const dateInput = form.querySelector('input[name="effective_date"]');
+
+    fileInput?.addEventListener("change", () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      if (file.size > 400 * 1024) {
+        toast("That file is larger than 400 KB. Check that the right file was chosen.", "error");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        textarea.value = String(reader.result);
+        fileName.textContent = `Loaded ${file.name}. Check the preview before publishing.`;
+        result.hidden = true;
+      };
+      reader.onerror = () => toast("The file could not be read.", "error");
+      reader.readAsText(file);
+    });
+
+    form.querySelector("[data-legal-preview]")?.addEventListener("click", async (e) => {
+      const btn = e.currentTarget;
+      clearErrors(form);
+      btn.setAttribute("aria-busy", "true");
+      try {
+        const data = await request(form.dataset.previewUrl, { method: "POST", body: { markdown: textarea.value } });
+        form.querySelector("[data-legal-preview-out]").innerHTML = data.html;
+        form.querySelector("[data-legal-diff]").innerHTML = data.diff.changed ? data.diff.html : '<p class="form-hint">No changes from the current version.</p>';
+        form.querySelector("[data-diff-summary]").textContent = data.diff.changed ? `${data.diff.added} words added, ${data.diff.removed} removed, ${data.sections.length} sections` : "No changes";
+        if (data.effectiveInText && !dateInput.value) dateInput.value = data.effectiveInText;
+        result.hidden = false;
+        result.scrollIntoView({ block: "start", behavior: "smooth" });
+      } catch (err) {
+        showErrors(form, err.fieldErrors, err.message);
+        toast(err.message, "error");
+      } finally {
+        btn.removeAttribute("aria-busy");
+      }
+    });
+  }
+  document.querySelectorAll("[data-legal-form]").forEach(initLegalForm);
+
   initComponents(document);
   window.MiceAdmin = { request, toast, openPanel, closePanel, confirmAction };
 })();

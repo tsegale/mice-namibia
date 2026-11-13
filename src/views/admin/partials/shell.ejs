@@ -23,6 +23,7 @@
   // Only admins see (and can open) Settings and Users.
   if (currentUser.role === 'admin') NAV.push({ section: 'Settings', items: [
     { key: 'settings', label: 'Site settings', href: '/admin/settings', icon: 'sliders' },
+    { key: 'legal', label: 'Legal pages', href: '/admin/legal', icon: 'lock' },
     { key: 'users', label: 'Users', href: '/admin/users', icon: 'users' },
   ] });
   const initials = (currentUser.name || '?').split(/\s+/).map((p) => p[0]).slice(0, 2).join('').toUpperCase();

@@ -1,0 +1,29 @@
+<%- include('../partials/top') %>
+<% const h = legal.header; %>
+<section class="page-header">
+  <picture class="page-header-media">
+    <source type="image/webp" srcset="<%= h.widths.map((w) => `${h.base}-${w}.webp ${w}w`).join(', ') %>" sizes="100vw">
+    <img src="<%= h.base %>-1280.jpg" srcset="<%= h.widths.map((w) => `${h.base}-${w}.jpg ${w}w`).join(', ') %>" sizes="100vw" alt="" width="<%= h.width %>" height="<%= h.height %>" fetchpriority="high">
+  </picture>
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/<%= legal.doc.slug %>"><%= legal.doc.title %></a></li><li aria-current="page">Previous versions</li></ol></nav>
+    <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">01</span>&nbsp;/ Legal</p>
+    <h1><%= legal.doc.title %>: previous versions</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container legal-versions">
+    <p>Every version of the <%= legal.doc.title %> we have published, newest first, with the date it took effect.</p>
+    <ol class="legal-version-list" reversed>
+      <%_ legal.versions.forEach((v) => { _%>
+      <li>
+        <a href="<%= v.isCurrent ? `/${legal.doc.slug}` : `/${legal.doc.slug}/versions/${v.version_number}` %>">Effective <%= v.effective %></a>
+        <% if (v.isCurrent) { %><span class="chip chip--category">Current version</span><% } %>
+      </li>
+      <%_ }) _%>
+    </ol>
+  </div>
+</section>
+
+<%- include('../partials/bottom') %>

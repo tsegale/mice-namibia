@@ -14,6 +14,7 @@ const venues = require("../repositories/venues");
 const speakers = require("../repositories/speakers");
 const team = require("../repositories/team");
 const pricing = require("../repositories/pricing");
+const legal = require("../services/legal");
 const faqs = require("../repositories/faqs");
 const partners = require("../repositories/partners");
 const gallery = require("../repositories/gallery");
@@ -93,8 +94,38 @@ router.get(
   })
 );
 
-for (const name of ["privacy-policy", "terms-and-conditions"]) {
-  router.get(`/${name}`, wrap((req, res) => render(res, name, name)));
+// Legal pages: the current version, the list of versions, and each earlier
+// version (noindex) at /<slug>/versions/<n>.
+for (const slug of legal.SLUGS) {
+  router.get(
+    `/${slug}`,
+    wrap(async (req, res, next) => {
+      const page = await legal.page(slug);
+      if (!page) return next();
+      await render(res, "legal", slug, { legal: page });
+    })
+  );
+  router.get(
+    `/${slug}/versions`,
+    wrap(async (req, res, next) => {
+      const page = await legal.page(slug);
+      if (!page) return next();
+      const meta = await seo.page(slug, res.locals);
+      await render(res, "legal-versions", { ...meta, title: await seo.title(`${page.doc.title}: previous versions`), path: `/${slug}/versions`, noindex: true }, { legal: page });
+    })
+  );
+  router.get(
+    `/${slug}/versions/:n`,
+    wrap(async (req, res, next) => {
+      const n = Number(req.params.n);
+      if (!Number.isInteger(n) || n < 1) return next();
+      const page = await legal.page(slug, n);
+      if (!page) return next();
+      if (page.isCurrent) return res.redirect(301, `/${slug}`);
+      const meta = await seo.page(slug, res.locals);
+      await render(res, "legal", { ...meta, title: await seo.title(`${page.doc.title} (effective ${page.effective})`), path: `/${slug}/versions/${n}`, noindex: true }, { legal: page });
+    })
+  );
 }
 
 router.get(
