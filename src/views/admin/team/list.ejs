@@ -3,18 +3,24 @@
 <body>
 <%- include('../partials/shell', { title, active: 'team', actions }) %>
 <main class="main" id="main" tabindex="-1">
-  <p class="page-intro">The Meet the Team page. Real people appear only once they are <strong>published and have agreed to it</strong>. Until then the page keeps its placeholders: the "photo coming soon" CEO card, and "Team member coming soon" slides in the carousel. Placeholders and real people are never shown together.</p>
+  <p class="page-intro">The Meet the Team page. Real people appear only once they are <strong>published and have agreed to it</strong>. Until then the page keeps its placeholders: the "photo coming soon" CEO card (only while the CEO section is switched on), and "Team member coming soon" slides in the carousel. Placeholders and real people are never shown together.</p>
 
   <% const ceoLive = ceo.status === 'published' && ceo.name && ceo.photo_media_id; %>
   <section class="card" aria-labelledby="ceo-title">
     <div class="card-header">
       <h2 id="ceo-title">Meet Our CEO</h2>
-      <span class="badge badge-<%= ceoLive ? 'published' : 'draft' %>"><%= ceoLive ? 'Live' : 'Placeholder on the site' %></span>
+      <span class="badge badge-<%= !showCeo ? 'draft' : ceoLive ? 'published' : 'draft' %>"><%= !showCeo ? 'Hidden on the site' : ceoLive ? 'Live' : 'Placeholder on the site' %></span>
+    </div>
+    <div class="card-body card-toggle">
+      <label class="check">
+        <input type="checkbox" data-setting-toggle="/admin/team/ceo/visibility" data-setting-name="show_ceo"<%= showCeo ? ' checked' : '' %>>
+        <span>Show the Meet Our CEO section<small>Off: the Team page leaves the whole section out, including the "photo coming soon" card. Turn it on when the CEO block should appear.</small></span>
+      </label>
     </div>
     <div class="card-body ceo-summary">
       <span class="td-thumb"><% if (ceoPhoto) { %><img src="<%= imageUrl(ceoPhoto, 640) %>" alt="" loading="lazy"><% } else { %><span class="thumb-empty"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-user"/></svg></span><% } %></span>
       <span class="ceo-summary-text">
-        <% if (ceo.name) { %><strong><%= ceo.name %></strong><% if (ceo.title) { %><span class="td-sub"><%= ceo.title %></span><% } %><% } else { %><span class="td-sub">No name or photo yet. The site shows the "photo coming soon" card.</span><% } %>
+        <% if (ceo.name) { %><strong><%= ceo.name %></strong><% if (ceo.title) { %><span class="td-sub"><%= ceo.title %></span><% } %><% } else { %><span class="td-sub">No name or photo yet. While the section is shown, the site uses the "photo coming soon" card.</span><% } %>
       </span>
       <button type="button" class="btn btn-ghost" data-open-panel="/admin/team/ceo/edit" data-deep-link="?ceo=1"><svg class="icon-sm" aria-hidden="true"><use href="/admin/icons.svg#i-edit"/></svg>Edit CEO block</button>
     </div>

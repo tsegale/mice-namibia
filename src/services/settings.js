@@ -55,7 +55,7 @@ const DEFAULT_PAGES = {
   partners: { title: "Our Partners", description: "Zusammen Travels proudly collaborates with valued partners who champion innovation, growth, and the creation of exceptional event experiences." },
   pricing: { title: "Pricing", description: "Ticket plans for our upcoming conferences in Africa: Early Bird, Standard and VIP, with prices on request." },
   contact: { title: "Contact Us", description: "Get in touch with MICE Namibia to plan your next meeting, incentive trip, conference or exhibition." },
-  team: { title: "Meet Our Team", description: "Meet the CEO, team and speakers behind MICE Namibia." },
+  team: { title: "Meet Our Team", description: "Meet the team and speakers behind MICE Namibia." },
   "privacy-policy": { title: "Privacy Policy", description: "Privacy Policy for MICE Namibia." },
   "terms-and-conditions": { title: "Terms and Conditions", description: "Terms and Conditions for MICE Namibia." },
   events: { title: "Events", description: "Upcoming conferences across Africa with MICE Namibia: dates, venues, calendar files and registration of interest." },
@@ -114,6 +114,13 @@ const GROUPS = {
       message: text(1500, "Short message"),
       status: v.status,
     }),
+  },
+  // Whether the Team page shows the "Meet Our CEO" section at all. Off
+  // until the client says so (he joins full time later); while off, the
+  // section and its placeholder are left out of the page completely.
+  team_page: {
+    defaults: { show_ceo: false },
+    schema: z.object({ show_ceo: v.bool }),
   },
   seo: {
     defaults: { site_name: "MICE Namibia", default_image_media_id: null, pages: DEFAULT_PAGES },

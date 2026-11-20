@@ -24,10 +24,10 @@ const isLive = (m) => m.status === "published" && m.consent_confirmed;
 router.get(
   "/",
   wrap(async (req, res) => {
-    const [rows, ceo] = await Promise.all([db()("team_members").orderBy("sort_order").orderBy("id").then((r) => media.attach(r, "photo_media_id", "photo")), settings.read("ceo")]);
+    const [rows, ceo, teamPage] = await Promise.all([db()("team_members").orderBy("sort_order").orderBy("id").then((r) => media.attach(r, "photo_media_id", "photo")), settings.read("ceo"), settings.read("team_page")]);
     const id = Number(req.query.edit);
     const open = req.query.ceo ? "/admin/team/ceo/edit" : req.query.new ? "/admin/team/new" : id ? `/admin/team/${id}/edit` : null;
-    res.render("admin/team/list", { title: "Team", rows, liveCount: rows.filter(isLive).length, ceo, ceoPhoto: await photoOf(ceo.photo_media_id), open });
+    res.render("admin/team/list", { title: "Team", rows, liveCount: rows.filter(isLive).length, ceo, ceoPhoto: await photoOf(ceo.photo_media_id), showCeo: teamPage.show_ceo, open });
   })
 );
 
@@ -59,6 +59,17 @@ router.put(
     const changed = settings.changedFields(before, after);
     if (changed.length) await audit(req, { action: "update", entity: "settings", entityId: null, summary: `changed the CEO block (${changed.join(", ")})` });
     res.json({ ok: true, message: after.status === "published" ? "CEO block saved and live" : "CEO block saved as a draft (the placeholder stays on the site)" });
+  })
+);
+
+// "Show the Meet Our CEO section": off by default. While off, the Team page
+// leaves the whole section out, placeholder included.
+router.put(
+  "/ceo/visibility",
+  wrap(async (req, res) => {
+    const { before, after } = await settings.save("team_page", { show_ceo: req.body?.show_ceo });
+    if (before.show_ceo !== after.show_ceo) await audit(req, { action: "update", entity: "settings", entityId: null, summary: after.show_ceo ? "showed the Meet Our CEO section on the Team page" : "hid the Meet Our CEO section on the Team page" });
+    res.json({ ok: true, show_ceo: after.show_ceo, message: after.show_ceo ? "The Meet Our CEO section is now shown on the Team page" : "The Meet Our CEO section is now hidden from the Team page" });
   })
 );
 

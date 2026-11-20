@@ -23,6 +23,7 @@ const as = (agent) => (req) => req.set("X-CSRF-Token", agent.csrf).set("X-Reques
 const team = async () => (await request(app).get("/team")).text;
 const carousel = (html) => html.slice(html.indexOf('id="team-carousel"'), html.indexOf("</ul>", html.indexOf('id="team-carousel"')));
 const count = (html, s) => html.split(s).length - 1;
+const showCeo = (agent, on) => as(agent)(agent.put("/admin/team/ceo/visibility")).send({ show_ceo: on }).expect(200);
 const member = (over = {}) => ({ name: "Test Person", role: "Event Coordinator", photo_media_id: String(photo), linkedin_url: "", consent_confirmed: false, status: "draft", ...over });
 
 before(async () => {
@@ -39,17 +40,59 @@ before(async () => {
 });
 beforeEach(async () => {
   await db()("team_members").delete();
-  await db()("settings").where({ key: "settings.ceo" }).delete();
+  await db()("settings").whereIn("key", ["settings.ceo", "settings.team_page"]).delete();
   settings.clearCache();
 });
 after(() => teardown(app));
 
 test("the Team page keeps today's placeholders while nothing is published", async () => {
   assert.equal(await db()("team_members").count({ n: "*" }).then(([r]) => Number(r.n)), 0, "the seed adds no people");
+  await showCeo(editor, true);
   const html = await team();
   assert.equal(count(carousel(html), PLACEHOLDER_SLIDE), 4);
   assert.match(html, new RegExp(PLACEHOLDER_CEO));
   assert.match(html, /Name, photo and full bio to follow once confirmed by the client\./);
+});
+
+test("the Meet Our CEO section is hidden by default, placeholder and all", async () => {
+  const html = await team();
+  assert.doesNotMatch(html, /Meet Our CEO/);
+  assert.doesNotMatch(html, new RegExp(PLACEHOLDER_CEO));
+  assert.doesNotMatch(html, /Name, photo and full bio to follow/);
+  assert.doesNotMatch(html, /ceo/i, "no anchor, id, class or link points at the CEO section");
+  // Our Team and Speakers are unchanged, numbered on from the page header.
+  assert.equal(count(carousel(html), PLACEHOLDER_SLIDE), 4);
+  assert.match(html, /<span class="eyebrow-num">02<\/span>&nbsp;\/ Our Team/);
+  assert.match(html, /<span class="eyebrow-num">03<\/span>&nbsp;\/ Speakers/);
+  assert.match(html, /<h2 id="speakers-title">Speakers<\/h2>/);
+});
+
+test("the CEO section can be switched on and off, and stays off even when published", async () => {
+  await as(editor)(editor.put("/admin/team/ceo")).send({ name: "Test Ceo", title: "Chief Executive Officer", photo_media_id: String(photo), message: "", status: "published" }).expect(200);
+  assert.doesNotMatch(await team(), /Test Ceo/, "a published CEO block stays hidden while the section is off");
+
+  await showCeo(editor, true);
+  let html = await team();
+  assert.match(html, /<h2 id="ceo-title">Meet Our CEO<\/h2>/);
+  assert.match(html, /Test Ceo/);
+  assert.match(html, /<span class="eyebrow-num">03<\/span>&nbsp;\/ Our Team/);
+  assert.match(html, /<span class="eyebrow-num">04<\/span>&nbsp;\/ Speakers/);
+  assert.match((await db()("audit_log").where({ entity: "settings" }).orderBy("id", "desc").first()).summary, /showed the Meet Our CEO section/);
+
+  // Saving the CEO block again does not touch the switch.
+  await as(editor)(editor.put("/admin/team/ceo")).send({ name: "Test Ceo", title: "CEO", photo_media_id: String(photo), message: "", status: "published" }).expect(200);
+  assert.match(await team(), /<h2 id="ceo-title">Meet Our CEO<\/h2>/);
+
+  await showCeo(editor, false);
+  html = await team();
+  assert.doesNotMatch(html, /Meet Our CEO|Test Ceo/);
+  assert.match((await db()("audit_log").where({ entity: "settings" }).orderBy("id", "desc").first()).summary, /hid the Meet Our CEO section/);
+});
+
+test("the CEO switch needs a signed-in user and the CSRF token", async () => {
+  assert.equal((await request(app).put("/admin/team/ceo/visibility").set("Accept", "application/json").send({ show_ceo: true })).status, 401);
+  assert.equal((await editor.put("/admin/team/ceo/visibility").set("Accept", "application/json").set("X-Requested-With", "fetch").send({ show_ceo: true })).status, 403);
+  assert.doesNotMatch(await team(), /Meet Our CEO/);
 });
 
 test("publishing a team member needs consent (and a photo)", async () => {
@@ -103,6 +146,7 @@ test("real team members replace the placeholder slides and are never mixed with 
 });
 
 test("the CEO block stays a placeholder until published with a name and photo", async () => {
+  await showCeo(editor, true);
   const empty = await as(editor)(editor.put("/admin/team/ceo")).send({ name: "", title: "", photo_media_id: "", message: "", status: "published" });
   assert.equal(empty.status, 422);
   assert.ok(empty.body.fieldErrors.name && empty.body.fieldErrors.photo_media_id);
@@ -131,7 +175,11 @@ test("Pages > Team is open to editors and lists both blocks", async () => {
   const page = await editor.get("/admin/team");
   assert.equal(page.status, 200);
   assert.match(page.text, /Meet Our CEO/);
-  assert.match(page.text, /Placeholder on the site/);
+  assert.match(page.text, /Hidden on the site/);
+  assert.match(page.text, /Show the Meet Our CEO section/);
+  assert.doesNotMatch(page.text, /data-setting-name="show_ceo" checked/, "off by default");
+  await showCeo(editor, true);
+  assert.match((await editor.get("/admin/team")).text, /Placeholder on the site/);
   assert.match((await editor.get("/admin")).text, /href="\/admin\/team"/);
   assert.equal((await editor.get("/admin/team/ceo/edit")).status, 200);
 });

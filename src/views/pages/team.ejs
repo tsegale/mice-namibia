@@ -12,6 +12,8 @@
   </div>
 </section>
 
+<%_ const num = (n) => String(showCeo ? n : n - 1).padStart(2, "0"); _%>
+<%_ if (showCeo) { _%>
 <%_ if (ceo) { _%>
 <section class="section" aria-labelledby="ceo-title">
   <div class="container about">
@@ -45,6 +47,7 @@
   </div>
 </section>
 <%_ } _%>
+<%_ } _%>
 
 <%_ if (!teamMembers.length) { _%>
 <!-- Our Team: hiring is still underway, so this is a sliding carousel of empty-state slots rather than real photos. -->
@@ -53,7 +56,7 @@
   <div class="container">
     <div class="team-head">
       <div>
-        <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">03</span>&nbsp;/ Our Team</p>
+        <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num"><%= num(3) %></span>&nbsp;/ Our Team</p>
         <h2 id="team-title">Our Team</h2>
         <%_ if (teamMembers.length) { _%>
         <p>The people who plan and deliver our events.</p>
@@ -111,7 +114,7 @@
 <section class="section" aria-labelledby="speakers-title">
   <div class="container">
     <div class="section-header">
-      <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num">04</span>&nbsp;/ Speakers</p>
+      <p class="eyebrow"><span class="stripe" aria-hidden="true"></span><span class="eyebrow-num"><%= num(4) %></span>&nbsp;/ Speakers</p>
       <h2 id="speakers-title">Speakers</h2>
       <p>Speaker profiles will appear here once each speaker is confirmed and has given consent.</p>
       <% if (teamSpeakers.samples || !teamSpeakers.speakers.length) { %>

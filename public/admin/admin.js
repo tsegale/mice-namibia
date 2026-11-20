@@ -339,6 +339,23 @@
     }
   });
 
+  /* On/off settings saved as soon as they change ([data-setting-toggle]) ----- */
+
+  document.addEventListener("change", async (e) => {
+    const box = e.target.closest("[data-setting-toggle]");
+    if (!box) return;
+    box.disabled = true;
+    try {
+      const data = await request(box.dataset.settingToggle, { method: "PUT", body: { [box.dataset.settingName]: box.checked } });
+      toastAfterReload(data.message || "Saved");
+      location.reload();
+    } catch (err) {
+      box.checked = !box.checked;
+      box.disabled = false;
+      toast(err.message, "error");
+    }
+  });
+
   /* Copy to clipboard (temporary passwords) ----------------------------------- */
 
   document.addEventListener("click", async (e) => {

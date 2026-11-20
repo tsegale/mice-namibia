@@ -139,8 +139,8 @@ router.get(
 router.get(
   "/team",
   wrap(async (req, res) => {
-    const [teamSpeakers, teamMembers, ceo] = await Promise.all([speakers.forTeamPage(8), team.published(), team.ceo()]);
-    await render(res, "team", "team", { teamSpeakers, teamMembers, ceo });
+    const [teamSpeakers, teamMembers, ceo, teamPage] = await Promise.all([speakers.forTeamPage(8), team.published(), team.ceo(), settings.get("team_page")]);
+    await render(res, "team", "team", { teamSpeakers, teamMembers, ceo, showCeo: teamPage.show_ceo });
   })
 );
 
