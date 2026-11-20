@@ -3209,7 +3209,7 @@ div.faq-answer ol {
 
 .speakers-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-3);
 }
 
@@ -3264,8 +3264,16 @@ div.faq-answer ol {
 }
 
 .speaker-card-body span {
+  display: block;
   font-size: 0.8rem;
   color: var(--color-muted);
+}
+
+/* Long names or organisations wrap inside the card instead of widening the
+   grid column (a single long word breaks as a last resort). */
+.speaker-card-body h3,
+.speaker-card-body span {
+  overflow-wrap: anywhere;
 }
 
 /* Team page: honest "coming soon" placeholders + sliding team carousel */
@@ -5703,7 +5711,7 @@ div.faq-answer ol {
   .pricing-grid,
   .team-grid,
   .speakers-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .about,
@@ -5745,7 +5753,7 @@ div.faq-answer ol {
 
   .team-grid,
   .speakers-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-2);
   }
 
