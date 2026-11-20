@@ -59,6 +59,14 @@ test("with nothing saved the site prints today's values", async () => {
   assert.match((await request(app).get("/faq")).text, /<title>FAQ \| MICE Namibia<\/title>/);
 });
 
+test("the default site email is mice@zusammentravels.com in the menu, footer and contact page", async () => {
+  const home = (await request(app).get("/")).text;
+  assert.doesNotMatch(home, /corporate\.events@/);
+  assert.match(home, /<a href="mailto:mice@zusammentravels\.com">mice@zusammentravels\.com<\/a>/, "mobile menu");
+  assert.match(footer(home), /href="mailto:mice@zusammentravels\.com"/);
+  assert.match((await request(app).get("/contact")).text, /<span class="contact-line-label">Email<\/span><a href="mailto:mice@zusammentravels\.com">/);
+});
+
 test("contact, social and footer settings reach the header menu, footer, contact page and Let's Connect band", async () => {
   assert.equal((await put(admin, "contact", CONTACT)).status, 200);
   assert.equal((await put(admin, "footer", { company_line: "Events across {destinations} countries with {partners} partners.", copyright_holder: "Example Holder Ltd" })).status, 200);

@@ -71,7 +71,7 @@ const pageSchema = z.object({
 
 const GROUPS = {
   contact: {
-    defaults: { phone: "+264 81 245 5852", email: "corporate.events@zusammentravels.com", address: "Windhoek, Namibia", map_query: "Windhoek,Namibia" },
+    defaults: { phone: "+264 81 245 5852", email: "mice@zusammentravels.com", address: "Windhoek, Namibia", map_query: "Windhoek,Namibia" },
     schema: z.object({
       phone: v.trimmed(40, "Phone").pipe(z.string().regex(/^\+?[0-9 ()./-]+$/, "Use only numbers, spaces and + ( ) - in the phone number.")),
       email: z.unknown().optional().transform((x) => str(x).toLowerCase()).pipe(z.email("Enter a valid email address.")),

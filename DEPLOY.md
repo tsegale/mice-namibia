@@ -120,9 +120,10 @@ UPLOADS_DIR=/home/<cpuser>/mice-data/uploads
 BACKUP_DIR=/home/<cpuser>/mice-data/backups
 UPLOAD_MAX_MB=12
 
-# The corporate.events@zusammentravels.com mailbox (cPanel > Email Accounts >
-# Connect Devices shows the outgoing server and port). Empty = enquiries are
-# saved in the admin but not emailed.
+# The mice@zusammentravels.com mailbox (cPanel > Email Accounts > Connect
+# Devices shows the outgoing server and port): SMTP_USER and MAIL_FROM are
+# that address, SMTP_PASS its password, typed into .env on the server only.
+# Empty = enquiries are saved in the admin but not emailed.
 SMTP_HOST=
 SMTP_PORT=465
 SMTP_SECURE=true
@@ -295,6 +296,29 @@ Then, signed in as an admin:
 3. **Pages > Team** and the price table under **Events** stay empty until
    the client sends real content; the site keeps its placeholders and
    "Price on request" until then.
+
+### The site email address (Nov 2026)
+
+The site's address is **mice@zusammentravels.com** (the default in the code
+since 20 Nov 2026). An address saved earlier in **Settings > Site settings >
+Contact details** overrides the default, so check it reads
+mice@zusammentravels.com there.
+
+Outgoing mail uses the same mailbox. In `~/mice-staging/.env`:
+
+```ini
+SMTP_USER=mice@zusammentravels.com
+SMTP_PASS='<the mailbox password>'
+MAIL_FROM="MICE Namibia <mice@zusammentravels.com>"
+```
+
+Then `touch tmp/restart.txt` and `npm run test-email`. The password goes
+only into `.env` on the server (mode 600); never commit, email or paste it
+anywhere else.
+
+The Privacy Policy and the Terms still name corporate.events@zusammentravels.com
+in their contact clauses. That text is the client's; change it only by
+publishing a new version he supplies (Settings > Legal pages).
 
 ## 11. Rollback
 
