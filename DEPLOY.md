@@ -1,4 +1,4 @@
-# Deploying to cPanel (staging)
+# Deploying to cPanel (staging and production)
 
 How the staging site at **https://staging.zusammentravels.com** was set up
 (12 Nov 2026) on the client's Namhost cPanel account, and how to update it.
@@ -6,8 +6,12 @@ The host runs LiteSpeed with cPanel's **Application Manager** (Phusion
 Passenger) for Node apps, Node 22 from cPanel's `ea-nodejs22` package and
 MariaDB 10.11. There is no "Setup Node.js App" (CloudLinux) on this account.
 
-Production will be the same with `SITE_ENV=production`, its own database and
-no `STAGING_BASIC_AUTH`.
+Production (**https://mice.zusammentravels.com**, live since 22 Nov 2026)
+was built with the same steps and runs side by side with staging on the same
+account, sharing nothing but the code. See [Production](#production) for its
+names and paths; every command in this guide works for it after swapping
+`~/mice-staging` for `~/mice-production` and `~/mice-data` for
+`~/mice-production-data`.
 
 The same cPanel account also runs the client's live Zusammen site
 (`zusammentravels.com` in Application Manager) and its backend. Never touch
@@ -223,6 +227,19 @@ The backups sit on the same server as the site. Download one now and then
 
 ## 9. Uptime check
 
+Production has an on-server check (cron, every 5 minutes):
+
+```
+*/5 * * * * /opt/cpanel/ea-nodejs22/bin/node /home/<cpuser>/mice-production/scripts/uptime-check.js
+```
+
+`scripts/uptime-check.js` reads `<BASE_URL>/healthz` and emails `MAIL_TO`
+(from `.env`, so it works while the database is down) after two failed checks
+in a row, and once more when the site recovers. Nothing is sent while the
+state holds; the state is `BACKUP_DIR/uptime-state.json`. It runs on the same
+server as the site, so it cannot report the whole server going offline. For
+that, add an external monitor as well:
+
 Any HTTP monitor (UptimeRobot, Better Stack):
 
 - URL: `https://staging.zusammentravels.com/healthz`
@@ -378,6 +395,59 @@ cPanel (for example `<cpuser>_mice_restore`), load the dump into that, and
 compare `SELECT COUNT(*)` per table. This round trip (backup, restore into a
 scratch database, row counts and uploads compared) was checked against the
 docker-compose MariaDB 10.11.
+
+## Production
+
+Set up on 22 Nov 2026 with sections 1 to 10 above. Staging stays up behind
+its password for testing changes before they reach production.
+
+| | Staging | Production |
+| --- | --- | --- |
+| Address | https://staging.zusammentravels.com | https://mice.zusammentravels.com |
+| Document root (Passenger only) | `~/staging.zusammentravels.com` | `~/mice.zusammentravels.com` |
+| Application Manager name | `mice-staging` | `mice-production` |
+| App root (git clone of `phase-2-backend`) | `~/mice-staging` | `~/mice-production` |
+| `UPLOADS_DIR` | `~/mice-data/uploads` | `~/mice-production-data/uploads` |
+| `BACKUP_DIR` | `~/mice-data/backups` | `~/mice-production-data/backups` |
+| Database | `<cpuser>_mice_staging` | `<cpuser>_mice_prod` |
+| Database user | `<cpuser>_mice` | `<cpuser>_miceprod` |
+| `SITE_ENV` | `staging` (noindex, `Disallow: /`) | `production` (indexable) |
+| `STAGING_BASIC_AUTH` | set | not set |
+| Backup cron | 02:15 | 02:45 |
+| Uptime check | none | `scripts/uptime-check.js`, every 5 minutes |
+
+Cron Email on this account is empty (`MAILTO=""` in the crontab), so cron
+mails nobody and a failing backup only shows in `backup.log`. Set an address
+under cPanel > **Cron Jobs** > Cron Email to get those failures by email. The
+uptime check does not depend on it; it sends its own email.
+
+Production `.env` differs from staging only in the lines above, its own
+`DB_PASSWORD` and `SESSION_SECRET` (both generated on the server, never shown
+or reused) and no `STAGING_BASIC_AUTH`. SMTP is the same mice@ mailbox.
+
+**How the content got there.** Production started as a copy of staging, not a
+fresh seed: a staging backup (`bash scripts/backup.sh`) was loaded into the
+empty production database, the uploads archive unpacked into
+`~/mice-production-data/uploads`, and the row count of every table (32) and
+the checksum of every upload (408 files) compared. `npm run migrate` then
+had nothing to do. Do not run the seed against production to "top up"
+content; it is only needed when an update's release notes say so (section 10).
+
+**Accounts.** admin@mice.com is deactivated. The client's admin account was
+given a new temporary password with "must change password" set; the panel
+makes them choose their own at first login. If they lock themselves out,
+**Admin > Users > Unlock** or **Reset password** from another admin account.
+
+**Deploying an update to production.** Deploy to staging first and check it
+there. Then section 10 with `cd ~/mice-production` and the production
+address in the `curl` line.
+
+**Old addresses.** The static review build on GitHub Pages
+(`tsegale.github.io/mice-namibia`, branch `master`) is now a set of redirect
+stubs: every page has a meta refresh and a canonical link to its address on
+the live site (the same map as the `redirects` table), and `404.html` sends
+visitors to the homepage. The same `.html` paths also answer with a 301 on
+the live site itself.
 
 ## Troubleshooting
 
